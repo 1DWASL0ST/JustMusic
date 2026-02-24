@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\backendapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:backendapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\backend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|solutionrelative:backend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backend.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,17 +42,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Dockerfile",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
               "RelativeDocumentMoniker": "Dockerfile",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
               "RelativeToolTip": "Dockerfile",
-              "ViewState": "AgIAAAYAAAAAAAAAAIBJwA0AAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-02-17T23:19:31.772Z",
               "EditorCaption": ""
@@ -67,7 +67,8 @@
               "RelativeToolTip": "backend.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2026-02-17T23:27:36.377Z"
+              "WhenOpened": "2026-02-17T23:27:36.377Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -79,7 +80,8 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-17T23:27:33.028Z"
+              "WhenOpened": "2026-02-17T23:27:33.028Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -91,7 +93,8 @@
               "RelativeToolTip": "appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-17T23:27:30.943Z"
+              "WhenOpened": "2026-02-17T23:27:30.943Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -101,21 +104,23 @@
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Properties\\launchSettings.json",
               "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-17T23:27:07.518Z"
+              "WhenOpened": "2026-02-17T23:27:07.518Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "backend.csproj",
-              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backend.csproj",
-              "RelativeDocumentMoniker": "backend.csproj",
-              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backend.csproj",
-              "RelativeToolTip": "backend.csproj",
+              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backendAPI.csproj",
+              "RelativeDocumentMoniker": "backendAPI.csproj",
+              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backendAPI.csproj",
+              "RelativeToolTip": "backendAPI.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-02-17T23:26:07.086Z"
+              "WhenOpened": "2026-02-17T23:26:07.086Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -127,7 +132,8 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T22:01:12.877Z"
+              "WhenOpened": "2026-02-17T22:01:12.877Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -139,7 +145,8 @@
               "RelativeToolTip": ".dockerignore",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-02-17T21:46:42.715Z"
+              "WhenOpened": "2026-02-17T21:46:42.715Z",
+              "EditorCaption": ""
             }
           ]
         }

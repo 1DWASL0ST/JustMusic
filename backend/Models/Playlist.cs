@@ -1,14 +1,9 @@
-﻿using System;
+﻿using backendAPI.User;
 
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class Class1
+public class Playlist
 {
-	public Class1()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public int id { get; set; }
+    public string name { get; set; } = "playlist";
+    public int userId { get; set; }
+    public User? User { get; set; }
 }
