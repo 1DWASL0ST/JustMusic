@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\controllers\\trackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:controllers\\trackcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\track.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\track.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\album.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\album.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Artist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\Artist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\PlaylistList.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,18 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Artist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\Artist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\album.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\album.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\backendapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -51,10 +59,6 @@
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
@@ -66,11 +70,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "TrackController.cs",
+              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Controllers\\TrackController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TrackController.cs",
+              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Controllers\\TrackController.cs",
+              "RelativeToolTip": "Controllers\\TrackController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T14:53:12.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "PlaylistList.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\PlaylistList.cs",
               "RelativeDocumentMoniker": "Models\\PlaylistList.cs",
@@ -83,59 +100,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Playlist.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Playlist.cs",
               "RelativeDocumentMoniker": "Models\\Playlist.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Playlist.cs",
               "RelativeToolTip": "Models\\Playlist.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-24T13:38:31.595Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Track.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Track.cs",
               "RelativeDocumentMoniker": "Models\\Track.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Track.cs",
               "RelativeToolTip": "Models\\Track.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-24T13:32:03.825Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "Album.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Album.cs",
               "RelativeDocumentMoniker": "Models\\Album.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Album.cs",
               "RelativeToolTip": "Models\\Album.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-24T13:15:28.694Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Artist.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Artist.cs",
               "RelativeDocumentMoniker": "Models\\Artist.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Artist.cs",
               "RelativeToolTip": "Models\\Artist.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-24T13:12:16.453Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
@@ -148,20 +165,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Dockerfile",
-              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
-              "RelativeDocumentMoniker": "Dockerfile",
-              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
-              "RelativeToolTip": "Dockerfile",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-02-17T23:19:31.772Z",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-17T23:27:33.028Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T22:01:12.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "backend.http",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backend.http",
               "RelativeDocumentMoniker": "backend.http",
@@ -175,19 +205,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-02-17T23:27:33.028Z",
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-02-17T23:19:31.772Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\appsettings.Development.json",
               "RelativeDocumentMoniker": "appsettings.Development.json",
@@ -200,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -213,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "backendAPI.csproj",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backendAPI.csproj",
               "RelativeDocumentMoniker": "backendAPI.csproj",
@@ -226,20 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T22:01:12.877Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": ".dockerignore",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\.dockerignore",
               "RelativeDocumentMoniker": ".dockerignore",
