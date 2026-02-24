@@ -1,6 +1,4 @@
-﻿using backendAPI.User;
-
-public class PlaylistList
+﻿public class PlaylistList
 {
     public int playlistId {  get; set; }
     public int userId {  get; set; }

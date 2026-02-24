@@ -1,5 +1,4 @@
-﻿namespace backendAPI.User;
-public class User
+﻿public class User
 {
     public int id { get; set; }
     public required string name { get; set; }

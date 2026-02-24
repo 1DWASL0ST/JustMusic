@@ -1,6 +1,4 @@
-﻿using backendAPI.User;
-
-public class Playlist
+﻿public class Playlist
 {
     public int id { get; set; }
     public string name { get; set; } = "playlist";
