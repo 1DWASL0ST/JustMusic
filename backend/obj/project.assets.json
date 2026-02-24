@@ -541,9 +541,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\API.csproj",
-      "projectName": "API",
-      "projectPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\API.csproj",
+      "projectUniqueName": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backendAPI.csproj",
+      "projectName": "backendAPI",
+      "projectPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\backendAPI.csproj",
       "packagesPath": "C:\\Users\\1dwasl0st\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\obj\\",
       "projectStyle": "PackageReference",
