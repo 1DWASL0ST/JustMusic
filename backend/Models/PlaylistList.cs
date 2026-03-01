@@ -5,6 +5,5 @@
     public int position {  get; set; }
     public int trackId {  get; set; }
     public Playlist? Playlist { get; set; }
-    public User? User { get; set; }
     public Track? Track { get; set; }
 }
