@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-
-namespace backend.Controllers
+using backendAPI.Data;
+using Microsoft.EntityFrameworkCore;
+namespace backendAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -8,27 +9,33 @@ namespace backend.Controllers
     {
 
         private readonly ILogger<TrackController> _logger;
+        private readonly DataDbContext _dbContext;
 
-        public TrackController(ILogger<TrackController> logger)
+        public TrackController(DataDbContext context, ILogger<TrackController> logger)
         {
+            _dbContext = context;
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetAllTracks")]
-        public IEnumerable<Track> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Track>>> GetTracks()
         {
-            var testArtist = new Artist { id = 0, name = "Artist" };
-            var testAlbum = new Album { id = 0, artistId = testArtist.id, artist = testArtist, name = "Album"};
-            return Enumerable.Range(1, 5).Select(index => new Track
+            try
             {
-                id = Random.Shared.Next(0, 100),
-                artist = testArtist,
-                album = testAlbum,
-                albumID = testAlbum.id,
+                var tracks = await _dbContext.Tracks
+                    .Include(track => track.artist)
+                    .Include(t => t.album)
+                    .ToListAsync();
+
+                return Ok(tracks);
             }
-            ).ToArray();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при получении списка треков");
+                return StatusCode(500, "Треки не найдены");
+            }
         }
-        
+
         [HttpGet("{id}")]
         public string Get(int id)
         {

@@ -18,20 +18,29 @@ namespace backendAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Artist>()
+                .HasKey(artist => artist.IDArtist);
+
+            modelBuilder.Entity<Track>()
+                .HasKey(track => track.IDSong);
+
             modelBuilder.Entity<Track>()
                 .HasOne(track => track.artist)
                 .WithMany()
-                .HasForeignKey(track => track.atristId);
+                .HasForeignKey(track => track.IDArtist);
            
             modelBuilder.Entity<Track>()
                 .HasOne(track => track.album)
                 .WithMany()
-                .HasForeignKey(track => track.albumID);
+                .HasForeignKey(track => track.IDAlbum);
+
+            modelBuilder.Entity<Album>()
+                .HasKey(album => album.IDAlbum);
 
             modelBuilder.Entity<Album>()
                 .HasOne(album => album.artist)
                 .WithMany()
-                .HasForeignKey(album => album.artistId);
+                .HasForeignKey(album => album.IDArtist);
 
             modelBuilder.Entity<Playlist>()
                 .HasOne(playlist => playlist.User)
@@ -47,6 +56,8 @@ namespace backendAPI.Data
                 .HasOne(pll => pll.Track)
                 .WithMany()
                 .HasForeignKey(pll => pll.trackId);
+            modelBuilder.Entity<PlaylistList>()
+                .HasKey(pll => new { pll.playlistId });
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Album>().ToTable("Albums");

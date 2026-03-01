@@ -1,11 +1,10 @@
 ﻿public class Track
 {
-    public required int id {  get; set; }
-    public string path { get; set; } = "song.mp3";
-    public string name { get; set; } = "Song";
-    public int atristId { get; set; }
-    public required int albumID { get; set; }
-    public string albumName { get; set; } = "album";
+    public required int IDSong {  get; set; }
+    public string PathSong { get; set; } = "song.mp3";
+    public string TrackName { get; set; } = "Song";
+    public int IDArtist { get; set; }
+    public required int IDAlbum { get; set; }
     public Artist? artist { get; set; }
     public Album? album { get; set; }
 }
