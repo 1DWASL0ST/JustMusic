@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\playlistlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\playlistlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\data\\datadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:data\\datadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\playlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\playlistlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|solutionrelative:models\\playlistlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9614013F-678B-4E23-87DA-88599336E090}|backendAPI.csproj|c:\\users\\1dwasl0st\\source\\repos\\1dwasl0st\\justmusic\\backend\\models\\track.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,17 +78,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "DataDbContext.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Data\\DataDbContext.cs",
               "RelativeDocumentMoniker": "Data\\DataDbContext.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Data\\DataDbContext.cs",
               "RelativeToolTip": "Data\\DataDbContext.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAwCoAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwDYAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-01T09:58:44.542Z",
               "EditorCaption": ""
@@ -173,20 +173,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Playlist.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Playlist.cs",
               "RelativeDocumentMoniker": "Models\\Playlist.cs",
               "ToolTip": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\Playlist.cs",
               "RelativeToolTip": "Models\\Playlist.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-24T13:38:31.595Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PlaylistList.cs",
               "DocumentMoniker": "C:\\Users\\1dwasl0st\\source\\repos\\1DWASL0ST\\JustMusic\\backend\\Models\\PlaylistList.cs",
               "RelativeDocumentMoniker": "Models\\PlaylistList.cs",
