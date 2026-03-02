@@ -12,9 +12,7 @@ namespace backendAPI.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            User testUser = new User { id = 0, name = "test", password = "password" };
-            User Usertest = new User { id = 1, name = "user", password = "password" };
-            return new User[] {testUser, Usertest};
+            return null;
         }
 
         // GET api/<UserController>/5
