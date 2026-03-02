@@ -1,7 +1,7 @@
 ﻿using backendAPI.Data;
 using backendAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
-using BCrypt.Net;
+using BC = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,16 +21,58 @@ namespace backendAPI.Controllers
         }
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public async Task<ActionResult<IEnumerable<UserResponse>>> Get()
         {
-            return null;
+            try
+            {
+                List<UserResponse> users = await _dbContext.Users
+                    .Select(user => new UserResponse  
+                    {
+                        IDUser = user.IDUser,
+                        UserName = user.UserName
+                    })
+                    .ToListAsync();
+
+                _logger.LogInformation("Получен список пользователей");
+
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при получении списка пользователей");
+                return StatusCode(500, new { message = "Не удалось получить список пользователей" });
+            }
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<UserResponse>> Get(int id)
         {
-            return "value";
+            try
+            {
+                UserResponse user = await _dbContext.Users
+                    .Where(user => user.IDUser == id)
+                    .Select(response => new UserResponse
+                    {
+                        IDUser = response.IDUser,
+                        UserName = response.UserName
+                    })
+                    .FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    _logger.LogWarning("Пользователь {id} не найден", id);
+                    return NotFound(new { message = "Пользователь не найден" });
+                }
+
+                _logger.LogInformation("Пользователь найден");
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при нахождении пользователя");
+                return StatusCode(500, new { message = "Не удалось выполнить получение пользователя" });
+            }
         }
 
         // Register api/<UserController>
@@ -42,10 +84,19 @@ namespace backendAPI.Controllers
                 User user = new User
                 {
                     UserName = register.UserName,
-                    UserPassword = BCrypt.Net.BCrypt.HashPassword(register.UserPassword)
+                    UserPassword = BC.HashPassword(register.UserPassword)
                 };
 
                 _dbContext.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
+                
+                Playlist playlist = new Playlist
+                {
+                    PlaylistName = "Избранное",
+                    IDUser = user.IDUser
+                };
+
+                _dbContext.Playlists.Add(playlist);
                 await _dbContext.SaveChangesAsync();
 
                 UserResponse response = new UserResponse
@@ -79,7 +130,7 @@ namespace backendAPI.Controllers
                     return Unauthorized(new { message = "Неверный логин или пароль" });
                 }
 
-                bool PasswordCheck = BCrypt.Net.BCrypt.Verify(login.UserPassword, user.UserPassword);
+                bool PasswordCheck = BC.Verify(login.UserPassword, user.UserPassword);
 
                 if (!PasswordCheck)
                 {
@@ -111,8 +162,71 @@ namespace backendAPI.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                User user = await _dbContext.Users
+                    .FirstOrDefaultAsync(user => user.IDUser == id);
+
+                if (user == null) 
+                {
+                    _logger.LogWarning("Удаляемый пользователь {id} не найден", id);
+                    return NotFound(new { message = "Пользователь не найден" });
+                }
+
+                List<Playlist> playlists = await _dbContext.Playlists
+                    .Where(playlist => playlist.IDUser == id)
+                    .Select(playlist => new Playlist
+                    {
+                        IDUser = playlist.IDUser,
+                        PlaylistName = playlist.PlaylistName,
+                        IDPlaylist = playlist.IDPlaylist,
+
+                    }).ToListAsync();
+
+                
+
+                if (playlists.Count > 0)
+                {
+                    foreach(Playlist playlist in playlists)
+                    {
+                        List<PlaylistList> plls = await _dbContext.PlaylistsList
+                            .Where(pll => pll.IDPlaylist == playlist.IDPlaylist)
+                            .Select(pll => new PlaylistList
+                            {
+                                IDPlaylist = pll.IDPlaylist,
+                                Position = pll.Position,
+                                IDSong = pll.IDSong,
+
+                            }).ToListAsync();
+                        if(plls.Count > 0)
+                        {
+                            foreach(PlaylistList pll in plls)
+                            {
+                                _dbContext.Remove(pll);
+                                await _dbContext.SaveChangesAsync();
+                            }
+                        }
+                        _dbContext.Remove(playlist);
+                        await _dbContext.SaveChangesAsync();
+                    }
+                }
+
+                _dbContext.Remove(user);
+                await _dbContext.SaveChangesAsync();
+
+                _logger.LogInformation("Пользователь {Id} и все его плейлисты удалены", id);
+
+                return Ok(new { message = "Удаление прошло успешно" });
+
+            }
+
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка удаления");
+                return StatusCode(500, new { message = "При удалении произошла ошибка" });
+            }
         }
     }
 }

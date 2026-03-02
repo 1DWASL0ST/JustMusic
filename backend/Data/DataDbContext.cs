@@ -57,12 +57,14 @@ namespace backendAPI.Data
             modelBuilder.Entity<PlaylistList>()
                 .HasOne(pll => pll.Playlist)
                 .WithOne(playlist => playlist.playlistList)
-                .HasForeignKey<PlaylistList>(pll => pll.IDPlaylist);
+                .HasForeignKey<PlaylistList>(pll => pll.IDPlaylist)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PlaylistList>()
                 .HasOne(pll => pll.Track)
                 .WithMany()
-                .HasForeignKey(pll => pll.IDSong);
+                .HasForeignKey(pll => pll.IDSong)
+                .OnDelete(DeleteBehavior.Cascade);
            
             modelBuilder.Entity<PlaylistList>()
                 .HasKey(pll => new { pll.IDPlaylist });
