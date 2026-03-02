@@ -1,8 +1,8 @@
 ﻿public class Playlist
 {
-    public int id { get; set; }
-    public string name { get; set; } = "playlist";
-    public int userId { get; set; }
+    public int IDPlaylist { get; set; }
+    public string PlaylistName { get; set; } = "playlist";
+    public int IDUser { get; set; }
     public User? User { get; set; }
 
     public PlaylistList ? playlistList { get; set; }
