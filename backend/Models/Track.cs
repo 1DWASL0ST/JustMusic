@@ -1,6 +1,6 @@
 ﻿public class Track
 {
-    public required int IDSong {  get; set; }
+    public int IDSong {  get; set; }
     public string PathSong { get; set; } = "song.mp3";
     public string TrackName { get; set; } = "Song";
     public int IDArtist { get; set; }

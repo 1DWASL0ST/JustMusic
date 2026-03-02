@@ -1,6 +1,6 @@
 ﻿public class Album
 {
-    public required int IDAlbum {  get; set; }
+    public int IDAlbum {  get; set; }
     public string AlbumName { get; set; } = "Name";
     public required int IDArtist { get; set; }
     public string AlbumPicture { get; set; } = "img.png"; 

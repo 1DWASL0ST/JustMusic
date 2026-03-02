@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace backendAPI.Data
 {
@@ -18,6 +19,9 @@ namespace backendAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasKey(user => user.IDUser);
+            
             modelBuilder.Entity<Artist>()
                 .HasKey(artist => artist.IDArtist);
 
@@ -45,19 +49,23 @@ namespace backendAPI.Data
             modelBuilder.Entity<Playlist>()
                 .HasOne(playlist => playlist.User)
                 .WithMany()
-                .HasForeignKey(playlist => playlist.userId);
+                .HasForeignKey(playlist => playlist.IDUser);
+            
+            modelBuilder.Entity<Playlist>()
+                .HasKey(playlist => playlist.IDPlaylist);
 
             modelBuilder.Entity<PlaylistList>()
                 .HasOne(pll => pll.Playlist)
                 .WithOne(playlist => playlist.playlistList)
-                .HasForeignKey<PlaylistList>(pll => pll.playlistId);
+                .HasForeignKey<PlaylistList>(pll => pll.IDPlaylist);
 
             modelBuilder.Entity<PlaylistList>()
                 .HasOne(pll => pll.Track)
                 .WithMany()
-                .HasForeignKey(pll => pll.trackId);
+                .HasForeignKey(pll => pll.IDSong);
+           
             modelBuilder.Entity<PlaylistList>()
-                .HasKey(pll => new { pll.playlistId });
+                .HasKey(pll => new { pll.IDPlaylist });
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Album>().ToTable("Albums");
