@@ -155,9 +155,76 @@ namespace backendAPI.Controllers
         }
        
         // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("ChangeUserName{id}")]
+        public async Task<IActionResult> ChangeUserName(int id, [FromBody] ChangeUsername request)
         {
+            try
+            {
+                User user = await _dbContext.Users.FindAsync(id);
+
+                if(user == null)
+                {
+                    _logger.LogWarning("Пользователь {id} не найден", id);
+                    return NotFound(new { mesage = "Пользователь не найден" });
+                }
+
+                if (string.IsNullOrEmpty(request.NewUserName))
+                {
+                    _logger.LogWarning("Невозможно добавить пустое имя пользователя");
+                    return BadRequest(new { mesage = "Имя пользователя не может быть пустым" });
+                }
+
+                user.UserName = request.NewUserName;
+                await _dbContext.SaveChangesAsync();
+                
+                 _logger.LogInformation("Успешное изменение имени пользователя");
+                return Ok(new { mesage = "Имя пользователя обновлено" });
+            }
+
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при обновлении имени пользователя");
+                return StatusCode(500, new { message = "Не удалось обновить имя пользователя" });
+            }
+        }
+
+        [HttpPut("ChangePassword{id}")]
+        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePassword request)
+        {
+            try
+            {
+                User user = await _dbContext.Users.FindAsync(id);
+                if (user == null)
+                {
+                    _logger.LogWarning("Пользователь {id} не найден", id);
+                    return NotFound(new { mesage = "Пользователь не найден" });
+                }
+
+                bool checkPassword = BC.Verify(request.CurrentPassword, user.UserPassword);
+
+                if (!checkPassword)
+                {
+                    _logger.LogWarning("Неверное введение текущего пароля");
+                    return BadRequest(new { mesage = "Неверно введён текущий пароль" });
+                }
+
+                if (string.IsNullOrEmpty(request.NewPassword))
+                {
+                    _logger.LogWarning("Невозможно добавить пустой пароль");
+                    return BadRequest(new { mesage = "Пароль не может быть пустым" });
+                }
+
+                user.UserPassword = BC.HashPassword(request.NewPassword);
+                await _dbContext.SaveChangesAsync();
+
+                _logger.LogInformation("Успешное изменение пароля");
+                return Ok(new { mesage = "Пароль обновлен" });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при обновлении пароля");
+                return StatusCode(500, new { message = "Не удалось обновить имя пользователя" });
+            }
         }
 
         // DELETE api/<UserController>/5
