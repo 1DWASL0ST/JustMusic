@@ -243,5 +243,3 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-*.png
-*.jpg
