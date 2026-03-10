@@ -242,44 +242,6 @@ namespace backendAPI.Controllers
                     return NotFound(new { message = "Пользователь не найден" });
                 }
 
-                //List<Playlist> playlists = await _dbContext.Playlists
-                //    .Where(playlist => playlist.IDUser == id)
-                //    .Select(playlist => new Playlist
-                //    {
-                //        IDUser = playlist.IDUser,
-                //        PlaylistName = playlist.PlaylistName,
-                //        IDPlaylist = playlist.IDPlaylist,
-
-                //    }).ToListAsync();
-
-                
-
-                //if (playlists.Count > 0)
-                //{
-                //    foreach(Playlist playlist in playlists)
-                //    {
-                //        List<PlaylistList> plls = await _dbContext.PlaylistsList
-                //            .Where(pll => pll.IDPlaylist == playlist.IDPlaylist)
-                //            .Select(pll => new PlaylistList
-                //            {
-                //                IDPlaylist = pll.IDPlaylist,
-                //                Position = pll.Position,
-                //                IDSong = pll.IDSong,
-
-                //            }).ToListAsync();
-                //        if(plls.Count > 0)
-                //        {
-                //            foreach(PlaylistList pll in plls)
-                //            {
-                //                _dbContext.Remove(pll);
-                //                await _dbContext.SaveChangesAsync();
-                //            }
-                //        }
-                //        _dbContext.Remove(playlist);
-                //        await _dbContext.SaveChangesAsync();
-                //    }
-                //}
-
                 _dbContext.Remove(user);
                 await _dbContext.SaveChangesAsync();
 
