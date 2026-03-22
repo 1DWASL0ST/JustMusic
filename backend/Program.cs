@@ -18,23 +18,7 @@ namespace backend
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-            using (var scope = app.Services.CreateScope())
-            {
-                try
-                {
-                    var dbContext = scope.ServiceProvider.GetRequiredService<DataDbContext>();
-                    Console.WriteLine(" DbContext создан");
-
-                    // ПРОВЕРКА 4: Подключение к БД
-                    var canConnect = dbContext.Database.CanConnect();
-                    Console.WriteLine(canConnect ? " Подключение к БД успешно" : " Нет подключения к БД");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Ошибка при создании DbContext: {ex.Message}");
-                }
-            }
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
