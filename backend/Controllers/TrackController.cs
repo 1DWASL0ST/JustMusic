@@ -10,11 +10,13 @@ namespace backendAPI.Controllers
 
         private readonly ILogger<TrackController> _logger;
         private readonly DataDbContext _dbContext;
+        private readonly IConfiguration _configuration;
 
-        public TrackController(DataDbContext context, ILogger<TrackController> logger)
+        public TrackController(DataDbContext context, ILogger<TrackController> logger, IConfiguration configuration)
         {
             _dbContext = context;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -36,10 +38,23 @@ namespace backendAPI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("stream/{id}")]
+        public async Task<IActionResult> Stream(int id)
         {
-            return "value";
+            try
+            {
+                Track track = await _dbContext.Tracks.FindAsync(id);
+
+                var TrackFolder = _configuration["TracksSettings:TracksFolder"];
+                var TrackPath = Path.Combine(TrackFolder, track.PathSong);
+
+                return PhysicalFile(TrackPath, "audio/mpeg", enableRangeProcessing: true);
+            
+            }
+            catch
+            {
+                return StatusCode(500, "Ошибка при получении трека");
+            }
         }
         
         [HttpPost]

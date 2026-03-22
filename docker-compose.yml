@@ -27,6 +27,8 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-
+    volumes:
+      - ./tracks:/app/tracks 
+    restart: unless-stopped
 volumes:
   postgres_data:
