@@ -1,28 +1,22 @@
 ﻿/* Group 13 */
-mainHeader {
-    position: absolute;
-    width: 1280px;
-    height: 48px;
-    left: 0px;
-    top: 0px;
-    /* Rectangle 2 */
-    position: absolute;
-    width: 1280px;
-    height: 48px;
+.mainHeader {
+    aspect-ratio: 80/3;
+    width: 100%;
     left: 0px;
     top: 0px;
     background: #EF14F3;
-    /* Только Музыка */
-    position: absolute;
-    width: 187px;
-    height: 37px;
-    left: 16px;
-    top: 5px;
-    font-family: 'Ubuntu Condensed';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 32px;
-    line-height: 37px;
-    /* identical to box height */
-    color: #000000;
+    position: relative;
+    
 }
+
+.mainHeader h1 {
+    position: absolute ;    
+    font-family: 'Ubuntu';
+    font-size: 2.4vw;
+    color: #000000;
+    margin: auto;
+    left: 2%;
+    top: 12.5%;
+}
+
+

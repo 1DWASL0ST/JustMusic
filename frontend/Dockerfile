@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json /app/
 COPY package-lock.json /app/
 
+EXPOSE 3000
+
 RUN npm ci --only=production
 
 # Копируем всё остальное

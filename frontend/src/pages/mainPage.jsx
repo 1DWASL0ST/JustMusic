@@ -1,6 +1,12 @@
-﻿import React, { useRef, useState } from 'react';
-import './global.css';
+﻿import React from 'react';
+import '../styles/global.css';
 
-return (
-    <div className= 'mainHeader'></div>
-)
+function MainPage() {
+    return (
+        <div className='mainHeader'>
+            <h1>Только Музыка</h1>
+        </div>
+    );
+}
+
+export default MainPage;
