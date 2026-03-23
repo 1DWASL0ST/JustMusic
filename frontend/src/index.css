@@ -21,7 +21,7 @@ code {
 @font-face {
     font-family: 'RobotoMono';
     src: url('./components/fonts/RobotoMono.ttf') format('truetype');
-    font-weight: 400;
+    font-weight: lighter;
     font-style: normal;
 }
 
