@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+п»їusing Microsoft.AspNetCore.Mvc;
 using backendAPI.Data;
 using Microsoft.EntityFrameworkCore;
 namespace backendAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TrackController : ControllerBase
     {
 
@@ -33,8 +33,8 @@ namespace backendAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при получении списка треков");
-                return StatusCode(500, "Треки не найдены");
+                _logger.LogError(ex, "РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё СЃРїРёСЃРєР° С‚СЂРµРєРѕРІ");
+                return StatusCode(500, "РўСЂРµРєРё РЅРµ РЅР°Р№РґРµРЅС‹");
             }
         }
 
@@ -53,7 +53,7 @@ namespace backendAPI.Controllers
             }
             catch
             {
-                return StatusCode(500, "Ошибка при получении трека");
+                return StatusCode(500, "РћС€РёР±РєР° РїСЂРё РїРѕР»СѓС‡РµРЅРёРё С‚СЂРµРєР°");
             }
         }
         

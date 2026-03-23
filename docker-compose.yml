@@ -1,4 +1,4 @@
-name: JustMusic
+﻿name: JustMusic
 services:
     postgres:
         container_name: DB
@@ -18,8 +18,8 @@ services:
             context: ./backend
             dockerfile: Dockerfile
         ports:
-            - "5000:8080"
-            - "5001:8081"  
+            - "0.0.0.0:5000:8080"
+            - "0.0.0.0:5001:8081"  
         depends_on:
             - postgres
         environment:
