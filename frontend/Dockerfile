@@ -1,7 +1,6 @@
 ﻿FROM node:18-alpine AS build
 WORKDIR /app
 
-# Копируем package.json
 COPY package.json /app/
 COPY package-lock.json /app/
 
@@ -9,7 +8,6 @@ EXPOSE 3000
 
 RUN npm ci --only=production
 
-# Копируем всё остальное
 COPY src /app/src
 COPY public /app/public
 

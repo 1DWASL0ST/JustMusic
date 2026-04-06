@@ -6,7 +6,7 @@ function App() {
     return (  // ← добавил return
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainPage />} />  // с большой буквы
+                <Route path="/" element={<MainPage />} /> 
             </Routes>
         </BrowserRouter>
     );

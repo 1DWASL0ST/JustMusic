@@ -47,11 +47,19 @@
     font-size: 1.8vw;
 }
 
-.mainPlayer {
+.mainContent {
     width: 44%;
     display: flex;
+    flex-direction: column;
+    align-items:center;
+    text-align:center;
+}
+
+.mainPlayer {
+    width: 100%;
+    display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     gap: 5%;
 }
 
@@ -82,13 +90,29 @@
 
 
 .albumImage {
-    /* image 1 */
-
     position: center;
     width: 320px;
     height: 320px;
     top: 20px;
     background-image: url('../components/images/AlbumCommon.png');
+}
+
+.mainContent h1 {
+    font-family: 'Ubuntu';
+    color: #EF14F3;
+    position: relative;
+    font-size: 3.6vw;
+    margin-block-end:0.3em
+}
+
+.mainContent h2 {
+    width: 50%;
+    font-family: 'Ubuntu';
+    font-weight: 100;
+    color: #EF14F3;
+    font-size: 2.6vw;
+    margin-block-start:0;
+    text-decoration:underline;
 }
 
 .queue {

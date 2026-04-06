@@ -18,14 +18,14 @@ services:
             context: ./backend
             dockerfile: Dockerfile
         ports:
-            - "0.0.0.0:5000:8080"
-            - "0.0.0.0:5001:8081"  
+            - "5000:8080"
+        networks:
+            - default
         depends_on:
             - postgres
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_HTTP_PORTS=8080
-            - ASPNETCORE_HTTPS_PORTS=8081
             - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
         volumes:
             - ./tracks:/app/tracks 
@@ -37,6 +37,8 @@ services:
             dockerfile: Dockerfile
         ports:
             - "3000:80"
+        networks:
+            - default
         depends_on:
             - backendapi
         restart: unless-stopped    
