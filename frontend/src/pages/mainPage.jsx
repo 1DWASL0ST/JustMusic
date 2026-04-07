@@ -3,7 +3,8 @@ import '../styles/global.css';
 import nextIcon from '../components/buttons/next.svg';
 import playIcon from '../components/buttons/play.svg';
 import pauseIcon from '../components/buttons/pause.svg';
-import { useQueue} from '../hooks/useQueue.js';
+import { useQueue } from '../hooks/useQueue.js';
+import defaultCover from '../components/images/AlbumCommon.png';
 
 function MainPage() {
     const { currentTrack, nextTrack, prevTrack } = useQueue();
@@ -60,7 +61,7 @@ function MainPage() {
                         <img src={nextIcon} style={{ width: '80px', height: '120px', transform: 'rotate(180deg)'}} alt='prev'></img>
                     </button>
                     <div className='albumContainer'>
-                        <img className='albumImage' alt=""></img>
+                            <img src={currentTrack.album?.albumPicture ? `/covers/${currentTrack.album.albumPicture}` : defaultCover} onError={(e) => e.target.src = defaultCover} alt="cover" />
                             <button style={{ background: 'none', border: 'none', cursor: 'pointer' }} onClick={Play}>
                                 <img
                                     src={isPlaying ? pauseIcon : playIcon}

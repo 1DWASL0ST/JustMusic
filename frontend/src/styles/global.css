@@ -22,7 +22,7 @@
 .mainPart {
     margin-top: 3vw;
     width: 100%;
-    height: 100%;
+    height: 84vh;
     display: flex;
     gap: 3vw;
     flex-direction: row;
@@ -94,15 +94,15 @@
     width: 320px;
     height: 320px;
     top: 20px;
-    background-image: url('../components/images/AlbumCommon.png');
 }
 
 .mainContent h1 {
     font-family: 'Ubuntu';
     color: #EF14F3;
     position: relative;
-    font-size: 3.6vw;
-    margin-block-end:0.3em
+    font-size: 3vw;
+    margin-block-end: 0.3em;
+
 }
 
 .mainContent h2 {
@@ -110,7 +110,7 @@
     font-family: 'Ubuntu';
     font-weight: 100;
     color: #EF14F3;
-    font-size: 2.6vw;
+    font-size: 2.4vw;
     margin-block-start:0;
     text-decoration:underline;
 }

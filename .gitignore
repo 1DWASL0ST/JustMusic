@@ -1,4 +1,4 @@
-*.mp3
+﻿*.mp3
 backend/.vs
 *.env
 # User-specific files
@@ -243,3 +243,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+*png
