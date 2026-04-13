@@ -5,6 +5,7 @@ import playIcon from '../components/buttons/play.svg';
 import pauseIcon from '../components/buttons/pause.svg';
 import { useQueue } from '../hooks/useQueue.js';
 import defaultCover from '../components/images/AlbumCommon.png';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
     const { currentTrack, nextTrack, prevTrack } = useQueue();
@@ -12,6 +13,7 @@ function MainPage() {
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const navigate = useNavigate();
 
     const Play = () => {
         if (audioRef.current) {
@@ -76,7 +78,7 @@ function MainPage() {
     return (
         <><div className='mainHeader'>
             <h1>Только Музыка</h1>
-            <button>Войти</button>
+            <button onClick={navigate('/login')}>Войти</button>
             <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>Регистрация</button>
         </div>
         <div className='mainPart'>
