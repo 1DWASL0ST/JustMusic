@@ -50,6 +50,7 @@ function MainPage() {
     return (
         <><div className='mainHeader'>
             <h1>Только Музыка</h1>
+            <button className= 'loginButton'>Войти</button>
         </div>
         <div className='mainPart'>
             <div className='search'>

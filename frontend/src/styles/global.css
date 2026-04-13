@@ -18,6 +18,20 @@
     left: 2%;
     top: 12.5%;
 }
+.loginButton {
+    background: #251F1F;
+    border-radius: 20px;
+    color: #EF14F3;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.loginButton:hover {
+     opacity: 0.9;
+}
 
 .mainPart {
     margin-top: 3vw;
@@ -94,6 +108,7 @@
     width: 320px;
     height: 320px;
     top: 20px;
+    object-fit: contain;
 }
 
 .mainContent h1 {
