@@ -1,12 +1,15 @@
-﻿/* Group 13 */
+﻿/*Хэдер*/
 .mainHeader {
-    aspect-ratio: 80/3;
-    width: 100%;
-    left: 0px;
-    top: 0px;
-    background: #EF14F3;
+    justify-content: flex-end;
+    align-items: center;
+    display: flex;
+    aspect-ratio: 80 / 3;
+    background: #ef14f3;
+    left: 0;
     position: relative;
-    
+    top: 0;
+    width: 100%;
+    flex-direction: row;
 }
 
 .mainHeader h1 {
@@ -18,21 +21,24 @@
     left: 2%;
     top: 12.5%;
 }
-.loginButton {
-    background: #251F1F;
-    border-radius: 20px;
-    color: #EF14F3;
+.mainHeader button {
+    margin-right: 0.5vw;
+    background: #251f1f;
     border: none;
-    padding: 10px 20px;
+    border-radius: 20px;
+    color: #ef14f3;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 16px;
+    font-family: 'Ubuntu';
+    font-size: 2vw;
+    padding: 0.2vw 1vw;
 }
 
-.loginButton:hover {
-     opacity: 0.9;
+.mainHeader button:hover {
+     opacity: 0.6;
 }
+/*Хэдер*/
 
+/*Основная часть*/
 .mainPart {
     margin-top: 3vw;
     width: 100%;
@@ -41,7 +47,7 @@
     gap: 3vw;
     flex-direction: row;
 }
-
+/*Основная часть: Левый блок поиска*/
 .search {
     width: 22%;
     aspect-ratio: 1 / 1.8;
@@ -60,7 +66,9 @@
     left: 20%;
     font-size: 1.8vw;
 }
+/*Основная часть: Левый блок поиска*/
 
+/*Основная часть: Плеер*/
 .mainContent {
     width: 44%;
     display: flex;
@@ -69,6 +77,7 @@
     text-align:center;
 }
 
+/*Основная часть: Плеер: кнопки и картинка альбома*/
 .mainPlayer {
     width: 100%;
     display: flex;
@@ -77,6 +86,10 @@
     gap: 5%;
 }
 
+.mainPlayer button:hover{
+    opacity:0.6;
+}
+/*Основная часть: Плеер: картинка альбома и кнопка плей*/
 .albumContainer {
     position: relative;
     width: 320px;
@@ -84,8 +97,10 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    object-fit: contain;
 }
 .albumContainer button {
+    background: none;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -98,26 +113,35 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
-    
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-
-.albumImage {
-    position: center;
-    width: 320px;
-    height: 320px;
-    top: 20px;
-    object-fit: contain;
+.albumContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
 }
 
+.albumContainer button:hover {
+    opacity: 1;
+}
+
+.albumContainer button img:hover {
+    transform: scale(1.1);
+}
+/*Основная часть: Плеер: картинка альбома и кнопка плей*/
+
+
+/*Основная часть: Плеер: Исполнитель и название трека*/
 .mainContent h1 {
     font-family: 'Ubuntu';
     color: #EF14F3;
     position: relative;
     font-size: 3vw;
     margin-block-end: 0.3em;
-
+    transition: opacity 0.5s ease;
 }
 
 .mainContent h2 {
@@ -126,10 +150,73 @@
     font-weight: 100;
     color: #EF14F3;
     font-size: 2.4vw;
-    margin-block-start:0;
-    text-decoration:underline;
+    margin-block-start: 0;
+    text-decoration: underline;
+    transition: opacity 0.5s ease;
+}
+/*Основная часть: Плеер: Исполнитель и название трека*/
+
+
+/*Основная часть: Плеер: Прогрессбар*/
+.progress-container {
+    width: 100%;
+    height: 3vh;
+    min-height: 4px;
+    background: none;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    position: relative;
 }
 
+.duration {
+    height: 1vh;
+    background: #251F1F;
+    border-radius: 0.5vh;
+    width: 100%;
+    position: relative;
+}
+.progress-bar {
+    height: 1vh;
+    background: #EF14F3;
+    border-radius: 0.5vh;
+    width: 0%;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: -0.8vw;  
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2vw;
+    height: 1.2vw;
+    min-width: 10px;
+    min-height: 10px;
+    max-width: 18px;
+    max-height: 18px;
+    background: #EF14F3;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: pointer;
+}
+
+.progress-container:hover .progress-bar::after {
+    opacity: 1;
+}
+
+.time-info {
+    margin-top: 1.5vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 2vh;
+    color: #EF14F3;
+}
+/*Основная часть: Плеер: Прогрессбар*/
+
+/*Основная часть: Очередь правый блок*/
 .queue {
     width: 22%;
     aspect-ratio: 1 / 1.8;
@@ -148,6 +235,38 @@
     left: 20%;
     font-size: 1.8vw;
 }
+/*Основная часть: Очередь правый блок*/
 
 
+/*Загрузочный Экран*/
+.loading{
+    height:100%;
+    display: grid;
+    justify-content:center;
+}
 
+.loading h1{
+    font-family: 'Ubuntu';
+    color: #EF14F3;
+    font-size: 7vw;
+    margin-block-end: 0.3em;
+    animation: breathe 2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+}
+/*Загрузочный Экран*/

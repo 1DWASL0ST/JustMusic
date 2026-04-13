@@ -10,6 +10,8 @@ function MainPage() {
     const { currentTrack, nextTrack, prevTrack } = useQueue();
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     const Play = () => {
         if (audioRef.current) {
@@ -43,14 +45,39 @@ function MainPage() {
             }
         }, 100);
     };
+
+    const formatTime = (time) => {
+        if (isNaN(time)) return '0:00';
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    const handleTimeUpdate = () => {
+        setCurrentTime(audioRef.current.currentTime);
+    };
+
+    const handleLoadedMetadata = () => {
+        setDuration(audioRef.current.duration);
+    };
+
+    const handleSeek = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        const newTime = percent * duration;
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
+    };
+
     if (!currentTrack) {
-        return (<div className="loading"><h1>Музыка вот вот будет</h1></div>);
+        return (<div className="loading"><h1> </h1> <h1> </h1>  <h1>Музыка вот вот будет</h1></div>);
     }
 
     return (
         <><div className='mainHeader'>
             <h1>Только Музыка</h1>
-            <button className= 'loginButton'>Войти</button>
+            <button>Войти</button>
+            <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>Регистрация</button>
         </div>
         <div className='mainPart'>
             <div className='search'>
@@ -63,26 +90,35 @@ function MainPage() {
                     </button>
                     <div className='albumContainer'>
                             <img src={currentTrack.album?.albumPicture ? `/covers/${currentTrack.album.albumPicture}` : defaultCover} onError={(e) => e.target.src = defaultCover} alt="cover" />
-                            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }} onClick={Play}>
+                            <button onClick={Play}>
                                 <img
                                     src={isPlaying ? pauseIcon : playIcon}
-                                    style={{ width: '135px', height: '135px' }}
+                                    style={{ width: '135px', height: '135px', transition: 'transform 0.2s ease' }}
                                     alt={isPlaying ? 'pause' : 'play'}
                                 />
                             </button>
                     </div>
-                        <button className style={{ background: 'none', border: 'none', cursor: 'pointer' }} onClick={Next}> 
+                        <button style={{ background: 'none', border: 'none', cursor: 'pointer' }} onClick={Next}> 
                             <img src={nextIcon} style={{width: '80px', height: '120px',}} alt = 'next'></img>
                     </button>
                 </div>
                 <h1>{currentTrack.trackName}</h1>
                 <h2>{currentTrack.artist.artistName}</h2>
+                <div className="progress-container" onClick={handleSeek}> 
+                    <div className="duration">
+                        <div className="progress-bar" style={{ width: `${(currentTime / duration) * 100}%` }} />
+                    </div>
+                </div>
+                <div className="time-info">
+                        <span>{formatTime(currentTime)}</span>
+                        <span>{formatTime(duration)}</span>
+                </div>
             </div>
             <div className='queue'>
                 <h1>Здесь будет очередь</h1>
             </div>
                 {currentTrack && (
-                    <audio ref={audioRef} src={`api/Track/stream/${currentTrack.idSong}`} onEnded={Next}/>    
+                    <audio ref={audioRef} src={`api/Track/stream/${currentTrack.idSong}`} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} onEnded={Next}/>    
                 )}
         </div>
         </>
