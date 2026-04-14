@@ -280,7 +280,7 @@
     margin-top: 6vh;
     margin-left: 50vw;
     width: 66%;
-    height: 60vh;
+    height: 55vh;
     background: #251F1F;
     border-radius:20px;
     
@@ -304,6 +304,15 @@
     width:100%
 }
 
+.showPassword{
+    margin-top: 2vh;
+    display:flex;
+    flex-direction:row;
+    width:80%;
+    align-items:center;
+    justify-content: flex-start;
+}
+
 .mainLogin input{
     margin-top: 0;
     width:80%;
@@ -316,6 +325,39 @@
     font-size: 1.5vw;
     text-align:center;
     outline:none;
+}
+input[type="checkbox" i] {
+    background-color: #000000;
+    cursor: pointer;
+    appearance: none;
+    border: none;
+    margin: 0;
+    width:1.7vw;
+    height:1.7vw;
+    border-radius: 100%;
+    margin-bottom: 0.5vh;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #EF14F3;
+    border-color: #EF14F3;
+}
+
+.mainLogin button {
+    margin-top: 3vh;
+    margin-right: 0.5vw;
+    background: #ef14f3;
+    border: none;
+    border-radius: 30px;
+    color: #000000;
+    cursor: pointer;
+    font-family: 'Ubuntu';
+    font-size: 2.5vw;
+    padding: 0.25vw 1.25vw;
+}
+
+.mainLogin button:hover {
+     opacity: 0.6;
 }
 /* Edge */
 input[type="password"]::-ms-reveal,
