@@ -81,31 +81,40 @@ namespace backendAPI.Controllers
         {
             try
             {
-                User user = new User
+                if(register.RepeatPassword == register.UserPassword)
                 {
-                    UserName = register.UserName,
-                    UserPassword = BC.HashPassword(register.UserPassword)
-                };
+                    User user = new User
+                    {
+                        UserName = register.UserName,
+                        UserPassword = BC.HashPassword(register.UserPassword)
+                    };
 
-                _dbContext.Users.Add(user);
-                await _dbContext.SaveChangesAsync();
+                    _dbContext.Users.Add(user);
+                    await _dbContext.SaveChangesAsync();
+
+                    Playlist playlist = new Playlist
+                    {
+                        PlaylistName = "Избранное",
+                        IDUser = user.IDUser
+                    };
+
+                    _dbContext.Playlists.Add(playlist);
+                    await _dbContext.SaveChangesAsync();
+
+                    UserResponse response = new UserResponse
+                    {
+                        IDUser = user.IDUser,
+                        UserName = user.UserName
+                    };
+
+                    return CreatedAtAction(nameof(Register), new { id = user.IDUser }, response);
+                }
+                else
+                {
+                    _logger.LogError("Ошибка при регистрации");
+                    return StatusCode(400, $"Пароли не совпадают");
+                }
                 
-                Playlist playlist = new Playlist
-                {
-                    PlaylistName = "Избранное",
-                    IDUser = user.IDUser
-                };
-
-                _dbContext.Playlists.Add(playlist);
-                await _dbContext.SaveChangesAsync();
-
-                UserResponse response = new UserResponse
-                {
-                    IDUser = user.IDUser,
-                    UserName = user.UserName
-                };
-
-                return CreatedAtAction(nameof(Register), new { id = user.IDUser }, response);
             }
             catch (Exception ex) 
             {

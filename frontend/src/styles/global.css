@@ -366,3 +366,23 @@ input[type="password"]::-ms-clear {
 }
 
 /*Авторизация*/
+
+/*Сообщения*/
+.success-message {
+    background: #251f1f;
+    color: #EF14F3;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.error-message {
+    background: #251f1f;
+    color: #ef14f3;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px 0;
+    text-align: center;
+}
+/*Сообщения*/
