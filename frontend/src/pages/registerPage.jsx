@@ -53,6 +53,9 @@ function RegisterPage() {
             else if (response.status === 400){
                 setError(data.message || 'Пароли не совпадают');
             }
+            else if (response.status === 404) {
+                setError(data.message || 'Не указано имя пользователя или пароль');
+            }
             else {
                 setError(data.message || 'Ошибка регистрации');
             }
@@ -76,11 +79,11 @@ function RegisterPage() {
                 <div className='mainLogin' style={{ height: '66vh'}}>
                     <h1>Регистрация</h1>
                     <h2>Введите имя пользователя:</h2>
-                        <input onChange={handleChange} value={formData.userName}></input>
+                    <input onChange={handleChange} value={formData.userName} name="userName"></input>
                     <h2>Введите Пароль:</h2>
-                    <input type={showPassword ? "text" : "password"} value={formData.userPassword} onChange={handleChange}/>
+                    <input  name="userPassword" type={showPassword ? "text" : "password"} value={formData.userPassword} onChange={handleChange}/>
                     <h2>Повторите Пароль:</h2>
-                    <input type={showPassword ? "text" : "password"} value={formData.repeatPassword} onChange={handleChange} />
+                    <input name="repeatPassword" type={showPassword ? "text" : "password"} value={formData.repeatPassword} onChange={handleChange} />
                     <div className="showPassword">
                         <input type='checkbox' checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)}></input>
                         <h2 style={{ marginTop: '0', width: 'max-content', paddingLeft: '1vw', height: '1.7vw' }} >Показать пароль</h2>

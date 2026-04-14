@@ -81,6 +81,11 @@ namespace backendAPI.Controllers
         {
             try
             {
+                if(string.IsNullOrEmpty(register.UserName) || string.IsNullOrEmpty(register.UserPassword))
+                {
+                    return BadRequest(new { message = "Нельзя регистрировать пользователя без пароля или имени пользователя" });
+                }
+
                 if(register.RepeatPassword == register.UserPassword)
                 {
                     User user = new User
@@ -112,7 +117,7 @@ namespace backendAPI.Controllers
                 else
                 {
                     _logger.LogError("Ошибка при регистрации");
-                    return StatusCode(400, $"Пароли не совпадают");
+                    return BadRequest(new { message = "Пароли не совпадают" });
                 }
                 
             }
