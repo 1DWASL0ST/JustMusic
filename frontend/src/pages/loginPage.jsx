@@ -48,9 +48,9 @@ function LoginPage() {
         </div>
         {success && <div className="success-message">{success}</div>}
         {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleLogin}>
         <div className= 'mainContent'>
             <div className= 'mainLogin'>
-            <form onSubmit={handleLogin}>
                 <h1>Вход</h1>
                 <h2>Введите имя пользователя:</h2>
                 <input value={userName} onChange={(e) => setUserName(e.target.value)} name = "userName"></input>
@@ -63,8 +63,8 @@ function LoginPage() {
                 <button type="submit" disabled={loading}>
                             {loading ? 'Вход...' : 'Войти'}
                 </button>
-            </form>
             </div>
         </div>
+        </form>
     </>); }
 export default LoginPage;

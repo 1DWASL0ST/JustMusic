@@ -53,7 +53,7 @@ namespace backend
                           .AllowAnyHeader();
                 });
             });
-            builder.Services.AddScoped<ITokenService, TokenService>(provider => new TokenService(jwtSettings, secretKey)));
+            builder.Services.AddScoped<ITokenService, TokenService>(provider => new TokenService(jwtSettings, secretKey));
             builder.Services.AddDbContext<DataDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

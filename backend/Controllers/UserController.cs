@@ -15,11 +15,12 @@ namespace backendAPI.Controllers
     {
         private readonly ILogger<TrackController> _logger;
         private readonly DataDbContext _dbContext;
-        private readonly TokenService _tokenService;
-        public UserController(DataDbContext dbContext, ILogger<TrackController> logger)
+        private readonly ITokenService _tokenService;
+        public UserController(DataDbContext dbContext, ILogger<TrackController> logger, ITokenService tokenService)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _tokenService = tokenService;
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -170,8 +171,8 @@ namespace backendAPI.Controllers
                 {
                     Token = refreshToken,
                     IDUser = user.IDUser,
-                    ExpiryDate = DateTime.Now.AddDays(30),
-                    CreatedAt = DateTime.Now,
+                    ExpiryDate = DateTime.UtcNow.AddDays(30),
+                    CreatedAt = DateTime.UtcNow,
                     IsRevoked = false
                 };
 
