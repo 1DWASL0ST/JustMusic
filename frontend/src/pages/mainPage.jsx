@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from 'react';
+﻿import { useState, useRef,useEffect } from 'react';
 import '../styles/global.css';
 import nextIcon from '../components/buttons/next.svg';
 import playIcon from '../components/buttons/play.svg';
@@ -14,6 +14,29 @@ function MainPage() {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            setIsAuthenticated(true);
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const name = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+                setUserName(name || 'User');
+            } catch (e) {
+                console.error('Ошибка парсинга токена', e);
+            }
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        setIsAuthenticated(false);
+        navigate('/login');
+    };
 
     const Play = () => {
         if (audioRef.current) {
@@ -76,11 +99,26 @@ function MainPage() {
     }
 
     return (
-        <><div className='mainHeader'>
+       <>
+       <div className='mainHeader'>
             <h1 onClick={() => navigate('/')}>Только Музыка</h1>
-            <button onClick={() => navigate('/login')}>Войти</button>
-            <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }} onClick={() => navigate('/register')}>Регистрация</button>
-        </div>
+            {!isAuthenticated ? 
+            (
+                <>
+                    <button onClick={() => navigate('/login')}>Войти</button>
+                    <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }} onClick={() => navigate('/register')}>Регистрация</button>
+                </>
+            ) 
+            :(
+                <>
+                    <button onClick={() => navigate('/playlists')}>Плейлисты</button>
+                    <button onClick={() => navigate('/profile')}>Профиль</button>
+                    <button onClick={handleLogout} style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>
+                    Выйти
+                    </button>
+                </>
+            )}
+       </div>
         <div className='mainPart'>
             <div className='search'>
                 <h1>Здесь будет поиск</h1>

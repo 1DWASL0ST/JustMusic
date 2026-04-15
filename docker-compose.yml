@@ -24,6 +24,7 @@ services:
         depends_on:
             - postgres
         environment:
+            - JWT_SECRET_KEY=${JWT_SECRET_KEY}
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_HTTP_PORTS=8080
             - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}

@@ -3,6 +3,7 @@ using backendAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
 using BC = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,6 +15,7 @@ namespace backendAPI.Controllers
     {
         private readonly ILogger<TrackController> _logger;
         private readonly DataDbContext _dbContext;
+        private readonly TokenService _tokenService;
         public UserController(DataDbContext dbContext, ILogger<TrackController> logger)
         {
             _logger = logger;
@@ -161,12 +163,27 @@ namespace backendAPI.Controllers
                 }
                 _logger.LogInformation("Пользователь {UserName} вошел", user.UserName);
 
+                string accessToken = _tokenService.GenerateAccessToken(user);
+                string refreshToken = _tokenService.GenerateRefreshToken();
+
+                RefreshToken rt = new RefreshToken
+                {
+                    Token = refreshToken,
+                    IDUser = user.IDUser,
+                    ExpiryDate = DateTime.Now.AddDays(30),
+                    CreatedAt = DateTime.Now,
+                    IsRevoked = false
+                };
+
+                _dbContext.RefreshTokens.Add(rt);
+                await _dbContext.SaveChangesAsync();
+
                 UserResponse response = new UserResponse
                 {
                     IDUser = user.IDUser,
                     UserName = user.UserName
                 };
-                return Ok(new { message = "Добро пожаловать. Здесь только музыка", response }); ;
+                return Ok(new {accessToken, refreshToken, expiresIn = 900, response, message = "Вход выполнен успешко!" }); ;
             }
 
             catch(Exception ex) 
@@ -175,7 +192,46 @@ namespace backendAPI.Controllers
                 return StatusCode(500, new { message = "При входе произошла ошибка" });
             }
         }
-       
+
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
+            var idUser = int.Parse(principal.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var refreshToken = await _dbContext.RefreshTokens
+                .Include(rt => rt.User)
+                .FirstOrDefaultAsync(rt => rt.Token == request.RefreshToken && rt.IDUser == idUser);
+
+            if (refreshToken == null || refreshToken.ExpiryDate < DateTime.UtcNow || refreshToken.IsRevoked)
+            {
+                return Unauthorized(new { message = "Invalid refresh token" });
+            }
+
+            var newAccessToken = _tokenService.GenerateAccessToken(refreshToken.User);
+            var newRefreshToken = _tokenService.GenerateRefreshToken();
+
+            refreshToken.IsRevoked = true;
+
+            _dbContext.RefreshTokens.Add(new RefreshToken
+            {
+                Token = newRefreshToken,
+                IDUser = idUser,
+                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                CreatedAt = DateTime.UtcNow,
+                IsRevoked = false
+            });
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(new
+            {
+                accessToken = newAccessToken,
+                refreshToken = newRefreshToken,
+                expiresIn = 900
+            });
+        }
+
         // PUT api/<UserController>/5
         [HttpPut("ChangeUserName{id}")]
         public async Task<IActionResult> ChangeUserName(int id, [FromBody] ChangeUsername request)

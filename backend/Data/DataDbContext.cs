@@ -16,6 +16,7 @@ namespace backendAPI.Data
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<PlaylistList> PlaylistsList { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +69,23 @@ namespace backendAPI.Data
            
             modelBuilder.Entity<PlaylistList>()
                 .HasKey(pll => new { pll.IDPlaylist });
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasKey(refreshtoken => refreshtoken.ID);
+           
+            modelBuilder.Entity<RefreshToken>()
+                .HasIndex(refreshtoken => refreshtoken.Token).IsUnique();
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasIndex(refreshtoken => refreshtoken.IDUser);
+
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(refreshtoken => refreshtoken.User)
+                .WithMany()
+                .HasForeignKey(refreshtoken => refreshtoken.IDUser)
+                .OnDelete(DeleteBehavior.Cascade);
+            
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Album>().ToTable("Albums");
