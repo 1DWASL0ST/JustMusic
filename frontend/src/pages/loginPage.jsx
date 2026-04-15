@@ -1,11 +1,12 @@
 ﻿import { useState, useRef } from 'react';
 import '../styles/global.css';
-
+import { useNavigate } from 'react-router-dom';
 function LoginPage() { 
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     return (
         <><div className='mainHeader'>
-            <h1>Только Музыка</h1>
+            <h1 onClick={() => navigate('/')}>Только Музыка</h1>
         </div>
         <div className= 'mainContent'>
             <div className= 'mainLogin'>

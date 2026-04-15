@@ -77,7 +77,7 @@ function MainPage() {
 
     return (
         <><div className='mainHeader'>
-            <h1>Только Музыка</h1>
+            <h1 onClick={() => navigate('/')}>Только Музыка</h1>
             <button onClick={() => navigate('/login')}>Войти</button>
             <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }} onClick={() => navigate('/register')}>Регистрация</button>
         </div>

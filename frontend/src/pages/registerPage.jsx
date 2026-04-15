@@ -67,7 +67,7 @@ function RegisterPage() {
 
     return (
         <><div className='mainHeader'>
-            <h1>Только Музыка</h1>
+            <h1 onClick={() => navigate('/')}>Только Музыка</h1>
         </div>
         {success && <div className="success-message">{success}</div>}
         {error && <div className="error-message">{error}</div>}

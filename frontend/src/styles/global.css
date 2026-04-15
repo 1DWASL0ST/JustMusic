@@ -20,6 +20,11 @@
     margin: auto;
     left: 2%;
     top: 12.5%;
+    cursor:pointer;
+}
+
+.mainHeader h1:hover{
+    opacity:0.6;
 }
 .mainHeader button {
     margin-right: 0.5vw;
