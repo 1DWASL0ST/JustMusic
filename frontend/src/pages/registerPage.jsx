@@ -30,7 +30,7 @@ function RegisterPage() {
         setSuccess('');
 
         try {
-            const response = await fetch('http://localhost:5000/api/User/Register', {
+            const response = await fetch('/api/User/Register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,10 +51,7 @@ function RegisterPage() {
                 }, 2000);
             }
             else if (response.status === 400){
-                setError(data.message || 'Пароли не совпадают');
-            }
-            else if (response.status === 404) {
-                setError(data.message || 'Не указано имя пользователя или пароль');
+                setError(data.message || '400: Неверно введены данные');
             }
             else {
                 setError(data.message || 'Ошибка регистрации');

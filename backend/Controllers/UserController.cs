@@ -86,7 +86,15 @@ namespace backendAPI.Controllers
                     return BadRequest(new { message = "Нельзя регистрировать пользователя без пароля или имени пользователя" });
                 }
 
-                if(register.RepeatPassword == register.UserPassword)
+                User exsistingUser = await _dbContext.Users
+                    .FirstOrDefaultAsync(exsistingUser => exsistingUser.UserName == register.UserName);
+
+                if (exsistingUser != null) 
+                {
+                    return BadRequest(new { message = "Имя пользвателя занято" });
+                }
+
+                if (register.RepeatPassword == register.UserPassword)
                 {
                     User user = new User
                     {
@@ -136,11 +144,11 @@ namespace backendAPI.Controllers
             try
             {
                 User user = await _dbContext.Users
-                    .FirstOrDefaultAsync(user => user.IDUser == login.IDUser);
+                    .FirstOrDefaultAsync(user => user.UserName == login.UserName);
 
                 if(user == null)
                 {
-                    _logger.LogWarning("Неверный ID: {IDUser}!", login.IDUser);
+                    _logger.LogWarning("Неверное имя пользователя: {UserName}!", login.UserName);
                     return Unauthorized(new { message = "Неверный логин или пароль" });
                 }
 
@@ -148,7 +156,7 @@ namespace backendAPI.Controllers
 
                 if (!PasswordCheck)
                 {
-                    _logger.LogWarning("Неверный пароль для пользователя {IDUser}!", login.IDUser);
+                    _logger.LogWarning("Неверный пароль!", login.UserName);
                     return Unauthorized(new { message = "Неверный логин или пароль" });
                 }
                 _logger.LogInformation("Пользователь {UserName} вошел", user.UserName);
