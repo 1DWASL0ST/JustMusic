@@ -98,7 +98,7 @@ function MainPage() {
         return (<div className="loading"><h1> </h1> <h1> </h1>  <h1>Музыка вот вот будет</h1></div>);
     }
 
-    return (
+    return (//ПРОВЕРЬ РЕФРЕШ ТОКЕНЫ
        <>
        <div className='mainHeader'>
             <h1 onClick={() => navigate('/')}>Только Музыка</h1>
