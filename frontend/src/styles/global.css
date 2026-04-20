@@ -173,6 +173,25 @@
     position: relative;
 }
 
+/*Кнопки над прогрессбаром*/
+.buttonContainer {
+    margin-bottom: 2vh;
+    display: flex;
+    flex-direction: row;
+    height: 3vh;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.buttonContainer button{
+padding: 0;
+    align-content: center;
+    aspect-ratio: 1;
+    max-height: 6vh;
+    background: none;
+    border-style: none;
+}
+
 .duration {
     height: 1vh;
     background: #251F1F;

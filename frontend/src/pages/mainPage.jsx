@@ -3,6 +3,12 @@ import '../styles/global.css';
 import nextIcon from '../components/buttons/next.svg';
 import playIcon from '../components/buttons/play.svg';
 import pauseIcon from '../components/buttons/pause.svg';
+import addPlaylist from '../components/buttons/addPlaylist.svg'
+import likeIcon from '../components/buttons/liked.svg'
+import unlikeIcon from '../components/buttons/unliked.svg'
+import shuffleIcon from '../components/buttons/shuffle.svg'
+import repeatIcon from '../components/buttons/repeat.svg'
+import repeatTrackIcon from '../components/buttons/repeatTrack.svg'
 import { useQueue } from '../hooks/useQueue.js';
 import defaultCover from '../components/images/AlbumCommon.png';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +22,20 @@ function MainPage() {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userName, setUserName] = useState('');
+    const [isLiked, setIsLiked] = useState(false);
+    const [opacity, setOpacity] = useState(0.6);
+    const [state, setState] = useState('first');
+
+    const states = {
+        first: { src: repeatIcon, opacity: 0.6, next: 'second' },
+        second: { src: repeatIcon, opacity: 1, next: 'third' },
+        third: { src: repeatTrackIcon, opacity: 1, next: 'first' }
+    };
+
+    const handleClick = () => {
+        setState(states[state].next);
+    };
+
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
@@ -144,6 +164,14 @@ function MainPage() {
                 </div>
                 <h1>{currentTrack.trackName}</h1>
                 <h2>{currentTrack.artist.artistName}</h2>
+                <div className="buttonContainer">
+                    <button>
+                        <img src={addPlaylist} alt ='add'/>
+                        <img src={isLiked ? unlikeIcon : likeIcon} onClick={() => setIsLiked(!isLiked) } alt ='add'/>
+                        <img src={shuffleIcon} style={{ opacity: opacity }} onClick={ setOpacity(1)} alt ='add'/>
+                        <img src={states[state].src} onClick={handleClick} style={{ opacity: states[state].opacity }} alt ='add'/>
+                    </button>
+                </div>
                 <div className="progress-container" onClick={handleSeek}> 
                     <div className="duration">
                         <div className="progress-bar" style={{ width: `${(currentTime / duration) * 100}%` }} />
