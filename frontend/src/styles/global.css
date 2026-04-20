@@ -175,12 +175,13 @@
 
 /*Кнопки над прогрессбаром*/
 .buttonContainer {
-    margin-bottom: 2vh;
     display: flex;
-    flex-direction: row;
-    height: 3vh;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    height: 4vh;
+    margin-bottom: 2vh;
     width: 100%;
+    justify-content: space-around;
+    flex-shrink:0;
 }
 
 .buttonContainer button{
@@ -190,7 +191,10 @@ padding: 0;
     max-height: 6vh;
     background: none;
     border-style: none;
+    cursor:pointer;
 }
+
+/*Кнопки над прогрессбаром*/
 
 .duration {
     height: 1vh;

@@ -7,7 +7,9 @@ import addPlaylist from '../components/buttons/addPlaylist.svg'
 import likeIcon from '../components/buttons/liked.svg'
 import unlikeIcon from '../components/buttons/unliked.svg'
 import shuffleIcon from '../components/buttons/shuffle.svg'
+import shuffleOnIcon from '../components/buttons/shuffleOn.svg'
 import repeatIcon from '../components/buttons/repeat.svg'
+import repeatOnIcon from '../components/buttons/repeatQueue.svg'
 import repeatTrackIcon from '../components/buttons/repeatTrack.svg'
 import { useQueue } from '../hooks/useQueue.js';
 import defaultCover from '../components/images/AlbumCommon.png';
@@ -23,17 +25,26 @@ function MainPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userName, setUserName] = useState('');
     const [isLiked, setIsLiked] = useState(false);
-    const [opacity, setOpacity] = useState(0.6);
-    const [state, setState] = useState('first');
+    const [shuffle, setShuffle] = useState('first');
+    const [stateRepeat, setStateRepeat] = useState('first');
 
-    const states = {
+    const statesRepeat = {
         first: { src: repeatIcon, opacity: 0.6, next: 'second' },
-        second: { src: repeatIcon, opacity: 1, next: 'third' },
+        second: { src: repeatOnIcon, opacity: 1, next: 'third' },
         third: { src: repeatTrackIcon, opacity: 1, next: 'first' }
     };
 
-    const handleClick = () => {
-        setState(states[state].next);
+    const shuffles = {
+        first: { src:shuffleIcon, opacity: 0.6, next: 'second' },
+        second: { src:shuffleOnIcon, opacity: 1, next: 'first' },
+    };
+
+    const handleShuffleClick = () => {
+        setShuffle(shuffles[shuffle].next);
+    };
+
+    const handleRepeatClick = () => {
+        setStateRepeat(statesRepeat[stateRepeat].next);
     };
 
 
@@ -167,9 +178,15 @@ function MainPage() {
                 <div className="buttonContainer">
                     <button>
                         <img src={addPlaylist} alt ='add'/>
-                        <img src={isLiked ? unlikeIcon : likeIcon} onClick={() => setIsLiked(!isLiked) } alt ='add'/>
-                        <img src={shuffleIcon} style={{ opacity: opacity }} onClick={ setOpacity(1)} alt ='add'/>
-                        <img src={states[state].src} onClick={handleClick} style={{ opacity: states[state].opacity }} alt ='add'/>
+                    </button>
+                    <button>
+                        <img src={isLiked ? likeIcon : unlikeIcon} onClick={() => setIsLiked(!isLiked) } alt ='like'/>
+                    </button>
+                    <button>
+                            <img src={shuffles[shuffle].src} style={{ opacity: shuffles[shuffle].opacity }} onClick={() => handleShuffleClick()} alt ='shuffle'/>
+                    </button>
+                    <button>
+                            <img src={statesRepeat[stateRepeat].src} onClick={() => handleRepeatClick()} style={{ opacity: statesRepeat[stateRepeat].opacity }} alt ='repeat'/>
                     </button>
                 </div>
                 <div className="progress-container" onClick={handleSeek}> 
