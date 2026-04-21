@@ -93,6 +93,7 @@ namespace backendAPI.Data
             modelBuilder.Entity<PlaylistList>().ToTable("PlaylistSongs");
             modelBuilder.Entity<Artist>().ToTable("Artists");
             modelBuilder.Entity<Track>().ToTable("Tracks");
+            modelBuilder.Entity<RefreshToken>().ToTable("RefreshTokens");
         }
     }
 }
