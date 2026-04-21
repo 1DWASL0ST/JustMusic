@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react';
 import { authFetch } from '../api';
-import playlistIcon from '../components/buttons/playlist.svg';
+import playlistIcon from '../components/buttons/playlistIcon.svg';
 import playIcon from '../components/buttons/play.svg';
 import '../styles/playlistModal.css';
 
