@@ -251,7 +251,7 @@ padding: 0;
     aspect-ratio: 1 / 1.8;
     background: #251F1F;
     border-radius: 2.6vw;
-    margin-left: 2%;
+    margin-left: -1%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -259,18 +259,19 @@ padding: 0;
 }
 
 .queue h3 {
-    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+    border-bottom: .13vh solid #ef14f3;
+    color: #ef14f3;
+    font-family: 'Ubuntu';
+    font-size: clamp(.8rem, 4vh, 1.5rem);
     font-weight: 100;
-    color: #EF14F3;
-    font-size: clamp(0.8rem, 1.2vw, 1.5rem);
     margin-bottom: 1.5vh;
     padding-bottom: 1vh;
-    border-bottom: 0.13vh solid #EF14F3;
 }
 
 .queue-list {
+    margin-right: -1.5vw;
     flex: 1;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 0.8vh;
@@ -287,10 +288,12 @@ padding: 0;
 }
 
 .queue-item:hover {
+    margin-right: 1vw;
     background: #000000;
 }
 
 .queue-item.active {
+    margin-right: 1vw;
     background: #000000;
     border-left: 0.3vw solid #EF14F3;
 }
@@ -347,7 +350,7 @@ padding: 0;
     font-family: 'Roboto Mono', monospace;
     font-weight: 100;
     color: #EF14F3;
-    font-size: clamp(0.7rem, 0.9vw, 1rem);
+    font-size: 3vh;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -357,7 +360,7 @@ padding: 0;
 .queue-separator {
     color: #EF14F3;
     opacity: 0.5;
-    font-size: clamp(0.6rem, 0.8vw, 0.9rem);
+    font-size: 3vh;
 }
 
 .queue-title {
@@ -365,7 +368,7 @@ padding: 0;
     font-weight: 100;
     color: #EF14F3;
     opacity: 0.7;
-    font-size: clamp(0.65rem, 0.85vw, 0.95rem);
+    font-size: 3vh;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

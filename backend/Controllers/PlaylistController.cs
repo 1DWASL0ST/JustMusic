@@ -63,9 +63,24 @@ namespace backendAPI.Controllers
             var tracks = await _context.PlaylistsList
                 .Where(pll => pll.IDPlaylist == id)
                 .OrderBy(pll => pll.Position)
-                .Select(pll => pll.Track)
-                .Include(t => t.IDArtist)
-                .Include(t => t.IDAlbum)
+                .Select(pll => new TrackCommon
+                {
+                    IDSong = pll.Track!.IDSong,
+                    TrackName = pll.Track.TrackName,
+                    IDArtist = pll.Track.IDArtist,
+                    IDAlbum = pll.Track.IDAlbum,
+                    PathSong = pll.Track.PathSong,
+                    Artist = new ArtistCommon
+                    {
+                        ArtistName = pll.Track!.artist!.ArtistName,
+                        ArtistDef = pll.Track!.artist!.ArtistDef
+                    },
+                    Album = new AlbumCommon
+                    {
+                        AlbumName = pll.Track!.album!.AlbumName,
+                        AlbumPicture = pll.Track!.album!.AlbumPicture
+                    }
+                })
                 .ToListAsync();
 
             return Ok(tracks);

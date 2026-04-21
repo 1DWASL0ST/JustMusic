@@ -1,19 +1,19 @@
-﻿import { useQueue } from '../hooks/useQueue';
-import { useState, useEffect } from 'react';
-import '../styles/global.css';
+﻿import '../styles/global.css';
 
-function Queue() {
-    const { queue, currentIndex } = useQueue();
-    const [refreshKey, setRefreshKey] = useState(0);
-
-    useEffect(() => {
-        setRefreshKey(prev => prev + 1);
-    }, [queue, currentIndex]);
+function Queue({ queue, currentIndex, onSelectTrack }) {  
 
     const truncate = (text, maxLength = 40) => {
+        if (!text) return 'Unknown';
         if (text.length <= maxLength) return text;
         return text.slice(0, maxLength) + '...';
     };
+
+    const handleTrackClick = (track, idx) => {
+        if (onSelectTrack) {
+            onSelectTrack(track, idx);
+        }
+    };
+
 
     return (
         <div className="queue">
@@ -23,6 +23,8 @@ function Queue() {
                     <div
                         key={track.idSong}
                         className={`queue-item ${idx === currentIndex ? 'active' : ''}`}
+                        onClick={() => handleTrackClick(track, idx)}  // ← добавить onClick
+                        style={{ cursor: 'pointer' }}
                     >
                         <div className="queue-bullet">
                             {idx === currentIndex && <div className="breathing-dot" />}

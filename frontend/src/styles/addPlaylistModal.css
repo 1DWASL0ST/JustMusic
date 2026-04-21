@@ -44,24 +44,41 @@
     font-family: 'Roboto-mono', monospace;
 }
 
-.playlists-modal-body {
+modal-body {
     padding: 1.3vh 1vw;
     overflow-y: auto;
     max-height: 60vh;
 }
 
+
 .playlists-item {
+    color: #EF14F3;
+    font-size: 2.5vw;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 1.5vh 2vw;
     border-radius: 20px;
     cursor: pointer;
     transition: background 0.2s;
+    gap: 1vw;
 }
 
     .playlists-item:hover {
-        background: #3a2a2a;
+        background: rgba(0, 0, 0, 0.8);
+    }
+    .playlists-item img {
+        max-width: 1.5vw;
+    }
+    
+    .modal-body button {
+        font-size: 3vh;
+        border: none;
+        height: 5vh;
+        width: 12vw;
+        margin-left: 2vw;
+        border-radius: 20px;
+        font-family: 'Ubuntu';
+        background: #EF14F3;
+        color: rgba(0, 0, 0, 0.8);
     }
 
 .playlists-item-info {

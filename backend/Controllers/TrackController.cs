@@ -29,7 +29,7 @@ namespace backendAPI.Controllers
             {
                 var tracks = await _dbContext.Tracks
                     .Include(track => track.artist)
-                    .Include(t => t.album)
+                    .Include(track => track.album)
                     .ToListAsync();
 
                 return Ok(tracks);

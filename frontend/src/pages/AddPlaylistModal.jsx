@@ -73,18 +73,17 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
 
                 <div className="modal-body">
                     {loading ? (
-                        <div>Загрузка...</div>
+                        <div style={{ color:'#EF14F3'}}>Загрузка...</div>
                     ) : (
                         <>
                             {playlists.map(playlist => (
                                 <div
                                     key={playlist.idPlaylist}
-                                    className="playlist-item"
+                                    className="playlists-item"
                                     onClick={() => addToPlaylist(playlist.idPlaylist)}
                                 >
                                     <img src={playlistIcon} alt="playlist" />
                                     <span>{playlist.playlistName}</span>
-                                    <img src={addIcon} alt="plus" />
                                 </div>
                             ))}
 
@@ -102,10 +101,11 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                             borderRadius: '2.6vw',
                                             color: '#EF14F3',
                                             fontFamily: 'Ubuntu',
-                                            fontSize: 'clamp(0.75rem, 1.5vw, 1rem)'
+                                            fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                            justifyContent: 'space-around'
                                         }}
                                     />
-                                    <div style={{ display: 'flex', gap: '1vw' }}>
+                                        <div style={{ display: 'flex', gap: '1vw', paddingRight: '3vw', justifyContent: 'space-around' }}>
                                         <button
                                             onClick={createPlaylist}
                                             style={{
@@ -142,7 +142,7 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                 </div>
                             ) : (
                                 <button onClick={() => setShowCreateForm(true)}>
-                                    + Новый плейлист
+                                    Новый плейлист
                                 </button>
                             )}
                         </>

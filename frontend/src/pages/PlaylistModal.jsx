@@ -4,10 +4,13 @@ import playlistIcon from '../components/images/playlistIcon.svg';
 import playIcon from '../components/buttons/play.svg';
 import '../styles/playlistModal.css';
 
-function PlaylistModal({ isOpen, onClose, onSelectPlaylist }) {
+function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hoveredPlaylist, setHoveredPlaylist] = useState(null);
+    const [showCreateForm, setShowCreateForm] = useState(false);
+    const [newPlaylistName, setNewPlaylistName] = useState('');
+
 
     useEffect(() => {
         if (isOpen) {
@@ -28,6 +31,24 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist }) {
         }
     };
 
+    const createPlaylist = async () => {
+        if (!newPlaylistName.trim()) return;
+
+        try {
+            const response = await authFetch('/api/Playlists', {
+                method: 'POST',
+                body: JSON.stringify({ playlistName: newPlaylistName })
+            });
+            if (response.ok) {
+                setNewPlaylistName('');
+                setShowCreateForm(false);
+                await loadPlaylists();
+            }
+        } catch (error) {
+            console.error('Ошибка создания:', error);
+        }
+    };
+
     const handlePlaylistClick = (playlist) => {
         // Переход на страницу плейлиста (в разработке)
         // navigate(`/playlist/${playlist.id}`);
@@ -36,7 +57,9 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist }) {
 
     const handlePlayClick = (e, playlist) => {
         e.stopPropagation(); // Чтобы не сработал переход на страницу
-        onSelectPlaylist(playlist);
+        if (onPlayPlaylist) {
+            onPlayPlaylist(playlist);  // ← вызываем отдельную функцию для воспроизведения
+        }
         onClose();
     };
 
@@ -53,34 +76,105 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist }) {
                 <div className="playlists-modal-body">
                     {loading ? (
                         <div className="playlists-loading">Загрузка...</div>
-                    ) : playlists.length === 0 ? (
-                        <div className="playlists-empty">Нет плейлистов</div>
                     ) : (
-                        playlists.map(playlist => (
-                            <div
-                                key={playlist.idPlaylist}
-                                className="playlists-item"
-                                onMouseEnter={() => setHoveredPlaylist(playlist.idPlaylist)}
-                                onMouseLeave={() => setHoveredPlaylist(null)}
-                            >
+                        <>
+                            {playlists.map(playlist => (
                                 <div
-                                    className="playlists-item-info"
-                                    onClick={() => handlePlaylistClick(playlist)}
+                                    key={playlist.idPlaylist}
+                                    className="playlists-item"
+                                    onMouseEnter={() => setHoveredPlaylist(playlist.idPlaylist)}
+                                    onMouseLeave={() => setHoveredPlaylist(null)}
                                 >
-                                    <img src={playlistIcon} alt="playlist" className="playlists-item-icon" />
-                                    <span className="playlists-item-name">{playlist.playlistName}</span>
-                                </div>
-
-                                {hoveredPlaylist === playlist.idPlaylist && (
-                                    <button
-                                        className="playlists-play-btn"
-                                        onClick={(e) => handlePlayClick(e, playlist)}
+                                    <div
+                                        className="playlists-item-info"
+                                        onClick={() => handlePlaylistClick(playlist)}
                                     >
-                                        <img src={playIcon} alt="play" />
-                                    </button>
-                                )}
-                            </div>
-                        ))
+                                        <img src={playlistIcon} alt="playlist" className="playlists-item-icon" />
+                                        <span className="playlists-item-name">{playlist.playlistName}</span>
+                                    </div>
+
+                                    {hoveredPlaylist === playlist.idPlaylist && (
+                                        <button
+                                            className="playlists-play-btn"
+                                            onClick={(e) => handlePlayClick(e, playlist)}
+                                        >
+                                            <img src={playIcon} alt="play" />
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            {showCreateForm ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5vh', marginTop: '1.5vh', padding: '1.5vh 1vw' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Название"
+                                        value={newPlaylistName}
+                                        onChange={(e) => setNewPlaylistName(e.target.value)}
+                                        style={{
+                                            padding: '1.2vh 1.5vw',
+                                            background: '#000000',
+                                            border: '0.13vh solid #EF14F3',
+                                            borderRadius: '2.6vw',
+                                            color: '#EF14F3',
+                                            fontFamily: 'Ubuntu',
+                                            fontSize: 'clamp(0.75rem, 1.5vw, 1rem)'
+                                        }}
+                                    />
+                                    <div style={{ display: 'flex', gap: '1vw', justifyContent: 'space-around' }}>
+                                        <button
+                                            onClick={createPlaylist}
+                                            style={{
+                                                padding: '1vh 1.5vw',
+                                                background: '#EF14F3',
+                                                border: 'none',
+                                                borderRadius: '2.6vw',
+                                                color: '#000000',
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                cursor: 'pointer',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            Создать
+                                        </button>
+                                        <button
+                                            onClick={() => setShowCreateForm(false)}
+                                            style={{
+                                                padding: '1vh 1.5vw',
+                                                background: '#EF14F3',
+                                                border: 'none',
+                                                borderRadius: '2.6vw',
+                                                color: '#000000',
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                cursor: 'pointer',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            Отмена
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={() => setShowCreateForm(true)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '1.5vh',
+                                        background: 'none',
+                                        border: '1px dashed #EF14F3',
+                                        borderRadius: '2.6vw',
+                                        color: '#EF14F3',
+                                        fontFamily: 'Ubuntu',
+                                        fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                        cursor: 'pointer',
+                                        marginTop: '1.5vh'
+                                    }}
+                                >
+                                    + Новый плейлист
+                                </button>
+                            )}
+                        </>
                     )}
                 </div>
             </div>

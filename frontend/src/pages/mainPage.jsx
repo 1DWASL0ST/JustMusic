@@ -27,7 +27,12 @@ function MainPage() {
         isShuffle,
         toggleShuffle,
         repeatMode,
-        toggleRepeat
+        toggleRepeat,
+        queue,
+        currentIndex,
+        setCurrentTrack,
+        setCurrentIndex,
+        loadPlaylistTracks
     } = useQueue();
 
     const [isPlaying, setIsPlaying] = useState(false);
@@ -170,27 +175,52 @@ function MainPage() {
         audioRef.current.currentTime = newTime;
         setCurrentTime(newTime);
     };
+    const handleSelectTrackFromQueue = (track, index) => {
+        setCurrentIndex(index);
+        setCurrentTrack(track);
 
-    // Повтор трека
+        setIsPlaying(false);
+        setTimeout(() => {
+            if (audioRef.current) {
+                audioRef.current.load();  
+                audioRef.current.play();
+                setIsPlaying(true);
+            }
+        }, 100);
+    };
+
+    const handlePlayPlaylist = (playlist) => {
+        console.log('Воспроизведение плейлиста:', playlist);
+        loadPlaylistTracks(playlist.idPlaylist);  // ← загружаем треки плейлиста
+        setIsPlaylistsModalOpen(false);
+    };
+
     useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
         const handleEnded = () => {
+        
             if (repeatMode === 'track') {
                 audio.currentTime = 0;
                 audio.play();
             } else {
                 nextTrack();
+                setTimeout(() => {
+                    if (audioRef.current) {
+                        audioRef.current.play()
+                            .then(() => setIsPlaying(true))
+                            .catch(e => console.log('Play error:', e));
+                    }
+                }, 100);
             }
         };
 
         audio.addEventListener('ended', handleEnded);
         return () => audio.removeEventListener('ended', handleEnded);
-    }, [repeatMode, currentTrack, nextTrack]);
-
+    }, [repeatMode, nextTrack, currentTrack]);  
     if (!currentTrack) {
-        return (<div className="loading"><h1> </h1><h1> </h1><h1> </h1><h1>Музыка вот вот будет</h1></div>);
+        return (<div className="loading"><h1> </h1><h1> </h1><h1>Музыка вот вот будет</h1></div>);
     }
 
     return (
@@ -205,6 +235,7 @@ function MainPage() {
                 isOpen={isPlaylistsModalOpen}
                 onClose={() => setIsPlaylistsModalOpen(false)}
                 onSelectPlaylist={(playlist) => console.log('Выбран плейлист:', playlist)}
+                onPlayPlaylist={handlePlayPlaylist}
             />
 
             <div className='mainHeader'>
@@ -288,7 +319,7 @@ function MainPage() {
                         <span>{formatTime(duration)}</span>
                     </div>
                 </div>
-                <Queue />
+                <Queue queue={queue} currentIndex={currentIndex} key={currentIndex} onSelectTrack={handleSelectTrackFromQueue} />
                 {currentTrack && (
                     <audio
                         ref={audioRef}

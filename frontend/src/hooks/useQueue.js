@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 
 export function useQueue() {
     const [allTracks, setAllTracks] = useState([]);
@@ -25,7 +25,11 @@ export function useQueue() {
 
     const createOriginalQueue = (trackList) => {
         if (!trackList.length) return;
-        setOriginalQueue([...trackList]);
+        const original = [...trackList];
+        setOriginalQueue(original);
+        setQueue(original);
+        setCurrentTrack(original[0]);
+        setCurrentIndex(0);
     };
 
     const createDisplayQueue = (trackList) => {
@@ -33,16 +37,16 @@ export function useQueue() {
 
         let newQueue;
         if (isShuffle) {
-            newQueue = [...trackList];
+            newQueue = [...trackList];  
             for (let i = newQueue.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [newQueue[i], newQueue[j]] = [newQueue[j], newQueue[i]];
             }
         } else {
-            newQueue = [...trackList];
+            newQueue = [...trackList];  
         }
 
-        setQueue(newQueue);
+        setQueue([...newQueue]);  
         setCurrentTrack(newQueue[0]);
         setCurrentIndex(0);
     };
@@ -66,12 +70,33 @@ export function useQueue() {
         setCurrentIndex(0);
     };
 
-    const toggleShuffle = () => {
-        setIsShuffle(!isShuffle);
-        setTimeout(() => {
-            updateQueueWithShuffle();
-        }, 0);
-    };
+    const toggleShuffle = useCallback(() => {
+        const newShuffleState = !isShuffle;
+        setIsShuffle(newShuffleState);
+
+        if (newShuffleState) {
+            const shuffled = [...queue];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            setQueue(shuffled);
+            const newIndex = shuffled.findIndex(t => t.idSong === currentTrack?.idSong);
+            if (newIndex !== -1) {
+                setCurrentIndex(newIndex);
+                setCurrentTrack(shuffled[newIndex]);
+            }
+        } else {
+            const restored = [...originalQueue];
+            setQueue(restored);
+            const newIndex = restored.findIndex(t => t.idSong === currentTrack?.idSong);
+            if (newIndex !== -1) {
+                setCurrentIndex(newIndex);
+                setCurrentTrack(restored[newIndex]);
+            }
+        }
+    }, [isShuffle, queue, currentTrack, originalQueue]);
+
 
     const toggleRepeat = () => {
         const modes = ['off', 'queue', 'track'];
@@ -113,7 +138,7 @@ export function useQueue() {
         createDisplayQueue(trackList);
     };
 
-    const nextTrack = () => {
+    const nextTrack = useCallback(() => {
         if (queue.length === 0) return;
 
         let nextIndex = currentIndex + 1;
@@ -130,7 +155,7 @@ export function useQueue() {
                 setCurrentTrack(queue[currentIndex]);
             }
         }
-    };
+    }, [currentIndex, queue, repeatMode]);
 
 
 
@@ -170,7 +195,8 @@ export function useQueue() {
         isShuffle,
         toggleShuffle,
         repeatMode,
-        toggleRepeat
-
+        toggleRepeat,
+        setCurrentIndex,
+        setCurrentTrack,
     };
 }
