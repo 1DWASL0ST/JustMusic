@@ -1,0 +1,122 @@
+﻿.playlists-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.playlists-modal-content {
+    background: #251f1f;
+    border-radius: 20px;
+    width: 50vw;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.playlists-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh 2.6vw;
+    border-bottom: 0.13vh solid #3a2a2a;
+}
+
+    .playlists-modal-header h2 {
+        margin: 0;
+        color: #ef14f3;
+        font-family: 'Roboto-mono', monospace;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+    }
+
+.playlists-modal-close {
+    background: none;
+    border: none;
+    color: #ef14f3;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    cursor: pointer;
+    font-family: 'Roboto-mono', monospace;
+}
+
+.playlists-modal-body {
+    padding: 1.3vh 1vw;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.playlists-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5vh 2vw;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .playlists-item:hover {
+        background: #3a2a2a;
+    }
+
+.playlists-item-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5vw;
+    flex: 1;
+}
+
+.playlists-item-icon {
+    width: 3vw;
+    height: 3vw;
+    max-width: 24px;
+    max-height: 24px;
+    min-width: 18px;
+    min-height: 18px;
+}
+
+.playlists-item-name {
+    color: #ef14f3;
+    font-family: 'Roboto-mono', monospace;
+    font-size: clamp(0.75rem, 1.8vw, 1rem);
+}
+
+.playlists-play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8vh 0.8vw;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+    .playlists-play-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .playlists-play-btn img {
+        width: 2.5vw;
+        height: 2.5vw;
+        max-width: 20px;
+        max-height: 20px;
+        min-width: 16px;
+        min-height: 16px;
+    }
+
+.playlists-loading,
+.playlists-empty {
+    text-align: center;
+    padding: 4vh 0;
+    color: #ef14f3;
+    font-family: 'Roboto-mono', monospace;
+    font-size: clamp(0.8rem, 1.8vw, 1rem);
+    opacity: 0.7;
+}
