@@ -111,3 +111,4 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
         </div>
     );
 }
+export default AddPlaylistModal;

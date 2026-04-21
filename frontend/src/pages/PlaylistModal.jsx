@@ -1,10 +1,10 @@
 ﻿import { useState, useEffect } from 'react';
 import { authFetch } from '../api';
-import playlistIcon from '../components/buttons/playlistIcon.svg';
+import playlistIcon from '../components/images/playlistIcon.svg';
 import playIcon from '../components/buttons/play.svg';
 import '../styles/playlistModal.css';
 
-function PlaylistsModal({ isOpen, onClose, onSelectPlaylist }) {
+function PlaylistModal({ isOpen, onClose, onSelectPlaylist }) {
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hoveredPlaylist, setHoveredPlaylist] = useState(null);
@@ -88,4 +88,4 @@ function PlaylistsModal({ isOpen, onClose, onSelectPlaylist }) {
     );
 }
 
-export default PlaylistsModal;
+export default PlaylistModal;
