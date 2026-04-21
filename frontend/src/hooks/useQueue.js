@@ -49,7 +49,21 @@ export function useQueue() {
 
     const updateQueueWithShuffle = () => {
         const sourceList = currentPlaylistId === null ? allTracks : originalQueue;
-        createDisplayQueue(sourceList);
+
+        const currentTrackCopy = currentTrack;
+
+        const otherTracks = sourceList.filter(t => t.idSong !== currentTrackCopy?.idSong);
+
+        for (let i = otherTracks.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [otherTracks[i], otherTracks[j]] = [otherTracks[j], otherTracks[i]];
+        }
+
+        const newQueue = currentTrackCopy ? [currentTrackCopy, ...otherTracks] : [...otherTracks];
+
+        setQueue(newQueue);
+        setCurrentTrack(newQueue[0]);
+        setCurrentIndex(0);
     };
 
     const toggleShuffle = () => {
@@ -143,7 +157,8 @@ export function useQueue() {
 
     return {
         currentTrack,
-        queue,
+        queue,           
+        currentIndex,    
         nextTrack,
         prevTrack,
         addToQueue,
@@ -156,5 +171,6 @@ export function useQueue() {
         toggleShuffle,
         repeatMode,
         toggleRepeat
+
     };
 }

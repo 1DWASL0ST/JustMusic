@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect } from 'react';
-import { authFetch } from '../api';
+import { authFetch } from '../api/api.js';
 import playlistIcon from '../components/images/playlistIcon.svg';
 import addIcon from '../components/buttons/addPlaylist.svg';
 import '../styles/addPlaylistModal.css'
@@ -49,7 +49,7 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
         try {
             const response = await authFetch('/api/Playlists', {
                 method: 'POST',
-                body: JSON.stringify({ name: newPlaylistName })
+                body: JSON.stringify({ playlistName: newPlaylistName })
             });
             if (response.ok) {
                 setNewPlaylistName('');
@@ -82,22 +82,63 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                     className="playlist-item"
                                     onClick={() => addToPlaylist(playlist.idPlaylist)}
                                 >
-                                    <img src={playlistIcon} alt="playlist"/>
+                                    <img src={playlistIcon} alt="playlist" />
                                     <span>{playlist.playlistName}</span>
                                     <img src={addIcon} alt="plus" />
                                 </div>
                             ))}
 
                             {showCreateForm ? (
-                                <div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5vh', marginTop: '1.5vh', padding: '1.5vh 1vw' }}>
                                     <input
                                         type="text"
                                         placeholder="Название"
                                         value={newPlaylistName}
                                         onChange={(e) => setNewPlaylistName(e.target.value)}
+                                        style={{
+                                            padding: '1.2vh 1.5vw',
+                                            background: '#000000',
+                                            border: '0.13vh solid #EF14F3',
+                                            borderRadius: '2.6vw',
+                                            color: '#EF14F3',
+                                            fontFamily: 'Ubuntu',
+                                            fontSize: 'clamp(0.75rem, 1.5vw, 1rem)'
+                                        }}
                                     />
-                                    <button onClick={createPlaylist}>Создать</button>
-                                    <button onClick={() => setShowCreateForm(false)}>Отмена</button>
+                                    <div style={{ display: 'flex', gap: '1vw' }}>
+                                        <button
+                                            onClick={createPlaylist}
+                                            style={{
+                                                padding: '1vh 1.5vw',
+                                                background: '#EF14F3',
+                                                border: 'none',
+                                                borderRadius: '2.6vw',
+                                                color: '#000000',
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                cursor: 'pointer',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            Создать
+                                        </button>
+                                        <button
+                                            onClick={() => setShowCreateForm(false)}
+                                            style={{
+                                                padding: '1vh 1.5vw',
+                                                background: '#EF14F3',
+                                                border: 'none',
+                                                borderRadius: '2.6vw',
+                                                color: '#000000',
+                                                fontFamily: 'Ubuntu',
+                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                cursor: 'pointer',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            Отмена
+                                        </button>
+                                    </div>
                                 </div>
                             ) : (
                                 <button onClick={() => setShowCreateForm(true)}>

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backendAPI.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using backendAPI.Data;
+using backendAPI.DTO;
+using System.Security.Claims;
 namespace backendAPI.Controllers
 {
     [ApiController]
@@ -71,5 +74,68 @@ namespace backendAPI.Controllers
         public void Delete(int id)
         {
         }
+        [Authorize]
+        [HttpPost("{id}/like")]
+        public async Task<IActionResult> LikeTrack(int id)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var favoritePlaylist = await _dbContext.Playlists
+                .FirstOrDefaultAsync(p => p.IDUser == userId && p.PlaylistName == "Избранное");
+
+            if (favoritePlaylist == null)
+            {
+                favoritePlaylist = new Playlist
+                {
+                    PlaylistName = "Избранное",
+                    IDUser = userId
+                };
+                _dbContext.Playlists.Add(favoritePlaylist);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            var existing = await _dbContext.PlaylistsList
+                .FirstOrDefaultAsync(ps => ps.IDPlaylist == favoritePlaylist.IDPlaylist && ps.IDSong == id);
+
+            if (existing != null)
+            {
+                _dbContext.PlaylistsList.Remove(existing);
+                await _dbContext.SaveChangesAsync();
+                return Ok(new { liked = false });
+            }
+
+            var maxPosition = await _dbContext.PlaylistsList
+                .Where(ps => ps.IDPlaylist == favoritePlaylist.IDPlaylist)
+                .MaxAsync(ps => (int?)ps.Position) ?? 0;
+
+            _dbContext.PlaylistsList.Add(new PlaylistList
+            {
+                IDPlaylist = favoritePlaylist.IDPlaylist,
+                IDSong = id,
+                Position = maxPosition + 1
+            });
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(new { liked = true });
+        }
+
+        [Authorize]
+        [HttpGet("{id}/like-status")]
+        public async Task<IActionResult> GetLikeStatus(int id)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var favoritePlaylist = await _dbContext.Playlists
+                .FirstOrDefaultAsync(p => p.IDUser == userId && p.PlaylistName == "Избранное");
+
+            if (favoritePlaylist == null)
+                return Ok(new { liked = false });
+
+            var exists = await _dbContext.PlaylistsList
+                .AnyAsync(ps => ps.IDPlaylist == favoritePlaylist.IDPlaylist && ps.IDSong == id);
+
+            return Ok(new { liked = exists });
+        }
     }
 }
+

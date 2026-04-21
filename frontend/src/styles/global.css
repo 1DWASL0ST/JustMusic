@@ -250,19 +250,141 @@ padding: 0;
     width: 22%;
     aspect-ratio: 1 / 1.8;
     background: #251F1F;
-    border-radius: 20px;
+    border-radius: 2.6vw;
+    margin-left: 2%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5vh 1.5vw;
+}
+
+.queue h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 100;
+    color: #EF14F3;
+    font-size: clamp(0.8rem, 1.2vw, 1.5rem);
+    margin-bottom: 1.5vh;
+    padding-bottom: 1vh;
+    border-bottom: 0.13vh solid #EF14F3;
+}
+
+.queue-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8vh;
+}
+
+.queue-item {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    padding: 1vh 1vw;
+    border-radius: 1.3vw;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.queue-item:hover {
+    background: #000000;
+}
+
+.queue-item.active {
+    background: #000000;
+    border-left: 0.3vw solid #EF14F3;
+}
+
+.queue-bullet {
+    width: 1.6vw;
+    height: 1.6vw;
+    min-width: 12px;
+    min-height: 12px;
+    max-width: 20px;
+    max-height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 2%;
 }
 
-.queue h1 {
-    font-family: 'RobotoMono';
-    font:100;
+.breathing-dot {
+    width: 0.8vw;
+    height: 0.8vw;
+    min-width: 6px;
+    min-height: 6px;
+    max-width: 12px;
+    max-height: 12px;
+    background: #EF14F3;
+    border-radius: 50%;
+    animation: breathe 1.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+}
+
+.queue-info {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5vw;
+    overflow: hidden;
+}
+
+.queue-artist {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 100;
     color: #EF14F3;
-    left: 20%;
-    font-size: 1.8vw;
+    font-size: clamp(0.7rem, 0.9vw, 1rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45%;
+}
+
+.queue-separator {
+    color: #EF14F3;
+    opacity: 0.5;
+    font-size: clamp(0.6rem, 0.8vw, 0.9rem);
+}
+
+.queue-title {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 100;
+    color: #EF14F3;
+    opacity: 0.7;
+    font-size: clamp(0.65rem, 0.85vw, 0.95rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.queue-list::-webkit-scrollbar {
+    width: 0.4vw;
+    min-width: 3px;
+}
+
+.queue-list::-webkit-scrollbar-track {
+    background: #251F1F;
+    border-radius: 0.2vw;
+}
+
+.queue-list::-webkit-scrollbar-thumb {
+    background: #EF14F3;
+    border-radius: 0.2vw;
 }
 /*Основная часть: Очередь правый блок*/
 

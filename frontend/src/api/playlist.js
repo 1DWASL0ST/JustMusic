@@ -1,4 +1,4 @@
-﻿import { authFetch } from './api';
+﻿import { authFetch } from '../api/api.js';
 
 export const getPlaylists = async () => {
     const response = await authFetch('/api/Playlists');
