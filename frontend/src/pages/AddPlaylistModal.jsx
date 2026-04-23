@@ -112,10 +112,10 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                                 padding: '1vh 1.5vw',
                                                 background: '#EF14F3',
                                                 border: 'none',
-                                                borderRadius: '2.6vw',
+                                                borderRadius: '20px',
                                                 color: '#000000',
                                                 fontFamily: 'Ubuntu',
-                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                fontSize: '1.5vw',
                                                 cursor: 'pointer',
                                                 fontWeight: 'bold'
                                             }}
@@ -128,10 +128,10 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                                 padding: '1vh 1.5vw',
                                                 background: '#EF14F3',
                                                 border: 'none',
-                                                borderRadius: '2.6vw',
+                                                borderRadius: '20px',
                                                 color: '#000000',
                                                 fontFamily: 'Ubuntu',
-                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                fontSize: '1.5vw',
                                                 cursor: 'pointer',
                                                 fontWeight: 'bold'
                                             }}
@@ -141,7 +141,18 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                                     </div>
                                 </div>
                             ) : (
-                                <button onClick={() => setShowCreateForm(true)}>
+                                <button onClick={() => setShowCreateForm(true)} style={{
+                                        width: '100%',
+                                        padding: '1.5vh',
+                                        background: 'none',
+                                        border: '1px dashed #EF14F3',
+                                        borderRadius: '20px',
+                                        color: '#EF14F3',
+                                        fontFamily: 'Ubuntu',
+                                        fontSize: '1.5vw',
+                                        cursor: 'pointer',
+                                        marginTop: '1.5vh'
+                                            }}>
                                     Новый плейлист
                                 </button>
                             )}

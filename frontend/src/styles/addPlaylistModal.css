@@ -31,8 +31,8 @@
     .playlists-modal-header h2 {
         margin: 0;
         color: #ef14f3;
-        font-family: 'Roboto-mono', monospace;
-        font-size: clamp(1rem, 2vw, 1.5rem);
+        font-family: 'RobotoMono';
+        font-size: 2vw;
     }
 
 .playlists-modal-close {
@@ -45,6 +45,7 @@
 }
 
 modal-body {
+    font-family:'Ubuntu';
     padding: 1.3vh 1vw;
     overflow-y: auto;
     max-height: 60vh;
@@ -52,6 +53,7 @@ modal-body {
 
 
 .playlists-item {
+    font-family: 'Ubuntu';
     color: #EF14F3;
     font-size: 2.5vw;
     display: flex;
@@ -69,7 +71,8 @@ modal-body {
         max-width: 1.5vw;
     }
     
-    .modal-body button {
+    /*.modal-body button {
+        margin-top: 2vh;
         font-size: 3vh;
         border: none;
         height: 5vh;
@@ -79,7 +82,7 @@ modal-body {
         font-family: 'Ubuntu';
         background: #EF14F3;
         color: rgba(0, 0, 0, 0.8);
-    }
+    }*/
 
 .playlists-item-info {
     display: flex;

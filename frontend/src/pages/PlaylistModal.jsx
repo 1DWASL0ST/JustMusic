@@ -73,7 +73,7 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
                     <button className="playlists-modal-close" onClick={onClose}>✕</button>
                 </div>
 
-                <div className="playlists-modal-body">
+                <div className="modal-body">
                     {loading ? (
                         <div className="playlists-loading">Загрузка...</div>
                     ) : (
@@ -90,7 +90,7 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
                                         onClick={() => handlePlaylistClick(playlist)}
                                     >
                                         <img src={playlistIcon} alt="playlist" className="playlists-item-icon" />
-                                        <span className="playlists-item-name">{playlist.playlistName}</span>
+                                        <span className="playlist-name">{playlist.playlistName}</span>
                                     </div>
 
                                     {hoveredPlaylist === playlist.idPlaylist && (
@@ -127,10 +127,10 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
                                                 padding: '1vh 1.5vw',
                                                 background: '#EF14F3',
                                                 border: 'none',
-                                                borderRadius: '2.6vw',
+                                                borderRadius: '20px',
                                                 color: '#000000',
                                                 fontFamily: 'Ubuntu',
-                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                fontSize: '1.5vw',
                                                 cursor: 'pointer',
                                                 fontWeight: 'bold'
                                             }}
@@ -143,10 +143,10 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
                                                 padding: '1vh 1.5vw',
                                                 background: '#EF14F3',
                                                 border: 'none',
-                                                borderRadius: '2.6vw',
+                                                borderRadius: '20px',
                                                 color: '#000000',
                                                 fontFamily: 'Ubuntu',
-                                                fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                                fontSize: '1.5vw',
                                                 cursor: 'pointer',
                                                 fontWeight: 'bold'
                                             }}
@@ -163,15 +163,15 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
                                         padding: '1.5vh',
                                         background: 'none',
                                         border: '1px dashed #EF14F3',
-                                        borderRadius: '2.6vw',
+                                        borderRadius: '20px',
                                         color: '#EF14F3',
                                         fontFamily: 'Ubuntu',
-                                        fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+                                        fontSize: '1.5vw',
                                         cursor: 'pointer',
                                         marginTop: '1.5vh'
                                     }}
                                 >
-                                    + Новый плейлист
+                                    Новый плейлист
                                 </button>
                             )}
                         </>

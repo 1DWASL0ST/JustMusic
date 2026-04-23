@@ -54,7 +54,7 @@ function MainPage() {
         }
 
         try {
-            const response = await authFetch(`/api/Tracks/${currentTrack?.idSong}/like`, {
+            const response = await authFetch(`/api/Track/${currentTrack?.idSong}/like`, {
                 method: 'POST'
             });
             if (response.ok) {
@@ -75,12 +75,10 @@ function MainPage() {
         setIsAddPlaylistModalOpen(true);
     };
 
-    // Кнопка "Плейлисты" — открывает окно со списком плейлистов
     const handlePlaylistsClick = () => {
         setIsPlaylistsModalOpen(true);
     };
 
-    // Проверка статуса лайка при смене трека
     useEffect(() => {
         if (currentTrack && isAuthenticated) {
             checkLikeStatus();
@@ -89,7 +87,7 @@ function MainPage() {
 
     const checkLikeStatus = async () => {
         try {
-            const response = await authFetch(`/api/Tracks/${currentTrack?.idSong}/like-status`);
+            const response = await authFetch(`/api/Track/${currentTrack?.idSong}/like-status`);
             if (response.ok) {
                 const data = await response.json();
                 setIsLiked(data.liked);
@@ -191,8 +189,15 @@ function MainPage() {
 
     const handlePlayPlaylist = (playlist) => {
         console.log('Воспроизведение плейлиста:', playlist);
-        loadPlaylistTracks(playlist.idPlaylist);  // ← загружаем треки плейлиста
+        loadPlaylistTracks(playlist.idPlaylist);  
         setIsPlaylistsModalOpen(false);
+        setTimeout(() => {
+            if (audioRef.current) {
+                audioRef.current.load();
+                audioRef.current.play();
+                setIsPlaying(true);
+            }
+        }, 100);
     };
 
     useEffect(() => {
