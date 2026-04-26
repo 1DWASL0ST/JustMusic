@@ -1,11 +1,12 @@
 ﻿.search-container {
-    width: 100%;
-    padding: 15px;
-    background: #251F1F;
-    border-radius: 20px;
+    background: #251f1f;
+    border-radius: 2.6vw;
+    padding: 2vw;
+    width: 22%;
 }
 
 .search-input-wrapper {
+    gap: 1vw;
     position: relative;
     display: flex;
     align-items: center;
@@ -36,6 +37,7 @@
     }
 
 .search-section {
+    font-size: 2.5vw;
     margin-top: 15px;
     border-top: 1px solid #3a2a2a;
     padding-top: 12px;
@@ -55,8 +57,7 @@
 
 .search-section-title {
     color: #EF14F3;
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 1rem;
+    font-family: 'Ubuntu';
     font-weight: bold;
 }
 

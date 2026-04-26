@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import AddPlaylistModal from '../pages/AddPlaylistModal.jsx';
 import PlaylistsModal from '../pages/PlaylistModal.jsx';
 import Queue from '../pages/Queue.jsx';
+import Search from '../pages/searchPage.jsx';
 import { authFetch } from '../api/api.js';
 
 function MainPage() {
@@ -45,8 +46,27 @@ function MainPage() {
     const [isLiked, setIsLiked] = useState(false);
     const [isAddPlaylistModalOpen, setIsAddPlaylistModalOpen] = useState(false);
     const [isPlaylistsModalOpen, setIsPlaylistsModalOpen] = useState(false);
+    const [searchMode, setSearchMode] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
 
-    // Лайк — добавляет/удаляет в "Избранное" без открытия окон
+    const handleTrackSelect = (track) => {
+        setCurrentTrack(track);
+        setSearchMode(false);
+    };
+
+    const handleArtistSelect = (artist) => {
+        setSearchMode(false);
+    };
+
+    const handleAlbumSelect = (album) => {
+        setSearchMode(false);
+    };
+
+    const handleSearchResults = (results) => {
+        setSearchResults(results);
+        setSearchMode(true);
+    };
+
     const handleLike = async () => {
         if (!isAuthenticated) {
             navigate('/login');
@@ -66,7 +86,6 @@ function MainPage() {
         }
     };
 
-    // Плюс — открывает окно для добавления в плейлист
     const handleAddToPlaylistClick = () => {
         if (!isAuthenticated) {
             navigate('/login');
@@ -264,9 +283,12 @@ function MainPage() {
             </div>
 
             <div className='mainPart'>
-                <div className='search'>
-                    <h1>Здесь будет поиск</h1>
-                </div>
+                <Search
+                    onTrackSelect={handleTrackSelect}
+                    onArtistSelect={handleArtistSelect}
+                    onAlbumSelect={handleAlbumSelect}
+                />
+
                 <div className='mainContent'>
                     <div className='mainPlayer'>
                         <button style={{ background: 'none', border: 'none', cursor: 'pointer' }} onClick={Prev}>

@@ -2,7 +2,7 @@
 import albumPic from '../components/images/album.svg';
 import artistPic from '../components/images/artist.svg';
 import searchPic from '../components/images/search.svg';
-import './search.css';
+import '../styles/search.css';
 
 function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
     const [query, setQuery] = useState('');
@@ -40,7 +40,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
     return (
         <div className="search-container">
             <div className="search-input-wrapper">
-                <img style={{ aspectRatio: 1, width: '2vw' }} alt='search'>{searchPic}</img>
+                <img style={{ aspectRatio: 1, width: '2vw' }} alt='search' src={searchPic} />
                 <input
                     type="text"
                     placeholder="Поиск музыки, исполнителей, альбомов..."
@@ -84,7 +84,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                             className="search-result-item"
                             onClick={() => onArtistSelect?.(artist)}
                         >
-                            <img style={{aspectRatio: 1, width: '2vw'}} alt='artist'>{artistPic}</img>
+                            <img style={{ aspectRatio: 1, width: '2vw' }} alt='artist' src={artistPic} />
                             <span className="result-name">{artist.artistName}</span>
                         </div>
                     ))}
@@ -104,7 +104,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                             className="search-result-item"
                             onClick={() => onAlbumSelect?.(album)}
                         >
-                            <img style={{ aspectRatio: 1, width: '2vw' }} alt='albim'>{albumPic}</img>
+                            <img style={{ aspectRatio: 1, width: '2vw' }} alt='albim' src={albumPic} />
                             <span className="result-name">{album.albumName}</span>
                         </div>
                     ))}
