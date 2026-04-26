@@ -5,5 +5,5 @@
     public int IDUser { get; set; }
     public User? User { get; set; }
 
-    public PlaylistList ? playlistList { get; set; }
+    //public PlaylistList ? playlistList { get; set; }
 }

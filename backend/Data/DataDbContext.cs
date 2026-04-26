@@ -57,8 +57,8 @@ namespace backendAPI.Data
 
             modelBuilder.Entity<PlaylistList>()
                 .HasOne(pll => pll.Playlist)
-                .WithOne(playlist => playlist.playlistList)
-                .HasForeignKey<PlaylistList>(pll => pll.IDPlaylist)
+                .WithMany()
+                .HasForeignKey(pll => pll.IDPlaylist)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PlaylistList>()
@@ -68,7 +68,7 @@ namespace backendAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
            
             modelBuilder.Entity<PlaylistList>()
-                .HasKey(pll => new { pll.IDPlaylist });
+                .HasKey(pll => new { pll.IDPlaylist, pll.IDSong });
 
             modelBuilder.Entity<RefreshToken>()
                 .HasKey(refreshtoken => refreshtoken.ID);
