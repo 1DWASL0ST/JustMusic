@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backendAPI.Data;
-using backendAPI.DTO;
 using System.Security.Claims;
 namespace backendAPI.Controllers
 {
