@@ -37,11 +37,16 @@
     }
 
 .search-section {
-    font-size: 2.5vw;
-    margin-top: 15px;
+    max-height: 30%;
+    overflow-y: auto;
     border-top: 1px solid #3a2a2a;
+    font-size: 1.5vw;
+    margin-top: 15px;
     padding-top: 12px;
 }
+    .search-section::-webkit-scrollbar {
+        width: 1vw;
+    }
 
 .search-section-header {
     display: flex;
@@ -77,6 +82,7 @@
 }
 
 .search-result-item {
+    gap: 1vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
