@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { authFetch } from '../api/api';
 import '../styles/profile.css';
+import editButton from '../components/buttons/edit.svg'
 
 function ProfilePage() {
     const navigate = useNavigate();
@@ -24,7 +25,12 @@ function ProfilePage() {
 
     const loadProfile = async () => {
         try {
-            const response = await authFetch('/api/User/Profile');
+            const token = localStorage.getItem('accessToken');
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const userId = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+            console.log('User ID from token:', userId);
+
+            const response = await authFetch(`/api/User/${userId}`);
             if (response.ok) {
                 const data = await response.json();
                 setUser(data);
@@ -145,7 +151,7 @@ function ProfilePage() {
                         className="profile-edit-btn"
                         onClick={() => setShowUsernameForm(!showUsernameForm)}
                     >
-                        ✏️
+                        <img src={editButton} alt="edit" style={{ width: '40px', height: '40px' }} />
                     </button>
                 </div>
             </div>

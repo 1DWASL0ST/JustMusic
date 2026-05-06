@@ -274,7 +274,7 @@ function MainPage() {
                     : (
                         <>
                             <button onClick={handlePlaylistsClick}>Плейлисты</button>
-                            <button onClick={() => navigate('/profile')}>Профиль</button>
+                            <button onClick={() => window.open('/profile', '_blank')}>Профиль</button>
                             <button onClick={handleLogout} style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>
                                 Выйти
                             </button>

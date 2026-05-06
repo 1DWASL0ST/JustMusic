@@ -234,7 +234,7 @@ namespace backendAPI.Controllers
         }
 
         // PUT api/<UserController>/5
-        [HttpPut("ChangeUserName{id}")]
+        [HttpPut("ChangeUserName/{id}")]
         public async Task<IActionResult> ChangeUserName(int id, [FromBody] ChangeUsername request)
         {
             try
@@ -267,7 +267,7 @@ namespace backendAPI.Controllers
             }
         }
 
-        [HttpPut("ChangePassword{id}")]
+        [HttpPut("ChangePassword/{id}")]
         public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePassword request)
         {
             try
