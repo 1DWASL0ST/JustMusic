@@ -9,13 +9,9 @@ function ProfilePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    
-    // Состояния для смены имени
     const [showUsernameForm, setShowUsernameForm] = useState(false);
     const [newUsername, setNewUsername] = useState('');
-    const [usernameLoading, setUsernameLoading] = useState(false);
-    
-    // Состояния для смены пароля
+    const [usernameLoading, setUsernameLoading] = useState(false);   
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -157,7 +153,6 @@ function ProfilePage() {
             {error && <div className="profile-error-msg">{error}</div>}
             {success && <div className="profile-success-msg">{success}</div>}
 
-            {/* Форма смены имени */}
             {showUsernameForm && (
                 <div className="profile-form">
                     <h3>Смена имени</h3>
@@ -176,7 +171,6 @@ function ProfilePage() {
                 </div>
             )}
 
-            {/* Форма смены пароля */}
             {showPasswordForm && (
                 <div className="profile-form">
                     <h3>Смена пароля</h3>
@@ -207,7 +201,6 @@ function ProfilePage() {
                 </div>
             )}
 
-            {/* Кнопка смены пароля */}
             {!showPasswordForm && (
                 <button 
                     className="profile-change-password-btn"
