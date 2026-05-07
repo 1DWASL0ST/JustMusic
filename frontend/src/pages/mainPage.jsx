@@ -8,7 +8,7 @@ import likeIcon from '../components/buttons/liked.svg'
 import unlikeIcon from '../components/buttons/unliked.svg'
 import shuffleIcon from '../components/buttons/shuffle.svg'
 import shuffleOnIcon from '../components/buttons/shuffleOn.svg'
-import repeatIcon from '../components/buttons/repeat.svg'
+import repeatIcon from '../components/buttons/repeat.svg' 
 import repeatOnIcon from '../components/buttons/repeatQueue.svg'
 import repeatTrackIcon from '../components/buttons/repeatTrack.svg'
 import { useQueue } from '../hooks/useQueue.js';

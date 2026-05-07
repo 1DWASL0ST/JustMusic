@@ -244,20 +244,28 @@ namespace backendAPI.Controllers
                 if(user == null)
                 {
                     _logger.LogWarning("Пользователь {id} не найден", id);
-                    return NotFound(new { mesage = "Пользователь не найден" });
+                    return NotFound(new { message = "Пользователь не найден" });
                 }
 
                 if (string.IsNullOrEmpty(request.NewUserName))
                 {
                     _logger.LogWarning("Невозможно добавить пустое имя пользователя");
-                    return BadRequest(new { mesage = "Имя пользователя не может быть пустым" });
+                    return BadRequest(new { message = "Имя пользователя не может быть пустым" });
+                }
+
+                User checkUserName = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == request.NewUserName && user.IDUser != id);
+
+                if(checkUserName != null)
+                {
+                    _logger.LogWarning("Невозможно добавить занятое имя пользователя");
+                    return BadRequest(new { message = "Имя пользователя занято" });
                 }
 
                 user.UserName = request.NewUserName;
                 await _dbContext.SaveChangesAsync();
                 
                  _logger.LogInformation("Успешное изменение имени пользователя");
-                return Ok(new { mesage = "Имя пользователя обновлено" });
+                return Ok(new { message = "Имя пользователя обновлено" });
             }
 
             catch(Exception ex)
@@ -276,7 +284,7 @@ namespace backendAPI.Controllers
                 if (user == null)
                 {
                     _logger.LogWarning("Пользователь {id} не найден", id);
-                    return NotFound(new { mesage = "Пользователь не найден" });
+                    return NotFound(new { message = "Пользователь не найден" });
                 }
 
                 bool checkPassword = BC.Verify(request.CurrentPassword, user.UserPassword);
@@ -284,20 +292,20 @@ namespace backendAPI.Controllers
                 if (!checkPassword)
                 {
                     _logger.LogWarning("Неверное введение текущего пароля");
-                    return BadRequest(new { mesage = "Неверно введён текущий пароль" });
+                    return BadRequest(new { message = "Неверно введён текущий пароль" });
                 }
 
                 if (string.IsNullOrEmpty(request.NewPassword))
                 {
                     _logger.LogWarning("Невозможно добавить пустой пароль");
-                    return BadRequest(new { mesage = "Пароль не может быть пустым" });
+                    return BadRequest(new { message = "Пароль не может быть пустым" });
                 }
 
                 user.UserPassword = BC.HashPassword(request.NewPassword);
                 await _dbContext.SaveChangesAsync();
 
                 _logger.LogInformation("Успешное изменение пароля");
-                return Ok(new { mesage = "Пароль обновлен" });
+                return Ok(new { message = "Пароль обновлен" });
             }
             catch(Exception ex)
             {
