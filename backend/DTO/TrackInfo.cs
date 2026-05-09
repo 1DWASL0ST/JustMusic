@@ -1,6 +1,6 @@
 ﻿namespace backendAPI.DTO
 {
-    public class TrackSearch
+    public class TrackInfo
     {
         public int IDSong { get; set; }
         public required string TrackName { get; set; }

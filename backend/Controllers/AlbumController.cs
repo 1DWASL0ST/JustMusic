@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backendAPI.Data;
+using backendAPI.DTO;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace backendAPI.Controllers
 {
@@ -24,16 +26,38 @@ namespace backendAPI.Controllers
 
         // GET: api/Album/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Album>> GetAlbum(int id)
+        public async Task<ActionResult<AlbumDetail>> GetAlbum(int id)
         {
-            var album = await _dbcontext.Albums.FindAsync(id);
+            Album album = await _dbcontext.Albums.FindAsync(id);
+            Artist artist = await _dbcontext.Artists.FindAsync(album.IDArtist);
+            List<Track> trackList = await _dbcontext.Tracks.Where(track => track.IDAlbum == id).ToListAsync();
 
             if (album == null)
             {
                 return NotFound();
             }
+                
 
-            return album;
+            var albumDto = new AlbumDetail
+            {
+                IDAlbum = album.IDAlbum,
+                AlbumName = album.AlbumName,
+                AlbumPicture = album.AlbumPicture,
+                artist = new ArtistInfo
+                {
+                    IDArtist = artist.IDArtist,
+                    ArtistName = artist.ArtistName
+                },
+                tracks = trackList.Select(track => new TrackInfo
+                {
+                    IDSong = track.IDSong,
+                    TrackName = track.TrackName,
+                    IDArtist = artist.IDArtist,
+                    ArtistName = artist.ArtistName
+                }).ToList()
+            };
+
+            return Ok(albumDto);
         }
 
         // PUT: api/Album/5

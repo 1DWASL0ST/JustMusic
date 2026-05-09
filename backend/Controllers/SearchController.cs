@@ -28,7 +28,7 @@ namespace backendAPI.Controllers
             var tracks = await _dbcontext.Tracks
                 .Where(t => EF.Functions.ILike(t.TrackName, $"%{query}%"))
                 .Take(20)
-                .Select(t => new TrackSearch
+                .Select(t => new TrackInfo
                 {
                     IDSong = t.IDSong,
                     TrackName = t.TrackName,
@@ -40,7 +40,7 @@ namespace backendAPI.Controllers
             var artists = await _dbcontext.Artists
                 .Where(a => EF.Functions.ILike(a.ArtistName, $"%{query}%"))
                 .Take(20)
-                .Select(a => new ArtistSearch
+                .Select(a => new ArtistInfo
                 {
                     IDArtist = a.IDArtist,
                     ArtistName = a.ArtistName

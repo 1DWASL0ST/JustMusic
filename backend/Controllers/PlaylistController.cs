@@ -70,12 +70,11 @@ namespace backendAPI.Controllers
                     IDArtist = pll.Track.IDArtist,
                     IDAlbum = pll.Track.IDAlbum,
                     PathSong = pll.Track.PathSong,
-                    Artist = new ArtistCommon
+                    Artist = new ArtistInfo
                     {
-                        ArtistName = pll.Track!.artist!.ArtistName,
-                        ArtistDef = pll.Track!.artist!.ArtistDef
+                        ArtistName = pll.Track!.artist!.ArtistName
                     },
-                    Album = new AlbumCommon
+                    Album = new AlbumInfo
                     {
                         AlbumName = pll.Track!.album!.AlbumName,
                         AlbumPicture = pll.Track!.album!.AlbumPicture

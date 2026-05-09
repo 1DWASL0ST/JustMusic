@@ -1,7 +1,6 @@
 ﻿import { useState, useEffect } from 'react';
 import { authFetch } from '../api/api.js';
 import playlistIcon from '../components/images/playlistIcon.svg';
-import addIcon from '../components/buttons/addPlaylist.svg';
 import '../styles/addPlaylistModal.css'
 
 function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
