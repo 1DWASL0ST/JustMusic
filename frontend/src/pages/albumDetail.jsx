@@ -5,7 +5,7 @@ import likeIcon from '../components/buttons/liked.svg';
 import unlikeIcon from '../components/buttons/unliked.svg';
 import addPlaylist from '../components/buttons/addPlaylist.svg';
 import { authFetch } from '../api/api';
-import '../styles/AlbumDetail.css';
+import '../styles/albumDetail.css';
 
 function AlbumDetail() {
     const { id } = useParams();
