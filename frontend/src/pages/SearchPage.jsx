@@ -105,7 +105,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                             onClick={() => onAlbumSelect?.(album)}
                         >
                             <img style={{ aspectRatio: 1, width: '2vw' }} alt='albim' src={albumPic} />
-                            <span className="result-name">{album.albumName}</span>
+                            <span className="result-name" onClick={() => window.open(`/album/${album.idAlbum}`, '_blank')}>{album.albumName}</span>
                         </div>
                     ))}
                     {results.albums?.length === 0 && query && (
