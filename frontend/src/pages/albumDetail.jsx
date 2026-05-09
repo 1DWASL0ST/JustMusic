@@ -1,10 +1,10 @@
 ﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import defaultCover from '../components/images/AlbumCommon.svg';
+import defaultCover from '../components/images/AlbumCommon.png';
 import likeIcon from '../components/buttons/liked.svg';
 import unlikeIcon from '../components/buttons/unliked.svg';
 import addPlaylist from '../components/buttons/addPlaylist.svg';
-import { authFetch } from '../api/api';
+import { authFetch } from '../api/api.js';
 import '../styles/albumDetail.css';
 
 function AlbumDetail() {
@@ -30,7 +30,7 @@ function AlbumDetail() {
 
     const loadAlbum = async () => {
         try {
-            const response = await fetch(`/api/Albums/${id}`);
+            const response = await fetch(`/api/Album/${id}`);
             if (response.ok) {
                 const data = await response.json();
                 setAlbum(data);
@@ -51,7 +51,7 @@ function AlbumDetail() {
         const likesStatus = {};
         for (const track of tracks) {
             try {
-                const response = await authFetch(`/api/Tracks/${track.idSong}/like-status`);
+                const response = await authFetch(`/api/Track/${track.idSong}/like-status`);
                 const data = await response.json();
                 likesStatus[track.idSong] = data.liked;
             } catch (error) {
@@ -68,7 +68,7 @@ function AlbumDetail() {
         }
 
         try {
-            const response = await authFetch(`/api/Tracks/${trackId}/like`, {
+            const response = await authFetch(`/api/Track/${trackId}/like`, {
                 method: 'POST'
             });
             if (response.ok) {
