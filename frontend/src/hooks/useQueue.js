@@ -69,7 +69,6 @@ export function useQueue(currentTrack) {
         addToQueue,
         tracks: allTracks,
         isLoading,
-        loadPlaylistTracks,
         resetToAllTracks,
         isPlayingPlaylist: currentPlaylistId !== null,
         setCurrentIndex,

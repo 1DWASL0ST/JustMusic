@@ -24,9 +24,6 @@ import { authFetch } from '../api/api.js';
 function MainPage() {
     const {
         setCurrentIndex,
-    } = useQueue();
-
-    const {
         handlePlayPlaylist,
         isShuffle,
         toggleShuffle,
