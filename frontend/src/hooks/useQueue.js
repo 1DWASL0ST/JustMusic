@@ -37,7 +37,9 @@ export function useQueue(currentTrack) {
             if (response.ok) {
                 const tracks = await response.json();
                 if (tracks.length > 0) {
-                    createOriginalQueue(tracks);
+                    setQueue(tracks);           
+                    setOriginalQueue(tracks);  
+                    setCurrentIndex(0);         
                     setCurrentPlaylistId(playlistId);
                 }
             }
@@ -59,6 +61,7 @@ export function useQueue(currentTrack) {
     };
 
     return {
+        loadPlaylistTracks,
         originalQueue,
         setQueue,
         queue,           

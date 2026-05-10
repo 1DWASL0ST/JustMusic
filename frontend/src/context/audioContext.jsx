@@ -5,6 +5,7 @@ const AudioContext = createContext(null);
 
 export function AudioProvider({ children }) {
     const {
+        loadPlaylistTracks,
         queue,
         currentIndex,
         setCurrentIndex,
@@ -96,13 +97,13 @@ export function AudioProvider({ children }) {
         if (queue.length === 0) return;
 
         if (repeatMode === 'track') {
-            // Перезапускаем текущий трек
+
             if (audioRef.current) {
                 audioRef.current.currentTime = 0;
                 audioRef.current.play();
                 setIsPlaying(true);
             }
-            return; // ← важно! не идём дальше
+            return; 
         }
 
         let nextIndex = currentIndex + 1;
@@ -115,7 +116,6 @@ export function AudioProvider({ children }) {
             setCurrentIndex(0);
             playTrack(queue[0]);
         }
-        // repeatMode === 'off' — ничего не делаем
     }, [currentIndex, queue, repeatMode, playTrack]);
 
 
@@ -146,6 +146,10 @@ export function AudioProvider({ children }) {
         if (audioRef.current) {
             setDuration(audioRef.current.duration);
         }
+    };
+
+    const handlePlayPlaylist = (playlist) => {
+        loadPlaylistTracks(playlist.idPlaylist);
     };
 
     const seekTo = (time) => {
@@ -181,6 +185,7 @@ export function AudioProvider({ children }) {
 
     return (
         <AudioContext.Provider value={{
+            handlePlayPlaylist,
             isShuffle,
             toggleShuffle,
             queue,

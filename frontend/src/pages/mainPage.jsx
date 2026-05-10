@@ -24,10 +24,10 @@ import { authFetch } from '../api/api.js';
 function MainPage() {
     const {
         setCurrentIndex,
-        loadPlaylistTracks
     } = useQueue();
 
     const {
+        handlePlayPlaylist,
         isShuffle,
         toggleShuffle,
         queue,
@@ -156,15 +156,6 @@ function MainPage() {
         playTrack(track);
     };
 
-    const handlePlayPlaylist = (playlist) => {
-        loadPlaylistTracks(playlist.idPlaylist);
-        setIsPlaylistsModalOpen(false);
-        setTimeout(() => {
-            if (queueTrack) {
-                playTrack(queueTrack);
-            }
-        }, 100);
-    };
 
     const formatTime = (time) => {
         if (isNaN(time)) return '0:00';
