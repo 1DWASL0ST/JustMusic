@@ -1,4 +1,5 @@
 ﻿import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import albumPic from '../components/images/album.svg';
 import artistPic from '../components/images/artist.svg';
 import searchPic from '../components/images/search.svg';
@@ -6,6 +7,7 @@ import '../styles/search.css';
 
 function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
     const [query, setQuery] = useState('');
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState({
         tracks: [],
@@ -105,7 +107,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                             onClick={() => onAlbumSelect?.(album)}
                         >
                             <img style={{ aspectRatio: 1, width: '2vw' }} alt='albim' src={albumPic} />
-                            <span className="result-name" onClick={() => window.open(`/album/${album.idAlbum}`, '_blank')}>{album.albumName}</span>
+                            <span className="result-name" onClick={() => navigate(`/album/${album.idAlbum}`, '_blank')}>{album.albumName}</span>
                         </div>
                     ))}
                     {results.albums?.length === 0 && query && (

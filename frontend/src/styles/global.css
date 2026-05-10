@@ -203,15 +203,15 @@ padding: 0;
     width: 100%;
     position: relative;
 }
-.progress-bar {
+.progress-Bar {
     height: 1vh;
     background: #EF14F3;
-    border-radius: 0.5vh;
+    border-radius: 20px;
     width: 0%;
     position: relative;
 }
 
-.progress-bar::after {
+.progress-Bar::after {
     content: '';
     position: absolute;
     right: -0.8vw;  
@@ -230,7 +230,7 @@ padding: 0;
     cursor: pointer;
 }
 
-.progress-container:hover .progress-bar::after {
+.progress-container:hover .progress-Bar::after {
     opacity: 1;
 }
 

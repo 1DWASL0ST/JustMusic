@@ -23,7 +23,7 @@ function Queue({ queue, currentIndex, onSelectTrack }) {
                     <div
                         key={track.idSong}
                         className={`queue-item ${idx === currentIndex ? 'active' : ''}`}
-                        onClick={() => handleTrackClick(track, idx)}  // ← добавить onClick
+                        onClick={() => handleTrackClick(track, idx)} 
                         style={{ cursor: 'pointer' }}
                     >
                         <div className="queue-bullet">

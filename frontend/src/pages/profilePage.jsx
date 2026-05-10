@@ -1,8 +1,10 @@
 ﻿import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authFetch } from '../api/api';
+import { authFetch } from '../api/api.js';
+import { useAudio } from '../context/audioContext';
 import '../styles/profile.css';
 import editButton from '../components/buttons/edit.svg'
+import GlobalPlayer from '../components/globalPlayer.jsx';
 
 function ProfilePage() {
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ function ProfilePage() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordLoading, setPasswordLoading] = useState(false);
+    const { playTrack } = useAudio();
 
     useEffect(() => {
         loadProfile();
@@ -215,7 +218,8 @@ function ProfilePage() {
                     Сменить пароль
                 </button>
             )}
-        </div>
+            <GlobalPlayer />
+        </div> 
     );
 }
 

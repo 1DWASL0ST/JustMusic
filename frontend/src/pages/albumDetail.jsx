@@ -1,9 +1,12 @@
 ﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useAudio } from '../context/audioContext';
+import GlobalPlayer from '../components/globalPlayer.jsx';
 import defaultCover from '../components/images/AlbumCommon.png';
 import likeIcon from '../components/buttons/liked.svg';
 import unlikeIcon from '../components/buttons/unliked.svg';
 import addPlaylist from '../components/buttons/addPlaylist.svg';
+import playButton from '../components/buttons/play100Op.svg';
 import { authFetch } from '../api/api.js';
 import '../styles/albumDetail.css';
 
@@ -17,7 +20,7 @@ function AlbumDetail() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedTrackId, setSelectedTrackId] = useState(null);
-
+    const { playTrack } = useAudio();
     useEffect(() => {
         loadAlbum();
         checkAuth();
@@ -92,10 +95,6 @@ function AlbumDetail() {
         setShowAddModal(true);
     };
 
-    const playTrack = (track) => {
-        console.log('Воспроизведение:', track);
-        // TODO: добавить воспроизведение трека
-    };
 
     if (loading) return <div className="album-loading">Загрузка...</div>;
     if (error) return <div className="album-error">{error}</div>;
@@ -104,11 +103,22 @@ function AlbumDetail() {
     return (
         <div className="album-page">
             <div className="album-header">
-                <button className="back-btn" onClick={() => navigate(-1)}>← Назад</button>
+                <button className="back-btn" onClick={() => navigate('/')}>← Назад</button>
                 <button className="add-playlist-btn">Добавить в плейлист</button>
             </div>
 
             <div className="album-info">
+                <button onClick={() => {
+                    if (album.tracks && album.tracks.length > 0) {
+                        playTrack(album.tracks[0]);
+                    }
+                }}><img
+                        src={playButton}
+                        alt="play"
+                        style={{ width: '35px', height: '35px' }}
+                    />
+
+                </button>
                 <img
                     src={album.albumPicture ? `/covers/${album.albumPicture}` : defaultCover}
                     alt={album.albumName}
@@ -128,7 +138,7 @@ function AlbumDetail() {
                 <div className="tracks-list">
                     {album.tracks && album.tracks.length > 0 ? (
                         album.tracks.map((track, index) => (
-                            <div key={track.idSong} className="track-item">
+                            <div key={track.idSong} className="track-item" onClick={() => playTrack(track)}>
                                 <div className="track-number">{index + 1}</div>
                                 <div className="track-info" onClick={() => playTrack(track)}>
                                     <div className="track-name">{track.trackName}</div>
@@ -176,6 +186,7 @@ function AlbumDetail() {
                     </div>
                 </div>
             )}
+            <GlobalPlayer />
         </div>
     );
 }
