@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect } from 'react';
 import '../styles/global.css';
+import Header from '../components/header.jsx';
 import nextIcon from '../components/buttons/next.svg';
 import playIcon from '../components/buttons/play.svg';
 import pauseIcon from '../components/buttons/pause.svg';
@@ -11,26 +12,25 @@ import shuffleOnIcon from '../components/buttons/shuffleOn.svg'
 import repeatIcon from '../components/buttons/repeat.svg'
 import repeatOnIcon from '../components/buttons/repeatQueue.svg'
 import repeatTrackIcon from '../components/buttons/repeatTrack.svg'
-import { useQueue } from '../hooks/useQueue.js';
+import { useLike } from '../hooks/useLike.js';
+import { useAuth } from '../hooks/useAuth.js';
+import { useAddToPlaylist } from '../hooks/useAddToPlaylist.js';
 import { useAudio } from '../context/audioContext.jsx';
 import defaultCover from '../components/images/AlbumCommon.png';
-import { useNavigate } from 'react-router-dom';
 import AddPlaylistModal from '../pages/AddPlaylistModal.jsx';
-import PlaylistsModal from '../pages/PlaylistModal.jsx';
+
 import Queue from '../pages/Queue.jsx';
 import Search from '../pages/searchPage.jsx';
-import { authFetch } from '../api/api.js';
 
 function MainPage() {
     const {
         setCurrentIndex,
-        handlePlayPlaylist,
         isShuffle,
         toggleShuffle,
         queue,
         currentIndex,
         setCurrentTrack,
-        currentTrack : queueTrack,
+        currentTrack: queueTrack,
         repeatMode,
         toggleRepeat,
         nextTrack,
@@ -43,14 +43,10 @@ function MainPage() {
         playTrack,
     } = useAudio();
 
-    const navigate = useNavigate();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userName, setUserName] = useState('');
-    const [isLiked, setIsLiked] = useState(false);
-    const [isAddPlaylistModalOpen, setIsAddPlaylistModalOpen] = useState(false);
-    const [isPlaylistsModalOpen, setIsPlaylistsModalOpen] = useState(false);
+    const { isAuthenticated } = useAuth();
+    const { isLiked, toggleLike, setIsLiked } = useLike(queueTrack?.idSong, isAuthenticated);
+    const { isAddPlaylistModalOpen, toggleAddToPlaylistClick, setIsAddPlaylistModalOpen } = useAddToPlaylist(isAuthenticated);
     const [searchMode, setSearchMode] = useState(false);
-    const [searchResults, setSearchResults] = useState([]);
 
     const handleTrackSelect = (track) => {
         playTrack(track);
@@ -65,80 +61,6 @@ function MainPage() {
         setSearchMode(false);
     };
 
-    const handleSearchResults = (results) => {
-        setSearchResults(results);
-        setSearchMode(true);
-    };
-
-    const handleLike = async () => {
-        if (!isAuthenticated) {
-            navigate('/login');
-            return;
-        }
-
-        try {
-            const response = await authFetch(`/api/Track/${queueTrack?.idSong}/like`, {
-                method: 'POST'
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setIsLiked(data.liked);
-            }
-        } catch (error) {
-            console.error('Ошибка при лайке:', error);
-        }
-    };
-
-    const handleAddToPlaylistClick = () => {
-        if (!isAuthenticated) {
-            navigate('/login');
-            return;
-        }
-        setIsAddPlaylistModalOpen(true);
-    };
-
-    const handlePlaylistsClick = () => {
-        setIsPlaylistsModalOpen(true);
-    };
-
-    useEffect(() => {
-        if (queueTrack && isAuthenticated) {
-            checkLikeStatus();
-        }
-    }, [queueTrack, isAuthenticated]);
-
-    const checkLikeStatus = async () => {
-        try {
-            const response = await authFetch(`/api/Track/${queueTrack?.idSong}/like-status`);
-            if (response.ok) {
-                const data = await response.json();
-                setIsLiked(data.liked);
-            }
-        } catch (error) {
-            console.error('Ошибка проверки лайка:', error);
-        }
-    };
-
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            setIsAuthenticated(true);
-            try {
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                const name = payload.name || payload.unique_name;
-                setUserName(name || 'User');
-            } catch (e) {
-                console.error('Ошибка парсинга токена', e);
-            }
-        }
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        setIsAuthenticated(false);
-        navigate('/login');
-    };
 
     useEffect(() => {
         window.nextTrack = nextTrack;
@@ -179,34 +101,8 @@ function MainPage() {
                 isOpen={isAddPlaylistModalOpen}
                 onClose={() => setIsAddPlaylistModalOpen(false)}
                 trackId={queueTrack?.idSong}
-                onTrackAdded={() => setIsLiked(true)}
             />
-            <PlaylistsModal
-                isOpen={isPlaylistsModalOpen}
-                onClose={() => setIsPlaylistsModalOpen(false)}
-                onSelectPlaylist={(playlist) => console.log('Выбран плейлист:', playlist)}
-                onPlayPlaylist={handlePlayPlaylist}
-            />
-
-            <div className='mainHeader'>
-                <h1 onClick={() => navigate('/')}>Только Музыка</h1>
-                {!isAuthenticated ?
-                    (
-                        <>
-                            <button onClick={() => navigate('/login')}>Войти</button>
-                            <button style={{ background: 'none', border: '1px solid black', color: '#251f1f' }} onClick={() => navigate('/register')}>Регистрация</button>
-                        </>
-                    )
-                    : (
-                        <>
-                            <button onClick={handlePlaylistsClick}>Плейлисты</button>
-                            <button onClick={() => navigate('/profile', '_blank')}>Профиль</button>
-                            <button onClick={handleLogout} style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>
-                                Выйти
-                            </button>
-                        </>
-                    )}
-            </div>
+            <Header/>
 
             <div className='mainPart'>
                 <Search
@@ -237,10 +133,10 @@ function MainPage() {
                     <h1>{queueTrack.trackName}</h1>
                     <h2>{queueTrack.artist?.artistName || 'Unknown'}</h2>
                     <div className="buttonContainer">
-                        <button onClick={handleAddToPlaylistClick}>
+                        <button onClick={toggleAddToPlaylistClick}>
                             <img src={addPlaylist} alt='add' />
                         </button>
-                        <button onClick={handleLike}>
+                        <button onClick={toggleLike}>
                             <img src={isLiked ? likeIcon : unlikeIcon} alt='like' />
                         </button>
                         <button onClick={toggleShuffle}>
@@ -262,18 +158,19 @@ function MainPage() {
                             />
                         </button>
                     </div>
-                    <div className="progress-container" onClick={handleProgressClick}>
-                        <div className="duration">
-                            <div className="progress-Bar" style={{ width: `${(currentTime / duration) * 100}%` }} />
+                    <div className="IfUSeeThatCallMe">
+                        <div className="progress-container" onClick={handleProgressClick}>
+                            <div className="duration">
+                                <div className="progress-Bar" style={{ width: `${(currentTime / duration) * 100}%` }} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="time-info">
-                        <span>{formatTime(currentTime)}</span>
-                        <span>{formatTime(duration)}</span>
+                        <div className="time-info">
+                            <span>{formatTime(currentTime)}</span>
+                            <span>{formatTime(duration)}</span>
+                        </div>
                     </div>
                 </div>
                 <Queue queue={queue} currentIndex={currentIndex} key={currentIndex} onSelectTrack={handleSelectTrackFromQueue} />
-                {/* Аудио-тег удалён — используется глобальный плеер */}
             </div>
         </>
     );

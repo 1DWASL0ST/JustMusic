@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect } from 'react';
 
 export function useQueue(currentTrack) {
+    const [album, setAlbum] = useState(null);
     const [allTracks, setAllTracks] = useState([]);
     const [originalQueue, setOriginalQueue] = useState([]);
     const [queue, setQueue] = useState([]);
@@ -47,7 +48,44 @@ export function useQueue(currentTrack) {
             console.error('Ошибка загрузки плейлиста:', error);
         }
     };
+    const loadAlbum = async (albumId) => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`/api/Album/${albumId}`
+            , {
+            headers: { 'Authorization': `Bearer ${token}`
+}
+            });
+            const data = await response.json();
 
+            setAlbum(data);
+
+        } catch (error) {
+            console.error('Ошибка загрузки альбома:', error);
+        }
+    };
+    const playAlbum = async (albumId) => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`/api/Album/${albumId}/tracks`
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+            if (response.ok) {
+                const tracks = await response.json();
+                if (tracks.length > 0) {
+                    setQueue(tracks);
+                    setOriginalQueue(tracks);
+                    setCurrentIndex(0);
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки треков альбома:', error);
+        }
+    };
     const resetToAllTracks = () => {
         if (allTracks.length > 0) {
             createOriginalQueue(allTracks);
@@ -61,6 +99,9 @@ export function useQueue(currentTrack) {
     };
 
     return {
+        playAlbum,
+        loadAlbum,
+        album,
         loadPlaylistTracks,
         originalQueue,
         setQueue,

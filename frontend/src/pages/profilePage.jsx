@@ -1,9 +1,9 @@
 ﻿import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authFetch } from '../api/api.js';
-import { useAudio } from '../context/audioContext';
 import '../styles/profile.css';
 import editButton from '../components/buttons/edit.svg'
+import Header from '../components/header.jsx';
 import GlobalPlayer from '../components/globalPlayer.jsx';
 
 function ProfilePage() {
@@ -20,7 +20,6 @@ function ProfilePage() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordLoading, setPasswordLoading] = useState(false);
-    const { playTrack } = useAudio();
 
     useEffect(() => {
         loadProfile();
@@ -134,92 +133,88 @@ function ProfilePage() {
     }
 
     return (
-        <div className="profile-page">
-            <div className="profile-header">
-                <button className="profile-back-btn" onClick={() => navigate('/')}>
-                    ← На главную
-                </button>
-                <h1>Профиль</h1>
-            </div>
-
-            <div className="profile-info">
-                <div className="info-item">
-                    <span className="info-label">ID:</span>
-                    <span className="info-value">{user.idUser}</span>
+        <>
+            <Header />
+            <div className="profile-page">
+                <div className="profile-info">
+                    <div className="info-item">
+                        <span className="info-label">ID:</span>
+                        <span className="info-value">{user.idUser}</span>
+                    </div>
+                    <div className="info-item">
+                        <span className="info-label">Имя пользователя:</span>
+                        <span className="info-value">{user.userName}</span>
+                        <button 
+                            className="profile-edit-btn"
+                            onClick={() => setShowUsernameForm(!showUsernameForm)}
+                        >
+                            <img src={editButton} alt="edit" style={{ width: '40px', height: '40px' }} />
+                        </button>
+                    </div>
                 </div>
-                <div className="info-item">
-                    <span className="info-label">Имя пользователя:</span>
-                    <span className="info-value">{user.userName}</span>
+
+                {error && <div className="profile-error-msg">{error}</div>}
+                {success && <div className="profile-success-msg">{success}</div>}
+
+                {showUsernameForm && (
+                    <div className="profile-form">
+                        <h3>Смена имени</h3>
+                        <input
+                            type="text"
+                            placeholder="Новое имя"
+                            value={newUsername}
+                            onChange={(e) => setNewUsername(e.target.value)}
+                        />
+                        <div className="profile-form-buttons">
+                            <button onClick={handleUpdateUsername} disabled={usernameLoading}>
+                                {usernameLoading ? 'Сохранение...' : 'Сохранить'}
+                            </button>
+                            <button onClick={() => setShowUsernameForm(false)}>Отмена</button>
+                        </div>
+                    </div>
+                )}
+
+                {showPasswordForm && (
+                    <div className="profile-form">
+                        <h3>Смена пароля</h3>
+                        <input
+                            type="password"
+                            placeholder="Текущий пароль"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Новый пароль"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Подтвердите новый пароль"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <div className="profile-form-buttons">
+                            <button onClick={handleUpdatePassword} disabled={passwordLoading}>
+                                {passwordLoading ? 'Сохранение...' : 'Сохранить'}
+                            </button>
+                            <button onClick={() => setShowPasswordForm(false)}>Отмена</button>
+                        </div>
+                    </div>
+                )}
+
+                {!showPasswordForm && (
                     <button 
-                        className="profile-edit-btn"
-                        onClick={() => setShowUsernameForm(!showUsernameForm)}
+                        className="profile-change-password-btn"
+                        onClick={() => setShowPasswordForm(true)}
                     >
-                        <img src={editButton} alt="edit" style={{ width: '40px', height: '40px' }} />
+                        Сменить пароль
                     </button>
-                </div>
-            </div>
-
-            {error && <div className="profile-error-msg">{error}</div>}
-            {success && <div className="profile-success-msg">{success}</div>}
-
-            {showUsernameForm && (
-                <div className="profile-form">
-                    <h3>Смена имени</h3>
-                    <input
-                        type="text"
-                        placeholder="Новое имя"
-                        value={newUsername}
-                        onChange={(e) => setNewUsername(e.target.value)}
-                    />
-                    <div className="profile-form-buttons">
-                        <button onClick={handleUpdateUsername} disabled={usernameLoading}>
-                            {usernameLoading ? 'Сохранение...' : 'Сохранить'}
-                        </button>
-                        <button onClick={() => setShowUsernameForm(false)}>Отмена</button>
-                    </div>
-                </div>
-            )}
-
-            {showPasswordForm && (
-                <div className="profile-form">
-                    <h3>Смена пароля</h3>
-                    <input
-                        type="password"
-                        placeholder="Текущий пароль"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Новый пароль"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Подтвердите новый пароль"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <div className="profile-form-buttons">
-                        <button onClick={handleUpdatePassword} disabled={passwordLoading}>
-                            {passwordLoading ? 'Сохранение...' : 'Сохранить'}
-                        </button>
-                        <button onClick={() => setShowPasswordForm(false)}>Отмена</button>
-                    </div>
-                </div>
-            )}
-
-            {!showPasswordForm && (
-                <button 
-                    className="profile-change-password-btn"
-                    onClick={() => setShowPasswordForm(true)}
-                >
-                    Сменить пароль
-                </button>
-            )}
-            <GlobalPlayer />
-        </div> 
+                )}
+                <GlobalPlayer />
+            </div> 
+        </>
     );
 }
 

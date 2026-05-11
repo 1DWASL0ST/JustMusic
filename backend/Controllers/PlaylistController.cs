@@ -85,7 +85,6 @@ namespace backendAPI.Controllers
             return Ok(tracks);
         }
 
-        // POST: api/Playlists — создать плейлист
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<Playlist>> CreatePlaylist([FromBody] CreatePlaylist request)

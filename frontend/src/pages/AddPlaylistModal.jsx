@@ -3,17 +3,24 @@ import { authFetch } from '../api/api.js';
 import playlistIcon from '../components/images/playlistIcon.svg';
 import '../styles/addPlaylistModal.css'
 
-function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
+function AddPlaylistModal({ isOpen, onClose, trackId}) {
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newPlaylistName, setNewPlaylistName] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     useEffect(() => {
         if (isOpen) {
             loadPlaylists();
         }
     }, [isOpen]);
+
+    const handleClose = () => {
+        setErrorMessage('');  
+        onClose();
+    };
 
     const loadPlaylists = async () => {
         setLoading(true);
@@ -33,9 +40,13 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
             const response = await authFetch(`/api/Playlists/${playlistId}/tracks/${trackId}`, {
                 method: 'POST'
             });
+            const data = await response.json();
             if (response.ok) {
-                onTrackAdded?.();
-                onClose();
+                handleClose();
+            } else if (response.status === 400) {
+                setErrorMessage(data.message || 'Трек уже есть в этом плейлисте');
+            } else {
+                setErrorMessage('Ошибка при добавлении трека');
             }
         } catch (error) {
             console.error('Ошибка добавления:', error);
@@ -69,7 +80,7 @@ function AddPlaylistModal({ isOpen, onClose, trackId, onTrackAdded }) {
                     <h2>Добавить в плейлист</h2>
                     <button className="close-btn" onClick={onClose}>✕</button>
                 </div>
-
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className="modal-body">
                     {loading ? (
                         <div style={{ color:'#EF14F3'}}>Загрузка...</div>

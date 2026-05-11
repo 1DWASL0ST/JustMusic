@@ -27,16 +27,6 @@ export function AudioProvider({ children }) {
         }
     }, [currentIndex, queue]);
 
-    //useEffect(() => {
-    //    const currentTrackId = currentTrack?.idSong;
-    //    if (currentTrackId && queue.length > 0) {
-    //        const newIndex = queue.findIndex(t => t.idSong === currentTrackId);
-    //        if (newIndex !== -1 && newIndex !== currentIndex) {
-    //            setCurrentIndex(newIndex);
-    //        }
-    //    }
-    //}, [queue, currentTrack, currentIndex, setCurrentIndex]);
-
     const playTrack = (track, forceRestart = false) => {
         if (!track) return;
 

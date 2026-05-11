@@ -118,6 +118,41 @@ namespace backendAPI.Controllers
             return NoContent();
         }
 
+
+        [HttpGet("{id}/tracks")]
+        public async Task<ActionResult<IEnumerable<Track>>> GetAkbumTracks(int id)
+        {
+
+            var album = await _dbcontext.Albums
+                .FirstOrDefaultAsync(album => album.IDAlbum == id);
+
+            if (album == null)
+                return NotFound();
+
+            var tracks = await _dbcontext.Tracks
+                .Where(track => track.IDAlbum == id)
+                .Select(track=> new TrackCommon
+                {
+                    IDSong = track!.IDSong,
+                    TrackName = track.TrackName,
+                    IDArtist = track.IDArtist,
+                    IDAlbum = track.IDAlbum,
+                    PathSong = track.PathSong,
+                    Artist = new ArtistInfo
+                    {
+                        ArtistName = track!.artist!.ArtistName
+                    },
+                    Album = new AlbumInfo
+                    {
+                        AlbumName = track!.album!.AlbumName,
+                        AlbumPicture = track!.album!.AlbumPicture
+                    }
+                })
+                .ToListAsync();
+
+            return Ok(tracks);
+        }
+
         private bool AlbumExists(int id)
         {
             return _dbcontext.Albums.Any(e => e.IDAlbum == id);

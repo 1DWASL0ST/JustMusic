@@ -1,39 +1,83 @@
 ﻿.global-player {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #251F1F;
-    border-top: 2px solid #EF14F3;
-    padding: 12px 20px;
-    display: flex;
+    font-size: 3vh;
     align-items: center;
+    background: #251f1f;
+    bottom: 0;
+    display: flex;
     gap: 20px;
-    z-index: 1000;
+    left: 0;
+    padding: 12px 20px;
+    position: fixed;
+    right: 0;
+    flex-direction: column-reverse;
 }
+.player-content {
+    gap: 3vw;
+    width: 100%;
+    font-size: 3vh;
+    display: flex;
+    flex-direction: row;
+    background: none;
+    align-items: center;
+    justify-content: flex-start;
+}
+.player-container {
+    gap: 2vw;
+    display: flex;
+    width: 33%;
+    align-items: center;
+}
+.picture-place{
+
+}
+    .picture-place img {
+        border-radius: 10px;
+        height: 10vh;
+        aspect-ratio: 1;
+    }
+
+.button-place {
+    gap: 1.5vh;
+    font-size: 3vh;
+    display: flex;
+    flex-direction: row;
+    background: none;
+    align-items: center;
+}
+    .button-place button {
+        border: none;
+        background: none;
+    }
 
 .player-info {
-    min-width: 180px;
+    flex-direction: column;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .track-name {
-    color: #EF14F3;
-    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: 'Ubuntu';
+    font-weight: 500;
 }
 
-.track-artist {
+.track-Artist {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: 'Ubuntu';
     color: #888;
-    font-size: 12px;
+    font-size: 2.4vh;
+    opacity: .7;
 }
 
 .play-btn {
     aspect-ratio: 1;
-    background: #ef14f3;
+    background: none;
     border: none;
-    border-radius: 50%;
     cursor: pointer;
-    font-size: 18px;
-    width: 5vh;
+    width: 8vh;
 }
 
 .progress-container {
@@ -42,7 +86,7 @@
     align-items: center;
     gap: 10px;
     color: #888;
-    font-size: 12px;
+    font-size: 2vh;
 }
 
 .progress-bar {

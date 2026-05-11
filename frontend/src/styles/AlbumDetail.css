@@ -37,10 +37,14 @@
         color: #000;
     }
 .album-page {
+    margin-bottom: 20vh;
+    margin-right: auto;
+    padding-bottom: 2vh;
+    height: 100%;
+    color: #ef14f3;
+    margin-left: auto;
     max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #EF14F3;
+    padding: 2vh;
 }
 
 .back-btn {

@@ -47,7 +47,6 @@
 .mainPart {
     margin-top: 3vw;
     width: 100%;
-    height: 84vh;
     display: flex;
     gap: 3vw;
     flex-direction: row;
@@ -163,6 +162,9 @@
 
 
 /*Основная часть: Плеер: Прогрессбар*/
+.IfUSeeThatCallMe{
+    width:100%;
+}
 .progress-container {
     width: 100%;
     height: 3vh;
