@@ -59,10 +59,6 @@ namespace backendAPI.Controllers
             }
         }
         
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
    
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

@@ -93,9 +93,9 @@ function AlbumDetail() {
                     />
                     <div className="album-details">
                         <h1>{album.albumName}</h1>
-                        <Link to={`/artist/${album.artist?.idArtist}`} className="album-artist-link">
+                        <div OnClick={navigate(`/artist/${album.artist?.idArtist}`)} className="album-artist-link">
                             {album.artist?.artistName || 'Неизвестный исполнитель'}
-                        </Link>
+                        </div>
                         <button onClick={(e) => handlePlayClick(e, id)}
                             style={{ background: 'none', border: 'none' }}><img
                                 src={playButton}

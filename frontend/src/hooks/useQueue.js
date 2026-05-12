@@ -8,16 +8,10 @@ export function useQueue(currentTrack) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentPlaylistId, setCurrentPlaylistId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    
+
     useEffect(() => {
-        fetch('/api/Track')
-            .then(res => res.json())
-            .then(data => {
-                setAllTracks(data);
-                createOriginalQueue(data);
-                setIsLoading(false);
-            })
-            .catch(err => console.error('Ошибка загрузки треков:', err));
+        resetToAllTracks();
+        setIsLoading(false);
     }, []);
 
     const createOriginalQueue = (trackList) => {
@@ -38,9 +32,9 @@ export function useQueue(currentTrack) {
             if (response.ok) {
                 const tracks = await response.json();
                 if (tracks.length > 0) {
-                    setQueue(tracks);           
-                    setOriginalQueue(tracks);  
-                    setCurrentIndex(0);         
+                    setQueue(tracks);
+                    setOriginalQueue(tracks);
+                    setCurrentIndex(0);
                     setCurrentPlaylistId(playlistId);
                 }
             }
@@ -52,10 +46,11 @@ export function useQueue(currentTrack) {
         try {
             const token = localStorage.getItem('accessToken');
             const response = await fetch(`/api/Album/${albumId}`
-            , {
-            headers: { 'Authorization': `Bearer ${token}`
-}
-            });
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
             const data = await response.json();
 
             setAlbum(data);
@@ -80,17 +75,29 @@ export function useQueue(currentTrack) {
                     setQueue(tracks);
                     setOriginalQueue(tracks);
                     setCurrentIndex(0);
+                    
                 }
             }
         } catch (error) {
             console.error('Ошибка загрузки треков альбома:', error);
         }
     };
-    const resetToAllTracks = () => {
-        if (allTracks.length > 0) {
-            createOriginalQueue(allTracks);
-            setCurrentPlaylistId(null);
+
+    const resetToAllTracks = async () => {
+        try {
+            const response = await fetch('/api/Track');
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0) {
+                    setQueue(data);
+                    setOriginalQueue(data);
+                    setCurrentIndex(0);
+                }
+            }
+        } catch(err) { 
+            console.error('Ошибка загрузки треков:', err);
         }
+            
     };
 
     const addToQueue = (track) => {

@@ -37,6 +37,38 @@ namespace backendAPI.Controllers
             return artist;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Artist>> GetArtistTracks(int id)
+        {
+            var artist = await _dbcontext.Artists.FindAsync(id);
+
+            if (!ArtistExists(id))
+            {
+                return NotFound();
+            }
+            var tracks = await _dbcontext.Tracks
+                .Where(track => track.IDArtist == id)
+                .Select(track => new TrackCommon
+                {
+                    IDSong = track!.IDSong,
+                    TrackName = track.TrackName,
+                    IDArtist = track.IDArtist,
+                    IDAlbum = track.IDAlbum,
+                    PathSong = track.PathSong,
+                    Artist = new ArtistInfo
+                    {
+                        ArtistName = track!.artist!.ArtistName
+                    },
+                    Album = new AlbumInfo
+                    {
+                        AlbumName = track!.album!.AlbumName,
+                        AlbumPicture = track!.album!.AlbumPicture
+                    }
+                })
+                .ToListAsync();
+            return Ok(tracks);
+        }
+
         // PUT: api/Artist/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

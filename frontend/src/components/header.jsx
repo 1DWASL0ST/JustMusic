@@ -3,10 +3,11 @@ import { useAuth } from '../hooks/useAuth';
 import { usePlaylist } from '../hooks/usePlaylists.js';
 import PlaylistsModal from '../pages/PlaylistModal.jsx';
 import { useAudio } from '../context/audioContext.jsx';
+import playAllTracksIcon from '../components/buttons/playAllTracks.svg';
 import '../styles/global.css';
 
 function Header() {
-    const { handlePlayPlaylist } = useAudio();
+    const { handlePlayPlaylist, resetToAllTracks } = useAudio();
     const navigate = useNavigate();
     const { isAuthenticated, logout } = useAuth();
     const { isPlaylistsModalOpen, setIsPlaylistsModalOpen, togglePlaylistsClick } = usePlaylist(true);
@@ -29,6 +30,7 @@ function Header() {
                     )
                     : (
                         <>
+                            <button style={{ backgroundImage: `url(${playAllTracksIcon})`, aspectRatio: '5.865', width: '16.34vw', backgroundColor: 'transparent' }} onClick={() => resetToAllTracks()}></button>
                             <button onClick={togglePlaylistsClick}>Плейлисты</button>
                             <button onClick={() => navigate('/profile', '_blank')}>Профиль</button>
                             <button onClick={logout} style={{ background: 'none', border: '1px solid black', color: '#251f1f' }}>

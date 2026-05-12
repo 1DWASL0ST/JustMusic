@@ -5,6 +5,7 @@ const AudioContext = createContext(null);
 
 export function AudioProvider({ children }) {
     const {
+        resetToAllTracks,
         loadPlaylistTracks,
         playAlbum,
         queue,
@@ -180,6 +181,7 @@ export function AudioProvider({ children }) {
 
     return (
         <AudioContext.Provider value={{
+            resetToAllTracks,
             handlePlayAlbum,
             setCurrentIndex,
             handlePlayPlaylist,
