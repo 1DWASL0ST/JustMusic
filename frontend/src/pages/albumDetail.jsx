@@ -7,30 +7,47 @@ import defaultCover from '../components/images/AlbumCommon.png';
 import likeIcon from '../components/buttons/liked.svg';
 import unlikeIcon from '../components/buttons/unliked.svg';
 import addPlaylist from '../components/buttons/addPlaylist.svg';
-import playButton from '../components/buttons/play100Op.svg';
+import playButton from '../components/buttons/playInvert.svg';
 import '../styles/albumDetail.css';
 import { useQueue } from '../hooks/useQueue.js';
 import { useAddToPlaylist } from '../hooks/useAddToPlaylist.js';
 import { useLikesInList } from '../hooks/useLikesInList.js';
 import AddPlaylistModal from '../pages/AddPlaylistModal.jsx';
 import { useAuth } from '../hooks/useAuth.js';
+import { usePlaylist } from '../hooks/usePlaylists';
 
 function AlbumDetail() {
     const { isAuthenticated } = useAuth();
-    const { playTrack, currentTrack, togglePlay} = useAudio();
-    const { album, loadAlbum, playAlbum } = useQueue();
+    const { playTrack, currentTrack, handlePlayAlbum} = useAudio();
+    const { album, loadAlbum} = useQueue();
     const { isLiked, toggleLike} = useLikesInList(album?.tracks, isAuthenticated);
     const { isAddPlaylistModalOpen, toggleAddToPlaylistClick, setIsAddPlaylistModalOpen } = useAddToPlaylist(isAuthenticated);
     const { id } = useParams();
     const navigate = useNavigate();
+    const { createPlaylistFromAlbum, setNewPlaylistName, newPlaylistName } = usePlaylist(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
         loadAlbum(id);
     }, [id]);
 
+    useEffect(() => {
+        if (newPlaylistName === album?.albumName) {
+
+            createPlaylistFromAlbum(album);
+        }
+    }, [newPlaylistName]);
+
+
     if (error) return <div className="album-error">{error}</div>;
     if (!album) return null;
+
+    const handlePlayClick = (e, id) => {
+        e.stopPropagation();
+        if (handlePlayAlbum) {
+            handlePlayAlbum(id);
+        }
+    };
 
     const handlePlayTrack = (track) => {
         const enrichedTrack = {
@@ -48,6 +65,12 @@ function AlbumDetail() {
         playTrack(enrichedTrack);
     };
 
+
+
+    const handleAdd = () => {
+        setNewPlaylistName(album.albumName);
+    }
+
     return (
         <>
             <AddPlaylistModal
@@ -58,19 +81,10 @@ function AlbumDetail() {
             <Header />
             <div className="album-page">
                 <div className="album-header">
-                    <button className="back-btn" onClick={() => navigate('/')}>← Назад</button>
-                    <button className="add-playlist-btn">Добавить в плейлист</button>
+                    <button className="add-playlist-btn" onClick={handleAdd}>Добавить как плейлист</button>
                 </div>
 
                 <div className="album-info">
-                    <button onClick={() => { playAlbum(album.idAlbum); togglePlay(); }}
-                    style={{background: 'none', border:'none'}}><img
-                            src={playButton}
-                            alt="play"
-                            style={{ width: '35px', height: '35px' }}
-                        />
-
-                    </button>
                     <img
                         src={album.albumPicture ? `/covers/${album.albumPicture}` : defaultCover}
                         alt={album.albumName}
@@ -82,6 +96,14 @@ function AlbumDetail() {
                         <Link to={`/artist/${album.artist?.idArtist}`} className="album-artist-link">
                             {album.artist?.artistName || 'Неизвестный исполнитель'}
                         </Link>
+                        <button onClick={(e) => handlePlayClick(e, id)}
+                            style={{ background: 'none', border: 'none' }}><img
+                                src={playButton}
+                                alt="play"
+                                style={{ width: '10vw' }}
+                            />
+
+                        </button>
                     </div>
                 </div>
 

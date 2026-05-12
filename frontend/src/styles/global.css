@@ -542,3 +542,24 @@ input[type="password"]::-ms-clear {
     text-align: center;
 }
 /*Сообщения*/
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+/* Дорожка скроллбара */
+::-webkit-scrollbar-track {
+    background: #251F1F;
+    border-radius: 10px;
+}
+
+/* Ползунок */
+::-webkit-scrollbar-thumb {
+    background: #EF14F3;
+    border-radius: 10px;
+}
+
+    /* Ползунок при наведении */
+    ::-webkit-scrollbar-thumb:hover {
+        opacity: 0.6;
+    }

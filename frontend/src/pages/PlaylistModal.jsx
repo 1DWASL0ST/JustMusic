@@ -1,15 +1,20 @@
 ﻿import { useState, useEffect } from 'react';
-import { authFetch } from '../api/api.js';
 import playlistIcon from '../components/images/playlistIcon.svg';
 import playIcon from '../components/buttons/play.svg';
 import '../styles/playlistModal.css';
+import { usePlaylist } from '../hooks/usePlaylists.js';
 
-function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
-    const [playlists, setPlaylists] = useState([]);
-    const [loading, setLoading] = useState(false);
+function PlaylistModal({ isOpen, onClose, onPlayPlaylist }) {
+    const { loadPlaylists,
+        loading,
+        playlists,
+        showCreateForm,
+        newPlaylistName,
+        setNewPlaylistName,
+        createPlaylist,
+        setShowCreateForm } = usePlaylist({ onClose })
     const [hoveredPlaylist, setHoveredPlaylist] = useState(null);
-    const [showCreateForm, setShowCreateForm] = useState(false);
-    const [newPlaylistName, setNewPlaylistName] = useState('');
+
 
 
     useEffect(() => {
@@ -18,36 +23,7 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
         }
     }, [isOpen]);
 
-    const loadPlaylists = async () => {
-        setLoading(true);
-        try {
-            const response = await authFetch('/api/Playlists');
-            const data = await response.json();
-            setPlaylists(data);
-        } catch (error) {
-            console.error('Ошибка загрузки плейлистов:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
-    const createPlaylist = async () => {
-        if (!newPlaylistName.trim()) return;
-
-        try {
-            const response = await authFetch('/api/Playlists', {
-                method: 'POST',
-                body: JSON.stringify({ playlistName: newPlaylistName })
-            });
-            if (response.ok) {
-                setNewPlaylistName('');
-                setShowCreateForm(false);
-                await loadPlaylists();
-            }
-        } catch (error) {
-            console.error('Ошибка создания:', error);
-        }
-    };
 
     const handlePlaylistClick = (playlist) => {
         // Переход на страницу плейлиста (в разработке)
@@ -56,9 +32,9 @@ function PlaylistModal({ isOpen, onClose, onSelectPlaylist, onPlayPlaylist }) {
     };
 
     const handlePlayClick = (e, playlist) => {
-        e.stopPropagation(); // Чтобы не сработал переход на страницу
+        e.stopPropagation(); 
         if (onPlayPlaylist) {
-            onPlayPlaylist(playlist);  // ← вызываем отдельную функцию для воспроизведения
+            onPlayPlaylist(playlist);  
         }
         onClose();
     };

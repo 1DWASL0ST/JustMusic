@@ -44,9 +44,6 @@
     margin-top: 15px;
     padding-top: 12px;
 }
-    .search-section::-webkit-scrollbar {
-        width: 1vw;
-    }
 
 .search-section-header {
     display: flex;

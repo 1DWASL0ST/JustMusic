@@ -23,6 +23,7 @@
     }
 
 .add-playlist-btn {
+    margin-bottom: 2vh;
     background: none;
     border: 1px solid #EF14F3;
     border-radius: 20px;
@@ -72,7 +73,19 @@
     object-fit: cover;
 }
 
-.album-details h1 {
+.album-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.album-details button{
+    padding: 0;
+    width: fit-content;
+    background: none;
+    border-style: none;
+}
+
+.album-details h1{
     margin: 0 0 10px 0;
     font-size: 1.8rem;
 }

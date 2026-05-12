@@ -1,15 +1,19 @@
-﻿import { useState, useEffect } from 'react';
-import { authFetch } from '../api/api.js';
+﻿import { useEffect } from 'react';
 import playlistIcon from '../components/images/playlistIcon.svg';
 import '../styles/addPlaylistModal.css'
+import { usePlaylist } from '../hooks/usePlaylists';
 
 function AddPlaylistModal({ isOpen, onClose, trackId}) {
-    const [playlists, setPlaylists] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [newPlaylistName, setNewPlaylistName] = useState('');
-    const [showCreateForm, setShowCreateForm] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
+    const { loadPlaylists,
+        errorMessage,
+        loading,
+        playlists,
+        addToPlaylist,
+        showCreateForm,
+        newPlaylistName,
+        setNewPlaylistName,
+        createPlaylist,
+        setShowCreateForm } = usePlaylist({ onClose });
 
     useEffect(() => {
         if (isOpen) {
@@ -17,59 +21,8 @@ function AddPlaylistModal({ isOpen, onClose, trackId}) {
         }
     }, [isOpen]);
 
-    const handleClose = () => {
-        setErrorMessage('');  
-        onClose();
-    };
 
-    const loadPlaylists = async () => {
-        setLoading(true);
-        try {
-            const response = await authFetch('/api/Playlists');
-            const data = await response.json();
-            setPlaylists(data.filter(p => p.playlistName !== "Избранное"));
-        } catch (error) {
-            console.error('Ошибка загрузки плейлистов:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
-    const addToPlaylist = async (playlistId) => {
-        try {
-            const response = await authFetch(`/api/Playlists/${playlistId}/tracks/${trackId}`, {
-                method: 'POST'
-            });
-            const data = await response.json();
-            if (response.ok) {
-                handleClose();
-            } else if (response.status === 400) {
-                setErrorMessage(data.message || 'Трек уже есть в этом плейлисте');
-            } else {
-                setErrorMessage('Ошибка при добавлении трека');
-            }
-        } catch (error) {
-            console.error('Ошибка добавления:', error);
-        }
-    };
-
-    const createPlaylist = async () => {
-        if (!newPlaylistName.trim()) return;
-
-        try {
-            const response = await authFetch('/api/Playlists', {
-                method: 'POST',
-                body: JSON.stringify({ playlistName: newPlaylistName })
-            });
-            if (response.ok) {
-                setNewPlaylistName('');
-                setShowCreateForm(false);
-                await loadPlaylists();
-            }
-        } catch (error) {
-            console.error('Ошибка создания:', error);
-        }
-    };
 
     if (!isOpen) return null;
 
@@ -90,7 +43,7 @@ function AddPlaylistModal({ isOpen, onClose, trackId}) {
                                 <div
                                     key={playlist.idPlaylist}
                                     className="playlists-item"
-                                    onClick={() => addToPlaylist(playlist.idPlaylist)}
+                                    onClick={() => addToPlaylist(playlist.idPlaylist, trackId, false)}
                                 >
                                     <img src={playlistIcon} alt="playlist" />
                                     <span>{playlist.playlistName}</span>

@@ -9,7 +9,7 @@ function Header() {
     const { handlePlayPlaylist } = useAudio();
     const navigate = useNavigate();
     const { isAuthenticated, logout } = useAuth();
-    const { isPlaylistsModalOpen, setIsPlaylistsModalOpen,togglePlaylistsClick } = usePlaylist();
+    const { isPlaylistsModalOpen, setIsPlaylistsModalOpen, togglePlaylistsClick } = usePlaylist(true);
     return (
         <>
             <PlaylistsModal
