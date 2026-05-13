@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using BC = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -234,6 +235,7 @@ namespace backendAPI.Controllers
         }
 
         // PUT api/<UserController>/5
+        [Authorize]
         [HttpPut("ChangeUserName/{id}")]
         public async Task<IActionResult> ChangeUserName(int id, [FromBody] ChangeUsername request)
         {
@@ -275,6 +277,7 @@ namespace backendAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("ChangePassword/{id}")]
         public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePassword request)
         {
@@ -315,27 +318,36 @@ namespace backendAPI.Controllers
         }
 
         // DELETE api/<UserController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                User user = await _dbContext.Users
-                    .FirstOrDefaultAsync(user => user.IDUser == id);
-
-                if (user == null) 
+                var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+                if (!isAdmin || currentUserId != id)
                 {
-                    _logger.LogWarning("Удаляемый пользователь {id} не найден", id);
-                    return NotFound(new { message = "Пользователь не найден" });
+                    return Unauthorized("Недостаточно прав");
                 }
+                else
+                {
+                    User user = await _dbContext.Users
+                        .FirstOrDefaultAsync(user => user.IDUser == id);
 
-                _dbContext.Remove(user);
-                await _dbContext.SaveChangesAsync();
+                    if (user == null)
+                    {
+                        _logger.LogWarning("Удаляемый пользователь {id} не найден", id);
+                        return NotFound(new { message = "Пользователь не найден" });
+                    }
 
-                _logger.LogInformation("Пользователь {Id} и все его плейлисты удалены", id);
+                    _dbContext.Remove(user);
+                    await _dbContext.SaveChangesAsync();
 
-                return Ok(new { message = "Удаление прошло успешно" });
+                    _logger.LogInformation("Пользователь {id} и все его плейлисты удалены", id);
 
+                    return Ok(new { message = "Удаление прошло успешно" });
+                }
             }
 
             catch(Exception ex)

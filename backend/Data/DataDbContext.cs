@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using backendAPI.Models;
 
 namespace backendAPI.Data
 {
@@ -16,6 +17,7 @@ namespace backendAPI.Data
         public DbSet<Track> Tracks { get; set; }
         public DbSet<PlaylistList> PlaylistsList { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Admin> Admins {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,12 +33,14 @@ namespace backendAPI.Data
             modelBuilder.Entity<Track>()
                 .HasOne(track => track.artist)
                 .WithMany()
-                .HasForeignKey(track => track.IDArtist);
-           
+                .HasForeignKey(track => track.IDArtist)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Track>()
                 .HasOne(track => track.album)
                 .WithMany()
-                .HasForeignKey(track => track.IDAlbum);
+                .HasForeignKey(track => track.IDAlbum)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Album>()
                 .HasKey(album => album.IDAlbum);
@@ -44,7 +48,8 @@ namespace backendAPI.Data
             modelBuilder.Entity<Album>()
                 .HasOne(album => album.artist)
                 .WithMany()
-                .HasForeignKey(album => album.IDArtist);
+                .HasForeignKey(album => album.IDArtist)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Playlist>()
                 .HasOne(playlist => playlist.User)
@@ -84,6 +89,15 @@ namespace backendAPI.Data
                 .WithMany()
                 .HasForeignKey(refreshtoken => refreshtoken.IDUser)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Admin>()
+                .HasKey(admin => admin.IDUser);
+
+            modelBuilder.Entity<Admin>()
+                .HasOne(admin => admin.user)
+                .WithOne()
+                .HasForeignKey<Admin>(admin => admin.IDUser);
+
             
 
             modelBuilder.Entity<User>().ToTable("Users");
@@ -93,6 +107,7 @@ namespace backendAPI.Data
             modelBuilder.Entity<Artist>().ToTable("Artists");
             modelBuilder.Entity<Track>().ToTable("Tracks");
             modelBuilder.Entity<RefreshToken>().ToTable("RefreshTokens");
+            modelBuilder.Entity<Admin>().ToTable("Admins");
         }
     }
 }

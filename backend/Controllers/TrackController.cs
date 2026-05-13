@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backendAPI.Data;
 using System.Security.Claims;
+using backendAPI.DTO;
 namespace backendAPI.Controllers
 {
     [ApiController]
@@ -20,7 +21,8 @@ namespace backendAPI.Controllers
             _logger = logger;
             _configuration = configuration;
         }
-
+        
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Track>>> GetTracks()
         {
@@ -58,16 +60,59 @@ namespace backendAPI.Controllers
                 return StatusCode(500, "Ошибка при получении трека");
             }
         }
-        
-   
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult<Track>> PostArtist([FromBody] TrackPost request)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
+            {
+                return Unauthorized("Недостаточно прав");
+            }
+
+            else
+            {
+                Track track = new Track
+                {
+                    TrackName = request.TrackName,
+                    IDAlbum = request.IDAlbum,
+                    IDArtist = request.IDArtist,
+                };
+
+                _dbContext.Tracks.Add(track);
+                await _dbContext.SaveChangesAsync();
+
+                return CreatedAtAction("GetTrack", new { id = track.IDSong }, track);
+            }
+        }
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
-
+        
+        [Authorize]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteTrack(int id)
         {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
+            {
+                return Unauthorized("Недостаточно прав");
+            }
+
+            else
+            {
+                var track = await _dbContext.Tracks.FindAsync(id);
+
+                _dbContext.Tracks.Remove(track);
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { message = "Трек удален" });
+            }
         }
         [Authorize]
         [HttpPost("{id}/like")]

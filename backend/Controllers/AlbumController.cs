@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using backendAPI.Data;
 using backendAPI.DTO;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace backendAPI.Controllers
 {
@@ -93,29 +94,57 @@ namespace backendAPI.Controllers
 
         // POST: api/Album
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Album>> PostAlbum(Album album)
+        public async Task<ActionResult<Album>> PostAlbum(AlbumPost request)
         {
-            _dbcontext.Albums.Add(album);
-            await _dbcontext.SaveChangesAsync();
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
+            {
+                return Unauthorized("Недостаточно прав");
+            }
 
-            return CreatedAtAction("GetAlbum", new { id = album.IDAlbum }, album);
+            else
+            {
+                Album album = new Album
+                {
+                    IDArtist = request.IDArtist,
+                    AlbumName = request.AlbumName
+                };
+                _dbcontext.Albums.Add(album);
+                await _dbcontext.SaveChangesAsync();
+
+                return CreatedAtAction("GetAlbum", new { id = album.IDAlbum }, album);
+            }
         }
 
         // DELETE: api/Album/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlbum(int id)
         {
-            var album = await _dbcontext.Albums.FindAsync(id);
-            if (album == null)
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
             {
-                return NotFound();
+                return Unauthorized("Недостаточно прав");
             }
 
-            _dbcontext.Albums.Remove(album);
-            await _dbcontext.SaveChangesAsync();
+            else
+            {
+                var album = await _dbcontext.Albums.FindAsync(id);
+                if (album == null)
+                {
+                    return NotFound();
+                }
 
-            return NoContent();
+                _dbcontext.Albums.Remove(album);
+                await _dbcontext.SaveChangesAsync();
+
+                return NoContent();
+            }
+                
         }
 
 

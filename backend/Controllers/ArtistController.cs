@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using backendAPI.Data;
 using backendAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace backendAPI.Controllers
 {
@@ -128,35 +130,58 @@ namespace backendAPI.Controllers
 
         // POST: api/Artist
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Artist>> PostArtist([FromBody]ArtistCommon ac)
         {
-            Artist artist = new Artist
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
             {
-                ArtistName = ac.ArtistName,
-                ArtistDef = ac.ArtistDef
-            };
+                return Unauthorized("Недостаточно прав");
+            }
 
-            _dbcontext.Artists.Add(artist);
-            await _dbcontext.SaveChangesAsync();
+            else
+            {
+                Artist artist = new Artist
+                {
+                    ArtistName = ac.ArtistName,
+                    ArtistDef = ac.ArtistDef
+                };
 
-            return CreatedAtAction("GetArtist", new { id = artist.IDArtist }, artist);
+                _dbcontext.Artists.Add(artist);
+                await _dbcontext.SaveChangesAsync();
+
+                return CreatedAtAction("GetArtist", new { id = artist.IDArtist }, artist);
+            }
         }
 
         // DELETE: api/Artist/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(int id)
         {
-            var artist = await _dbcontext.Artists.FindAsync(id);
-            if (!ArtistExists(id))
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            if (!isAdmin)
             {
-                return NotFound();
+                return Unauthorized("Недостаточно прав");
             }
 
-            _dbcontext.Artists.Remove(artist);
-            await _dbcontext.SaveChangesAsync();
+            else
+            {
 
-            return Ok(new {message = "Исполнитель {ArtistName} удален", ArtistName = artist.ArtistName});
+                var artist = await _dbcontext.Artists.FindAsync(id);
+                if (!ArtistExists(id))
+                {
+                    return NotFound();
+                }
+
+                _dbcontext.Artists.Remove(artist);
+                await _dbcontext.SaveChangesAsync();
+
+                return Ok(new { message = "Исполнитель {ArtistName} удален", ArtistName = artist.ArtistName });
+            }
         }
 
         private bool ArtistExists(int id)
