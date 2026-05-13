@@ -5,6 +5,7 @@ const AudioContext = createContext(null);
 
 export function AudioProvider({ children }) {
     const {
+        playArtist,
         resetToAllTracks,
         loadPlaylistTracks,
         playAlbum,
@@ -148,6 +149,10 @@ export function AudioProvider({ children }) {
         playAlbum(albumId);
     }
 
+    const handlePlayArtist = (id) => {
+        playArtist(id);
+    }
+
     const seekTo = (time) => {
         if (audioRef.current) {
             audioRef.current.currentTime = time;
@@ -181,6 +186,7 @@ export function AudioProvider({ children }) {
 
     return (
         <AudioContext.Provider value={{
+            handlePlayArtist,
             resetToAllTracks,
             handlePlayAlbum,
             setCurrentIndex,

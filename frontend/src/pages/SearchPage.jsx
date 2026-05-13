@@ -87,7 +87,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                             onClick={() => onArtistSelect?.(artist)}
                         >
                             <img style={{ aspectRatio: 1, width: '2vw' }} alt='artist' src={artistPic} />
-                            <span className="result-name">{artist.artistName}</span>
+                            <span className="result-name" onClick={() => navigate(`/artist/${artist.idArtist}`, '_blank')}>{artist.artistName}</span>
                         </div>
                     ))}
                 </div>

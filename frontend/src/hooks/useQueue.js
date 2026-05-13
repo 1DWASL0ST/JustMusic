@@ -83,6 +83,24 @@ export function useQueue(currentTrack) {
         }
     };
 
+    const playArtist = async (id) => {
+        try {
+            const response = await fetch(`/api/Artist/${id}/tracks`);
+
+            if (response.ok) {
+                const tracks = await response.json();
+                if (tracks.length > 0) {
+                    setQueue(tracks);
+                    setOriginalQueue(tracks);
+                    setCurrentIndex(0);
+
+                }
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки треков аартиста:', error);
+        }
+    };
+
     const resetToAllTracks = async () => {
         try {
             const response = await fetch('/api/Track');
@@ -106,6 +124,7 @@ export function useQueue(currentTrack) {
     };
 
     return {
+        playArtist,
         playAlbum,
         loadAlbum,
         album,

@@ -37,7 +37,7 @@ namespace backendAPI.Controllers
             return artist;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/tracks")]
         public async Task<ActionResult<Artist>> GetArtistTracks(int id)
         {
             var artist = await _dbcontext.Artists.FindAsync(id);
@@ -69,6 +69,30 @@ namespace backendAPI.Controllers
             return Ok(tracks);
         }
 
+        [HttpGet("{id}/albums")]
+        public async Task<ActionResult<Artist>> GetArtistAlbums(int id)
+        {
+            var artist = await _dbcontext.Artists.FindAsync(id);
+
+            if (!ArtistExists(id))
+            {
+                return NotFound();
+            }
+            var albums = await _dbcontext.Albums
+                .Where(album => album.IDArtist == id)
+                .Select(album => new AlbumDetail
+                {
+                    IDAlbum = album!.IDAlbum,
+                    AlbumPicture = album!.AlbumPicture,
+                    AlbumName = album!.AlbumName,
+                    artist = new ArtistInfo
+                    {
+                        ArtistName = album!.artist!.ArtistName
+                    }
+                })
+                .ToListAsync();
+            return Ok(albums);
+        }
         // PUT: api/Artist/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

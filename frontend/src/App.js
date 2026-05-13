@@ -6,6 +6,7 @@ import LoginPage from './pages/loginPage';
 import RegisterPage from './pages/registerPage';
 import ProfilePage from './pages/profilePage';
 import AlbumDetail from './pages/albumDetail';
+import ArtistDetail from './pages/artistDetail.jsx';
 
 
 
@@ -21,6 +22,7 @@ function App() {
                     <Route path="*" element={<MainPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/album/:id" element={<AlbumDetail />} />
+                    <Route path="/artist/:id" element={<ArtistDetail />} />
                 </Routes>
             </AudioProvider>
         </BrowserRouter>
