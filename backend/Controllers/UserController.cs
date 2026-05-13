@@ -325,7 +325,7 @@ namespace backendAPI.Controllers
             try
             {
                 var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-                var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+                var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
                 if (!isAdmin || currentUserId != id)
                 {
                     return Unauthorized("Недостаточно прав");

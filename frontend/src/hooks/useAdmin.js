@@ -21,7 +21,7 @@ export function useAdmin() {
             const payload = JSON.parse(atob(token.split('.')[1]));
             const userId = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
-            const response = await fetch(`/api/User/isAdmin/${userId}`, {
+            const response = await fetch(`/api/Admin/isAdmin/${userId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();

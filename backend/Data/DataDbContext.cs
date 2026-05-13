@@ -91,12 +91,12 @@ namespace backendAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Admin>()
-                .HasKey(admin => admin.IDUser);
+                .HasKey(admin => admin.Id);
 
             modelBuilder.Entity<Admin>()
                 .HasOne(admin => admin.user)
                 .WithOne()
-                .HasForeignKey<Admin>(admin => admin.IDUser);
+                .HasForeignKey<Admin>(admin => admin.UserId);
 
             
 

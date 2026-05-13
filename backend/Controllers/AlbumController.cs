@@ -99,7 +99,7 @@ namespace backendAPI.Controllers
         public async Task<ActionResult<Album>> PostAlbum(AlbumPost request)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.UserId == currentUserId);
             if (!isAdmin)
             {
                 return Unauthorized("Недостаточно прав");
@@ -125,7 +125,7 @@ namespace backendAPI.Controllers
         public async Task<IActionResult> DeleteAlbum(int id)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.UserId == currentUserId);
             if (!isAdmin)
             {
                 return Unauthorized("Недостаточно прав");

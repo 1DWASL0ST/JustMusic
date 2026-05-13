@@ -65,7 +65,7 @@ namespace backendAPI.Controllers
         public async Task<ActionResult<Track>> PostArtist([FromBody] TrackPost request)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
             if (!isAdmin)
             {
                 return Unauthorized("Недостаточно прав");
@@ -97,7 +97,7 @@ namespace backendAPI.Controllers
         public async Task<IActionResult> DeleteTrack(int id)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.IDUser == currentUserId);
+            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
             if (!isAdmin)
             {
                 return Unauthorized("Недостаточно прав");

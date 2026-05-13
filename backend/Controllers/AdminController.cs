@@ -22,7 +22,7 @@ namespace backendAPI.Controllers
         [HttpGet("isAdmin/{userId}")]
         public async Task<IActionResult> IsAdmin(int userId)
         {
-            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.IDUser == userId);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.UserId == userId);
             return Ok(new { isAdmin });
         }
         
