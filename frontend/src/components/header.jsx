@@ -5,10 +5,12 @@ import PlaylistsModal from '../pages/PlaylistModal.jsx';
 import { useAudio } from '../context/audioContext.jsx';
 import playAllTracksIcon from '../components/buttons/playAllTracks.svg';
 import '../styles/global.css';
+import { useAdmin } from '../hooks/useAdmin';
 
 function Header() {
     const { handlePlayPlaylist, resetToAllTracks } = useAudio();
     const navigate = useNavigate();
+    const { isAdmin, loading } = useAdmin();
     const { isAuthenticated, logout } = useAuth();
     const { isPlaylistsModalOpen, setIsPlaylistsModalOpen, togglePlaylistsClick } = usePlaylist(true);
     return (
@@ -38,6 +40,9 @@ function Header() {
                             </button>
                         </>
                     )}
+                {isAuthenticated && !loading && isAdmin && (
+                    <button onClick={() => navigate('/admin')}>Админ панель</button>
+                )}
             </div>
         </>
     );

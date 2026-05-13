@@ -22,7 +22,6 @@ namespace backendAPI.Controllers
             _configuration = configuration;
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Track>>> GetTracks()
         {
