@@ -5,6 +5,7 @@ using BC = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using backendAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -241,33 +242,42 @@ namespace backendAPI.Controllers
         {
             try
             {
-                User user = await _dbContext.Users.FindAsync(id);
-
-                if(user == null)
+                var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                if (currentUserId != id)
                 {
-                    _logger.LogWarning("Пользователь {id} не найден", id);
-                    return NotFound(new { message = "Пользователь не найден" });
+                    return Unauthorized("Недостаточно прав");
                 }
 
-                if (string.IsNullOrEmpty(request.NewUserName))
+                else
                 {
-                    _logger.LogWarning("Невозможно добавить пустое имя пользователя");
-                    return BadRequest(new { message = "Имя пользователя не может быть пустым" });
+                    User user = await _dbContext.Users.FindAsync(id);
+
+                    if (user == null)
+                    {
+                        _logger.LogWarning("Пользователь {id} не найден", id);
+                        return NotFound(new { message = "Пользователь не найден" });
+                    }
+
+                    if (string.IsNullOrEmpty(request.NewUserName))
+                    {
+                        _logger.LogWarning("Невозможно добавить пустое имя пользователя");
+                        return BadRequest(new { message = "Имя пользователя не может быть пустым" });
+                    }
+
+                    User checkUserName = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == request.NewUserName && user.IDUser != id);
+
+                    if (checkUserName != null)
+                    {
+                        _logger.LogWarning("Невозможно добавить занятое имя пользователя");
+                        return BadRequest(new { message = "Имя пользователя занято" });
+                    }
+
+                    user.UserName = request.NewUserName;
+                    await _dbContext.SaveChangesAsync();
+
+                    _logger.LogInformation("Успешное изменение имени пользователя");
+                    return Ok(new { message = "Имя пользователя обновлено" });
                 }
-
-                User checkUserName = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == request.NewUserName && user.IDUser != id);
-
-                if(checkUserName != null)
-                {
-                    _logger.LogWarning("Невозможно добавить занятое имя пользователя");
-                    return BadRequest(new { message = "Имя пользователя занято" });
-                }
-
-                user.UserName = request.NewUserName;
-                await _dbContext.SaveChangesAsync();
-                
-                 _logger.LogInformation("Успешное изменение имени пользователя");
-                return Ok(new { message = "Имя пользователя обновлено" });
             }
 
             catch(Exception ex)
@@ -283,32 +293,42 @@ namespace backendAPI.Controllers
         {
             try
             {
-                User user = await _dbContext.Users.FindAsync(id);
-                if (user == null)
+                var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                if (currentUserId != id)
                 {
-                    _logger.LogWarning("Пользователь {id} не найден", id);
-                    return NotFound(new { message = "Пользователь не найден" });
+                    return Unauthorized("Недостаточно прав");
                 }
 
-                bool checkPassword = BC.Verify(request.CurrentPassword, user.UserPassword);
-
-                if (!checkPassword)
+                else
                 {
-                    _logger.LogWarning("Неверное введение текущего пароля");
-                    return BadRequest(new { message = "Неверно введён текущий пароль" });
+
+                    User user = await _dbContext.Users.FindAsync(id);
+                    if (user == null)
+                    {
+                        _logger.LogWarning("Пользователь {id} не найден", id);
+                        return NotFound(new { message = "Пользователь не найден" });
+                    }
+
+                    bool checkPassword = BC.Verify(request.CurrentPassword, user.UserPassword);
+
+                    if (!checkPassword)
+                    {
+                        _logger.LogWarning("Неверное введение текущего пароля");
+                        return BadRequest(new { message = "Неверно введён текущий пароль" });
+                    }
+
+                    if (string.IsNullOrEmpty(request.NewPassword))
+                    {
+                        _logger.LogWarning("Невозможно добавить пустой пароль");
+                        return BadRequest(new { message = "Пароль не может быть пустым" });
+                    }
+
+                    user.UserPassword = BC.HashPassword(request.NewPassword);
+                    await _dbContext.SaveChangesAsync();
+
+                    _logger.LogInformation("Успешное изменение пароля");
+                    return Ok(new { message = "Пароль обновлен" });
                 }
-
-                if (string.IsNullOrEmpty(request.NewPassword))
-                {
-                    _logger.LogWarning("Невозможно добавить пустой пароль");
-                    return BadRequest(new { message = "Пароль не может быть пустым" });
-                }
-
-                user.UserPassword = BC.HashPassword(request.NewPassword);
-                await _dbContext.SaveChangesAsync();
-
-                _logger.LogInformation("Успешное изменение пароля");
-                return Ok(new { message = "Пароль обновлен" });
             }
             catch(Exception ex)
             {
@@ -326,7 +346,7 @@ namespace backendAPI.Controllers
             {
                 var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
                 var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
-                if (!isAdmin || currentUserId != id)
+                if (!isAdmin && currentUserId != id)
                 {
                     return Unauthorized("Недостаточно прав");
                 }

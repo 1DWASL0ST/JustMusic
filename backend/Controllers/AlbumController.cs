@@ -112,6 +112,7 @@ namespace backendAPI.Controllers
                     IDArtist = request.IDArtist,
                     AlbumName = request.AlbumName
                 };
+
                 _dbcontext.Albums.Add(album);
                 await _dbcontext.SaveChangesAsync();
 
@@ -147,9 +148,8 @@ namespace backendAPI.Controllers
                 
         }
 
-
         [HttpGet("{id}/tracks")]
-        public async Task<ActionResult<IEnumerable<Track>>> GetAkbumTracks(int id)
+        public async Task<ActionResult<IEnumerable<Track>>> GetAlbumTracks(int id)
         {
 
             var album = await _dbcontext.Albums
@@ -180,6 +180,37 @@ namespace backendAPI.Controllers
                 .ToListAsync();
 
             return Ok(tracks);
+        }
+        [Authorize]
+        [HttpPost("upload/cover")]
+        public async Task<IActionResult> UploadTrack([FromForm] AlbumUpload model)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbcontext.Admins.AnyAsync(a => a.UserId == currentUserId);
+            if (!isAdmin)
+            {
+                return Unauthorized("Недостаточно прав");
+            }
+
+            else
+            {
+                if (model.PictureFile == null || model.PictureFile.Length == 0)
+                    return BadRequest("Файл не выбран");
+
+                var uploadPath = "/app/covers";
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                string fileName = $"picture{model.IDAlbum}.png";
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.PictureFile.CopyToAsync(stream);
+                }
+
+                return Ok();
+            }
         }
 
         private bool AlbumExists(int id)

@@ -18,9 +18,9 @@ function AdminPage() {
     const [success, setSuccess] = useState('');
 
 
-    const [newTrack, setNewTrack] = useState({ trackName: '', idArtist: '', idAlbum: ''});
+    const [newTrack, setNewTrack] = useState({ trackName: '', idArtist: '', idAlbum: '', file: null});
     const [newArtist, setNewArtist] = useState({ artistName: '',  artistDef: '' });
-    const [newAlbum, setNewAlbum] = useState({ albumName: '', idArtist: '' });
+    const [newAlbum, setNewAlbum] = useState({ albumName: '', idArtist: '', file: null });
 
     useEffect(() => {
         if (!adminLoading && !isAdmin) {
@@ -75,17 +75,32 @@ function AdminPage() {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('trackName', newTrack.trackName);
-        formData.append('artistId', newTrack.idArtist);
-        formData.append('albumId', newTrack.idAlbum);
-
         try {
             const response = await authFetch('/api/Track', {
                 method: 'POST',
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    trackName: newTrack.trackName,
+                    idArtist: newTrack.idArtist,
+                    idAlbum: newTrack.idAlbum
+                })
             });
-            if (response.ok) {
+
+            const createdTrack = await response.json();
+            const trackId = createdTrack.idSong; 
+
+            const uploadFormData = new FormData();
+            uploadFormData.append('IDSong', trackId);
+            uploadFormData.append('AudioFile', newTrack.file)
+            console.log(newTrack.file);
+            console.log(newTrack.file instanceof File);
+
+            const uploadResponse = await authFetch('/api/Track/upload/track', {
+                method: 'POST',
+                body: uploadFormData
+            });
+
+            if (response.ok && uploadResponse.ok) {
                 setSuccess('Трек добавлен');
                 setNewTrack({ trackName: '', idArtist: '', idAlbum: '' });
                 loadData();
@@ -137,21 +152,36 @@ function AdminPage() {
     };
 
     const handleAddAlbum = async () => {
-        if (!newAlbum.picture) {
+        if (!newAlbum.file) {
             setError('Выберите PNG файл для обложки');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('albumName', newAlbum.albumName);
-        formData.append('idArtist', newAlbum.idArtist);
-
         try {
             const response = await authFetch('/api/Album', {
                 method: 'POST',
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    albumName: newAlbum.albumName,
+                    idArtist: newAlbum.idArtist
+                })
             });
-            if (response.ok) {
+
+            const createdAlbum = await response.json();
+            const albumId = createdAlbum.idAlbum;
+
+            const uploadFormData = new FormData();
+            uploadFormData.append('IDAlbum', albumId);
+            console.log(newTrack.file);
+            console.log(newTrack.file instanceof File);
+            uploadFormData.append('PictureFile', newAlbum.file);
+
+            const uploadResponse = await authFetch('/api/Album/upload/cover', {
+                method: 'POST',
+                body: uploadFormData
+            });
+
+            if (response.ok && uploadResponse.ok) {
                 setSuccess('Альбом добавлен');
                 setNewAlbum({ albumName: '', idArtist: ''});
                 loadData();
@@ -220,7 +250,7 @@ function AdminPage() {
                             <div className="items-list">
                                 {tracks.map(track => (
                                     <div key={track.idSong} className="admin-item">
-                                        <span>{track.trackName}</span>
+                                        <span>{track.trackName} (ID: {track.idSong})</span>
                                         <button className="delete-btn" onClick={() => handleDeleteTrack(track.idSong)}>Удалить</button>
                                     </div>
                                 ))}
@@ -240,7 +270,7 @@ function AdminPage() {
                             <div className="items-list">
                                 {artists.map(artist => (
                                     <div key={artist.idArtist} className="admin-item">
-                                        <span>{artist.artistName}</span>
+                                        <span>{artist.artistName} (ID: {artist.idArtist})</span>
                                         <button className="delete-btn" onClick={() => handleDeleteArtist(artist.idArtist)}>Удалить</button>
                                     </div>
                                 ))}
@@ -255,13 +285,13 @@ function AdminPage() {
                                 <h3>Добавить альбом</h3>
                                 <input type="text" placeholder="Название" value={newAlbum.name} onChange={(e) => setNewAlbum({ ...newAlbum, albumName: e.target.value })} />
                                 <input type="text" placeholder="ID исполнителя" value={newAlbum.artistId} onChange={(e) => setNewAlbum({ ...newAlbum, idArtist: e.target.value })} />
-                                <input type="file" accept=".png" onChange={(e) => setNewAlbum({ ...newAlbum, picture: e.target.files[0] })} />
+                                <input type="file" accept=".png" onChange={(e) => setNewAlbum({ ...newAlbum, file: e.target.files[0] })} />
                                 <button onClick={handleAddAlbum}>Добавить</button>
                             </div>
                             <div className="items-list">
                                 {albums.map(album => (
                                     <div key={album.idAlbum} className="admin-item">
-                                        <span>{album.albumName}</span>
+                                        <span>{album.albumName} (ID:{album.idAlbum})</span>
                                         <button className="delete-btn" onClick={() => handleDeleteAlbum(album.idAlbum)}>Удалить</button>
                                     </div>
                                 ))}

@@ -40,6 +40,19 @@ namespace backendAPI.Controllers
                 return StatusCode(500, "Треки не найдены");
             }
         }
+        public async Task<ActionResult<AlbumDetail>> GetTrack(int id)
+        {
+            Track track = await _dbContext.Tracks.FindAsync(id);
+            Artist artist = await _dbContext.Artists.FindAsync(track.IDArtist);
+            Album album = await _dbContext.Albums.FindAsync(track.IDAlbum);
+
+            if (album == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(track);
+        }
 
         [HttpGet("stream/{id}")]
         public async Task<IActionResult> Stream(int id)
@@ -62,7 +75,7 @@ namespace backendAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Track>> PostArtist([FromBody] TrackPost request)
+        public async Task<ActionResult<Track>> PostTrack([FromBody] TrackPost request)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
@@ -174,6 +187,38 @@ namespace backendAPI.Controllers
                 .AnyAsync(ps => ps.IDPlaylist == favoritePlaylist.IDPlaylist && ps.IDSong == id);
 
             return Ok(new { liked = exists });
+        }
+
+        [Authorize]
+        [HttpPost("upload/track")]
+        public async Task<IActionResult> UploadTrack([FromForm] TrackUpload model)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var isAdmin = await _dbContext.Admins.AnyAsync(a => a.UserId == currentUserId);
+            if (!isAdmin)
+            {
+                return Unauthorized("Недостаточно прав");
+            }
+
+            else
+            {
+                if (model.AudioFile == null || model.AudioFile.Length == 0)
+                    return BadRequest("Файл не выбран");
+
+                var uploadPath = "/app/tracks";
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                string fileName = $"track{model.IDSong}.mp3";
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.AudioFile.CopyToAsync(stream);
+                }
+
+                return Ok();
+            }
         }
     }
 }

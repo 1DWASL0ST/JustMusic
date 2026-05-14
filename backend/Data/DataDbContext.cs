@@ -97,8 +97,15 @@ namespace backendAPI.Data
                 .HasOne(admin => admin.user)
                 .WithOne()
                 .HasForeignKey<Admin>(admin => admin.UserId);
-
             
+            modelBuilder.Entity<Album>()
+                .Property(a => a.AlbumPicture)
+                .HasComputedColumnSql("('picture' || \"IDAlbum\" || '.png')");
+
+            modelBuilder.Entity<Track>()
+               .Property(t => t.PathSong)
+               .HasComputedColumnSql("('track' || \"IDSong\" || '.mp3')");
+
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Album>().ToTable("Albums");
