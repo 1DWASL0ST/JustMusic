@@ -1,19 +1,37 @@
 ﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAudio } from '../context/audioContext.jsx'
 import albumPic from '../components/images/album.svg';
 import artistPic from '../components/images/artist.svg';
 import searchPic from '../components/images/search.svg';
 import '../styles/search.css';
 
-function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
+function Search({ onArtistSelect, onAlbumSelect }) {
     const [query, setQuery] = useState('');
     const navigate = useNavigate();
+    const { playTrack } = useAudio();
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState({
         tracks: [],
         artists: [],
         albums: []
     });
+
+    const handlePlayTrack = (track) => {
+        const enrichedTrack = {
+            ...track,
+            album: {
+                idAlbum: track.album.idAlbum,
+                albumName: track.album.albumName,
+                albumPicture: track.album.albumPicture
+            },
+            artist: {
+                idArtist: track.idArtist,
+                artistName: track.artist.artistName
+            }
+        };
+        playTrack(enrichedTrack);
+    };
 
     const handleSearch = async (searchQuery) => {
         if (!searchQuery.trim()) {
@@ -64,7 +82,7 @@ function Search({ onTrackSelect, onArtistSelect, onAlbumSelect }) {
                         <div
                             key={track.idSong}
                             className="search-result-item"
-                            onClick={() => onTrackSelect?.(track)}
+                            onClick={() => handlePlayTrack(track)}
                         >
                             <span className="result-name">{track.trackName}</span>
                             <span className="result-sub">{track.artistName}</span>

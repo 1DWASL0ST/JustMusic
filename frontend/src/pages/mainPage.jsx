@@ -1,4 +1,5 @@
 ﻿import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/global.css';
 import Header from '../components/header.jsx';
 import nextIcon from '../components/buttons/next.svg';
@@ -44,14 +45,10 @@ function MainPage() {
     } = useAudio();
 
     const { isAuthenticated } = useAuth();
-    const { isLiked, toggleLike, setIsLiked } = useLike(queueTrack?.idSong, isAuthenticated);
+    const { isLiked, toggleLike } = useLike(queueTrack?.idSong, isAuthenticated);
     const { isAddPlaylistModalOpen, toggleAddToPlaylistClick, setIsAddPlaylistModalOpen } = useAddToPlaylist(isAuthenticated);
-    const [searchMode, setSearchMode] = useState(false);
-
-    const handleTrackSelect = (track) => {
-        playTrack(track);
-        setSearchMode(false);
-    };
+    const [setSearchMode] = useState(false);
+    const navigate = useNavigate();
 
     const handleArtistSelect = (artist) => {
         setSearchMode(false);
@@ -106,7 +103,6 @@ function MainPage() {
 
             <div className='mainPart'>
                 <Search
-                    onTrackSelect={handleTrackSelect}
                     onArtistSelect={handleArtistSelect}
                     onAlbumSelect={handleAlbumSelect}
                 />
@@ -131,7 +127,7 @@ function MainPage() {
                         </button>
                     </div>
                     <h1>{queueTrack.trackName}</h1>
-                    <h2>{queueTrack.artist?.artistName || 'Unknown'}</h2>
+                    <h2 onClick={() => navigate(`/artist/${queueTrack.artist.idArtist}`) }>{queueTrack.artist?.artistName || 'Unknown'}</h2>
                     <div className="buttonContainer">
                         <button onClick={toggleAddToPlaylistClick}>
                             <img src={addPlaylist} alt='add' />

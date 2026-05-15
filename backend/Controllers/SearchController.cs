@@ -32,6 +32,8 @@ namespace backendAPI.Controllers
                 {
                     IDSong = t.IDSong,
                     TrackName = t.TrackName,
+                    IDAlbum = t.IDAlbum,
+                    AlbumName = t.album!.AlbumName,
                     IDArtist = t.IDArtist,
                     ArtistName = t.artist!.ArtistName
                 })

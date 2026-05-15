@@ -6,5 +6,7 @@
         public required string TrackName { get; set; }
         public required int IDArtist { get; set; }
         public required string ArtistName { get; set; }
+        public int IDAlbum { get; set; }
+        public string AlbumName { get; set; }
     }
 }

@@ -184,6 +184,37 @@ namespace backendAPI.Controllers
             }
         }
 
+        [HttpGet("stats")]
+        public async Task<ActionResult<Artist>> GetArtistStats()
+        {
+            var stats = await _dbcontext.Artists
+                    .Select(a => new
+                    {
+                        artistId = a.IDArtist,
+                        artistName = a.ArtistName,
+                        tracksCount = _dbcontext.Tracks.Count(t => t.IDArtist == a.IDArtist),
+                        albumsCount = _dbcontext.Albums.Count(al => al.IDArtist == a.IDArtist)
+                    })
+                    .OrderByDescending(a => a.tracksCount)
+                    .ToListAsync();
+            if (stats == null)
+                return NotFound();
+
+
+            var tracksPerAlbum = await _dbcontext.Albums
+                .Select(a => new
+                {
+                    a.AlbumName,
+                    TracksCount = _dbcontext.Tracks.Count(t => t.IDAlbum == a.IDAlbum)
+                })
+                .ToListAsync();
+
+            return Ok(new
+            {
+                stats,
+                tracksPerAlbum
+            });
+        }
         private bool ArtistExists(int id)
         {
             return _dbcontext.Artists.Any(e => e.IDArtist == id);

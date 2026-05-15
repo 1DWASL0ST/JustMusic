@@ -4,6 +4,7 @@ import Header from '../components/header';
 import { authFetch } from '../api/api';
 import { useAdmin } from '../hooks/useAdmin';
 import '../styles/adminPage.css';
+import ArtistStats from '../components/artistStats';
 
 function AdminPage() {
     const navigate = useNavigate();
@@ -313,6 +314,7 @@ function AdminPage() {
                         </div>
                     )}
                 </div>
+                <ArtistStats />
             </div>
         </>
     );
